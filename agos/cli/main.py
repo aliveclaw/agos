@@ -493,25 +493,39 @@ def policy(
 def dashboard(
     port: int = typer.Option(8420, "--port", "-p", help="Port to run on"),
     host: str = typer.Option("127.0.0.1", "--host", help="Host to bind to"),
+    no_browser: bool = typer.Option(False, "--no-browser", help="Don't auto-open browser"),
 ):
     """Launch the real-time monitoring dashboard.
 
     Opens a web UI at http://localhost:8420 with live agent status,
     event stream, audit trail, and system metrics.
     """
-    from agos.cli.context import AgosContext
+    from agos.cli.context import AgosContext, run_async
     from agos.dashboard.app import dashboard_app, configure
 
     ctx = AgosContext.get()
+
+    # Initialize loom so knowledge endpoints work
+    run_async(ctx.ensure_loom())
+
     configure(
         runtime=ctx.runtime,
         event_bus=ctx.event_bus,
         audit_trail=ctx.audit_trail,
         policy_engine=ctx.policy_engine,
+        tracer=ctx.tracer,
+        loom=ctx.loom,
     )
 
-    console.print(f"[bold cyan]agos dashboard[/bold cyan] starting at http://{host}:{port}")
+    url = f"http://{host}:{port}"
+    console.print(f"[bold cyan]agos dashboard[/bold cyan] starting at {url}")
     console.print("[dim]Press Ctrl+C to stop.[/dim]")
+
+    # Auto-open browser
+    if not no_browser:
+        import threading
+        import webbrowser
+        threading.Timer(1.0, webbrowser.open, args=[url]).start()
 
     import uvicorn
     uvicorn.run(dashboard_app, host=host, port=port, log_level="warning")
