@@ -885,15 +885,42 @@ async def evolution_loop(bus: EventBus, audit: AuditTrail, loom,
 # ══════════════════════════════════════════════════════════════════
 
 async def _load_community_contributions(loom, bus: EventBus) -> int:
-    """Load community contribution files and apply unlearned strategies."""
+    """Load community contribution files and apply unlearned strategies.
+
+    Reciprocity model:
+    - Contributors (GitHub token + auto-share on): load ALL community strategies
+    - Non-contributors: load only contributions older than 7 days (weekly bundled)
+
+    This incentivizes instances to share their learnings for real-time access.
+    """
+    from agos.config import settings as _settings
+    from datetime import datetime, timedelta
+
     contrib_dir = pathlib.Path("community/contributions")
     if not contrib_dir.exists():
         return 0
 
+    is_contributor = bool(_settings.github_token and _settings.auto_share_every > 0)
+    cutoff = datetime.utcnow() - timedelta(days=7)
+
     loaded = 0
+    skipped = 0
     for f in sorted(contrib_dir.glob("*.json")):
         try:
             data = _json.loads(f.read_text(encoding="utf-8"))
+
+            # Reciprocity gate: non-contributors only get week-old contributions
+            if not is_contributor:
+                contributed_at = data.get("contributed_at", "")
+                if contributed_at:
+                    try:
+                        ts = datetime.fromisoformat(contributed_at)
+                        if ts > cutoff:
+                            skipped += 1
+                            continue
+                    except ValueError:
+                        pass
+
             for s in data.get("strategies_applied", []):
                 name = s.get("name", "")
                 module = s.get("module", "")
@@ -908,6 +935,13 @@ async def _load_community_contributions(loom, bus: EventBus) -> int:
                     loaded += 1
         except Exception as e:
             _logger.warning("Failed to load community contribution %s: %s", f, e)
+
+    if skipped > 0:
+        await bus.emit("evolution.community_gated", {
+            "skipped": skipped,
+            "reason": "non-contributor: only weekly updates loaded",
+        }, source="kernel")
+
     return loaded
 
 

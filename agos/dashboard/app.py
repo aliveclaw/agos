@@ -97,6 +97,15 @@ class ApiKeyPayload(BaseModel):
     api_key: str
 
 
+class GitHubTokenPayload(BaseModel):
+    github_token: str
+
+
+class FederatedTogglePayload(BaseModel):
+    enabled: bool
+    interval: int = 3
+
+
 @dashboard_app.get("/api/settings")
 async def get_settings() -> dict:
     has_key = bool(settings.anthropic_api_key)
@@ -108,6 +117,7 @@ async def get_settings() -> dict:
         "has_github_token": has_gh,
         "github_token_preview": settings.github_token[:8] + "..." if has_gh else "",
         "auto_share_every": settings.auto_share_every,
+        "is_contributor": bool(settings.github_token and settings.auto_share_every > 0),
     }
 
 
@@ -118,6 +128,28 @@ async def set_api_key(payload: ApiKeyPayload) -> dict:
         return {"ok": False, "error": "API key cannot be empty"}
     settings.anthropic_api_key = key
     return {"ok": True, "preview": key[:8] + "..."}
+
+
+@dashboard_app.post("/api/settings/github-token")
+async def set_github_token(payload: GitHubTokenPayload) -> dict:
+    token = payload.github_token.strip()
+    if not token:
+        return {"ok": False, "error": "Token cannot be empty"}
+    settings.github_token = token
+    return {"ok": True, "preview": token[:8] + "..."}
+
+
+@dashboard_app.post("/api/settings/federated")
+async def set_federated(payload: FederatedTogglePayload) -> dict:
+    if payload.enabled:
+        settings.auto_share_every = max(1, payload.interval)
+    else:
+        settings.auto_share_every = 0
+    return {
+        "ok": True,
+        "auto_share_every": settings.auto_share_every,
+        "is_contributor": bool(settings.github_token and settings.auto_share_every > 0),
+    }
 
 
 # ── Evolution state + community sharing ──────────────────────────
@@ -666,8 +698,8 @@ tr:hover td { background: rgba(255,255,255,0.02); }
             </div>
             <div id="fed-last-pr" style="margin-top:6px;font-size:12px;color:var(--text2)"></div>
             <div style="display:flex;gap:8px;margin-top:10px">
-                <input id="share-token" type="password" placeholder="GitHub token (or use env var)" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:monospace;font-size:12px;outline:none" />
-                <button onclick="shareLearnings()" style="background:linear-gradient(135deg,var(--purple),var(--blue));border:none;border-radius:8px;padding:8px 16px;color:#fff;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap">Share Now</button>
+                <button onclick="shareLearnings()" style="flex:1;background:linear-gradient(135deg,var(--purple),var(--blue));border:none;border-radius:8px;padding:8px 16px;color:#fff;font-weight:700;font-size:12px;cursor:pointer">Share Now</button>
+                <button onclick="openSettings()" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--text2);font-size:12px;cursor:pointer">Configure</button>
             </div>
             <div id="share-status" style="margin-top:6px;font-size:12px;color:var(--text2)"></div>
         </div>
@@ -693,10 +725,48 @@ tr:hover td { background: rgba(255,255,255,0.02); }
                 <div id="api-key-status" style="margin-top:8px;font-size:12px;color:var(--text2)"></div>
             </div>
             <button onclick="saveApiKey()" style="width:100%;padding:10px;background:linear-gradient(135deg,var(--blue),var(--blue2));border:none;border-radius:8px;color:#0a0e14;font-weight:700;font-size:13px;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Save API Key</button>
+
+            <!-- GitHub Token -->
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+                <label style="display:block;font-size:11px;text-transform:uppercase;color:var(--text2);letter-spacing:1px;margin-bottom:8px;font-weight:600">GitHub Token</label>
+                <div style="display:flex;gap:8px">
+                    <input id="gh-token-input" type="password" placeholder="ghp_..." style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:monospace;font-size:13px;outline:none;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--purple)'" onblur="this.style.borderColor='var(--border)'"/>
+                    <button onclick="saveGHToken()" style="background:linear-gradient(135deg,var(--purple),var(--blue));border:none;border-radius:8px;padding:0 16px;color:#fff;font-weight:700;font-size:12px;cursor:pointer">Save</button>
+                </div>
+                <div id="gh-token-status" style="margin-top:8px;font-size:12px;color:var(--text2)"></div>
+            </div>
+
+            <!-- Federated Learning Toggle -->
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+                <label style="display:block;font-size:11px;text-transform:uppercase;color:var(--text2);letter-spacing:1px;margin-bottom:10px;font-weight:600">Federated Learning</label>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-radius:8px;margin-bottom:10px">
+                    <div>
+                        <div style="font-size:13px;font-weight:600">Auto-share learnings</div>
+                        <div style="font-size:11px;color:var(--text2);margin-top:2px">Contribute evolution strategies to the community</div>
+                    </div>
+                    <label style="position:relative;display:inline-block;width:44px;height:24px;cursor:pointer">
+                        <input type="checkbox" id="fed-toggle" onchange="toggleFederated()" style="opacity:0;width:0;height:0">
+                        <span id="fed-slider" style="position:absolute;top:0;left:0;right:0;bottom:0;background:var(--border);border-radius:12px;transition:0.3s"></span>
+                        <span id="fed-dot" style="position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s"></span>
+                    </label>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                    <span style="font-size:12px;color:var(--text2)">Share every</span>
+                    <select id="fed-interval" onchange="toggleFederated()" style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--text);font-size:12px;outline:none">
+                        <option value="1">1 cycle</option>
+                        <option value="2">2 cycles</option>
+                        <option value="3" selected>3 cycles</option>
+                        <option value="5">5 cycles</option>
+                        <option value="10">10 cycles</option>
+                    </select>
+                </div>
+                <div id="fed-reciprocity" style="font-size:11px;padding:8px 10px;background:var(--bg);border-radius:6px;border:1px solid var(--border)"></div>
+            </div>
+
             <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
                 <div style="font-size:11px;color:var(--text2)">
-                    <span style="color:var(--yellow)">&#x26A0;</span> The API key is stored in memory only. It won't persist across container restarts.
-                    Set <code style="color:var(--cyan);background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px">AGOS_ANTHROPIC_API_KEY</code> as an environment variable for persistence.
+                    <span style="color:var(--yellow)">&#x26A0;</span> Runtime settings are stored in memory only.
+                    Set <code style="color:var(--cyan);background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px">AGOS_GITHUB_TOKEN</code> and <code style="color:var(--cyan);background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11px">AGOS_AUTO_SHARE_EVERY</code> as env vars for persistence.
                 </div>
             </div>
         </div>
@@ -972,17 +1042,48 @@ try { const ws = new WebSocket('ws://'+location.host+'/ws/events'); ws.onmessage
 function openSettings() {
     const m = document.getElementById('settings-modal');
     m.style.display = 'flex';
-    // Load current state
     fetchJSON('/api/settings').then(s => {
         if (!s) return;
-        const status = document.getElementById('api-key-status');
+        // API key
+        const akStatus = document.getElementById('api-key-status');
         if (s.has_api_key) {
-            status.innerHTML = '<span style="color:var(--green)">&#10003; Key configured:</span> <code style="color:var(--cyan)">' + esc(s.api_key_preview) + '</code>';
+            akStatus.innerHTML = '<span style="color:var(--green)">&#10003; Key configured:</span> <code style="color:var(--cyan)">' + esc(s.api_key_preview) + '</code>';
             document.getElementById('api-key-input').placeholder = s.api_key_preview;
         } else {
-            status.innerHTML = '<span style="color:var(--yellow)">&#x26A0; No API key set</span> — LLM features disabled';
+            akStatus.innerHTML = '<span style="color:var(--yellow)">&#x26A0; No API key set</span>';
         }
+        // GitHub token
+        const ghStatus = document.getElementById('gh-token-status');
+        if (s.has_github_token) {
+            ghStatus.innerHTML = '<span style="color:var(--green)">&#10003; Token configured:</span> <code style="color:var(--cyan)">' + esc(s.github_token_preview) + '</code>';
+            document.getElementById('gh-token-input').placeholder = s.github_token_preview;
+        } else {
+            ghStatus.innerHTML = '<span style="color:var(--text2)">Required for federated learning</span>';
+        }
+        // Federated toggle
+        const toggle = document.getElementById('fed-toggle');
+        const interval = document.getElementById('fed-interval');
+        const isOn = s.auto_share_every > 0;
+        toggle.checked = isOn;
+        updateToggleUI(isOn);
+        if (isOn) interval.value = String(s.auto_share_every);
+        // Reciprocity info
+        updateReciprocityInfo(s.is_contributor);
     });
+}
+function updateToggleUI(on) {
+    const slider = document.getElementById('fed-slider');
+    const dot = document.getElementById('fed-dot');
+    if (on) { slider.style.background = 'var(--purple)'; dot.style.transform = 'translateX(20px)'; }
+    else { slider.style.background = 'var(--border)'; dot.style.transform = 'translateX(0)'; }
+}
+function updateReciprocityInfo(isContributor) {
+    const el = document.getElementById('fed-reciprocity');
+    if (isContributor) {
+        el.innerHTML = '<span style="color:var(--green)">&#10003; Contributor</span> — you get <b style="color:var(--text)">real-time</b> community strategies on every boot. Your instance helps evolve the OS for everyone.';
+    } else {
+        el.innerHTML = '<span style="color:var(--yellow)">&#x26A0; Observer only</span> — you get community updates <b style="color:var(--text)">weekly</b> (bundled with releases). Enable sharing to unlock real-time strategies from all instances.';
+    }
 }
 function closeSettings() { document.getElementById('settings-modal').style.display = 'none'; }
 document.getElementById('settings-modal').addEventListener('click', function(e) { if (e.target === this) closeSettings(); });
@@ -1004,6 +1105,31 @@ async function saveApiKey() {
     } else {
         status.innerHTML = '<span style="color:var(--red)">' + esc(data.error) + '</span>';
     }
+}
+async function saveGHToken() {
+    const token = document.getElementById('gh-token-input').value.trim();
+    if (!token) { document.getElementById('gh-token-status').innerHTML = '<span style="color:var(--red)">Please enter a token</span>'; return; }
+    const resp = await fetch('/api/settings/github-token', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({github_token: token}) });
+    const data = await resp.json();
+    const st = document.getElementById('gh-token-status');
+    if (data.ok) {
+        st.innerHTML = '<span style="color:var(--green)">&#10003; Token saved:</span> <code style="color:var(--cyan)">' + esc(data.preview) + '</code>';
+        document.getElementById('gh-token-input').value = '';
+        document.getElementById('gh-token-input').placeholder = data.preview;
+        // Re-check contributor status
+        const s = await fetchJSON('/api/settings');
+        if (s) updateReciprocityInfo(s.is_contributor);
+    } else {
+        st.innerHTML = '<span style="color:var(--red)">' + esc(data.error) + '</span>';
+    }
+}
+async function toggleFederated() {
+    const on = document.getElementById('fed-toggle').checked;
+    const interval = parseInt(document.getElementById('fed-interval').value) || 3;
+    updateToggleUI(on);
+    const resp = await fetch('/api/settings/federated', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({enabled: on, interval: interval}) });
+    const data = await resp.json();
+    if (data.ok) updateReciprocityInfo(data.is_contributor);
 }
 // Check key status on load
 fetchJSON('/api/settings').then(s => {
@@ -1067,18 +1193,17 @@ async function refreshEvolution() {
 }
 
 async function shareLearnings() {
-    const token = document.getElementById('share-token').value.trim();
     const status = document.getElementById('share-status');
-    status.innerHTML = '<span style="color:var(--yellow)">Sharing learnings...</span>';
+    status.innerHTML = '<span style="color:var(--yellow)">Sharing learnings via PR...</span>';
     try {
         const resp = await fetch('/api/evolution/share', {
             method: 'POST', headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({github_token: token})
+            body: JSON.stringify({github_token: ''})
         });
         const data = await resp.json();
         if (data.ok) {
             status.innerHTML = '<span style="color:var(--green)">&#10003; PR created:</span> <a href="' + esc(data.pr_url) + '" target="_blank" style="color:var(--cyan)">' + esc(data.pr_url) + '</a>';
-            document.getElementById('share-token').value = '';
+            lastSharePR = data.pr_url;
         } else {
             status.innerHTML = '<span style="color:var(--red)">' + esc(data.error) + '</span>';
         }
