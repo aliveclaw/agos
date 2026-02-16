@@ -1,8 +1,7 @@
 """Tests for the ArxivScout."""
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
-import pytest
 
 from agos.evolution.scout import ArxivScout, Paper, SEARCH_TOPICS, CATEGORIES
 

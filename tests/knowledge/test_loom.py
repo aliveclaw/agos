@@ -4,16 +4,15 @@ import pytest
 import tempfile
 
 from agos.knowledge.manager import TheLoom
-from agos.knowledge.base import Thread
 
 
 @pytest.fixture
 async def loom():
     with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
         db_path = f.name
-    l = TheLoom(db_path)
-    await l.initialize()
-    return l
+    lm = TheLoom(db_path)
+    await lm.initialize()
+    return lm
 
 
 @pytest.mark.asyncio

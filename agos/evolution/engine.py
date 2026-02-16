@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import time
 from datetime import datetime
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from agos.evolution.integrator import EvolutionIntegrator, IntegrationResult
@@ -31,8 +31,8 @@ from agos.events.bus import EventBus
 from agos.policy.audit import AuditTrail
 from agos.evolution.scout import ArxivScout, Paper
 from agos.evolution.analyzer import PaperAnalyzer, PaperInsight
-from agos.evolution.repo_scout import RepoScout, RepoSnapshot
-from agos.evolution.code_analyzer import CodeAnalyzer, CodePattern, CodeAnalysisResult
+from agos.evolution.repo_scout import RepoScout
+from agos.evolution.code_analyzer import CodeAnalyzer, CodePattern
 from agos.evolution.sandbox import Sandbox, SandboxResult
 
 

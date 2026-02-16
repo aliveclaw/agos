@@ -9,7 +9,6 @@ When a trigger fires, the manager:
 
 from __future__ import annotations
 
-import asyncio
 from typing import Any
 
 from rich.console import Console

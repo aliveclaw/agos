@@ -2,7 +2,6 @@
 
 import pytest
 import tempfile
-from datetime import datetime, timedelta
 
 from agos.knowledge.episodic import EpisodicWeave
 from agos.knowledge.base import Thread, ThreadQuery

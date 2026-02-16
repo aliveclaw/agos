@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import time
 from collections import defaultdict
-from typing import Any
 
 from agos.policy.schema import AgentPolicy
 from agos.exceptions import PolicyViolationError

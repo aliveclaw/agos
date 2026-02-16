@@ -9,12 +9,11 @@ import pytest_asyncio
 from agos.llm.base import LLMResponse
 from agos.knowledge.manager import TheLoom
 from agos.events.bus import EventBus
-from agos.policy.audit import AuditTrail
-from agos.evolution.scout import ArxivScout, Paper
+from agos.evolution.scout import Paper
 from agos.evolution.analyzer import PaperAnalyzer, PaperInsight
 from agos.evolution.engine import EvolutionEngine, EvolutionProposal, EvolutionReport
-from agos.evolution.repo_scout import RepoScout, RepoSnapshot, RepoFile
-from agos.evolution.code_analyzer import CodeAnalyzer, CodePattern, CodeAnalysisResult
+from agos.evolution.repo_scout import RepoSnapshot, RepoFile
+from agos.evolution.code_analyzer import CodePattern, CodeAnalysisResult
 from agos.evolution.sandbox import Sandbox
 
 from tests.conftest import MockLLMProvider

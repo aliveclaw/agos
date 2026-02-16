@@ -7,7 +7,6 @@ This makes that possible.
 from __future__ import annotations
 
 import asyncio
-import os
 from pathlib import Path
 
 from agos.triggers.base import BaseTrigger, TriggerConfig

@@ -437,7 +437,6 @@ def policy(
         agos policy --read-only                   # block all write/exec tools
     """
     from agos.cli.context import AgosContext
-    from agos.policy.schema import AgentPolicy
     from rich.table import Table
 
     ctx = AgosContext.get()

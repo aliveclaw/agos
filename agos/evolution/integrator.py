@@ -14,7 +14,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from agos.types import new_id
-from agos.exceptions import IntegrationError, IntegrationRollbackError
+from agos.exceptions import IntegrationRollbackError
 from agos.evolution.engine import EvolutionProposal
 from agos.knowledge.manager import TheLoom
 from agos.events.bus import EventBus

@@ -2,7 +2,7 @@
 
 import time
 
-from agos.events.tracing import Tracer, Trace, Span
+from agos.events.tracing import Tracer
 
 
 def test_start_trace():

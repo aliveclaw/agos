@@ -7,7 +7,7 @@ through this facade.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from agos.knowledge.episodic import EpisodicWeave
 from agos.knowledge.semantic import SemanticWeave
@@ -60,7 +60,7 @@ class TheLoom:
     ) -> None:
         """Add a memory layer with a priority (higher = checked first)."""
         self._layers.append(MemoryLayer(name=name, weave=weave, priority=priority))
-        self._layers.sort(key=lambda l: l.priority, reverse=True)
+        self._layers.sort(key=lambda ly: ly.priority, reverse=True)
 
     def enable_layered_recall(self, enabled: bool = True) -> None:
         """Enable or disable layered recall mode."""
@@ -97,7 +97,6 @@ class TheLoom:
 
     async def _layered_recall(self, query: str, limit: int) -> list[Thread]:
         """Check layers in priority order, stop when limit is reached."""
-        q = ThreadQuery(text=query, limit=limit)
         seen: set[str] = set()
         results: list[Thread] = []
 

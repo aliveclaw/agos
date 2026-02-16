@@ -34,8 +34,8 @@ class LayeredRetrievalStrategy(IntegrationStrategy):
         return {
             "use_layered_recall": self._loom._use_layered_recall,
             "layers": [
-                {"name": l.name, "priority": l.priority, "enabled": l.enabled}
-                for l in self._loom._layers
+                {"name": ly.name, "priority": ly.priority, "enabled": ly.enabled}
+                for ly in self._loom._layers
             ],
         }
 
@@ -70,7 +70,7 @@ class LayeredRetrievalStrategy(IntegrationStrategy):
     async def health_check(self) -> bool:
         # Verify recall still works
         try:
-            results = await self._loom.recall("test health check", limit=1)
+            await self._loom.recall("test health check", limit=1)
             return True
         except Exception:
             return False

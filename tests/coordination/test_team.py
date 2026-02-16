@@ -1,6 +1,5 @@
 """Tests for the Team coordinator."""
 
-import asyncio
 
 import pytest
 

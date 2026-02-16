@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 
-from agos.types import AgentId, AgentState, AgentDefinition
+from agos.types import AgentId, AgentDefinition
 from agos.kernel.agent import Agent
 from agos.llm.base import BaseLLMProvider
 from agos.exceptions import AgentNotFoundError

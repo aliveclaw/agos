@@ -10,7 +10,6 @@ Inspired by: A-MEM (Agentic Memory for LLM Agents, 2025)
 
 from __future__ import annotations
 
-import asyncio
 from datetime import datetime
 from typing import Any
 

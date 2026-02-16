@@ -7,7 +7,6 @@ then fetches key source files via the GitHub API. No git clone needed.
 from __future__ import annotations
 
 import re
-from typing import Any
 
 import httpx
 from pydantic import BaseModel, Field

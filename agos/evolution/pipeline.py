@@ -14,12 +14,10 @@ import json
 import argparse
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
 
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings
 
-from agos.types import new_id
 from agos.evolution.engine import EvolutionProposal, EvolutionReport
 
 

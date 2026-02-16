@@ -12,10 +12,9 @@ stored in the knowledge system and emitted on the event bus.
 
 from __future__ import annotations
 
-import asyncio
 import subprocess
 from abc import ABC, abstractmethod
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -71,7 +70,7 @@ class BaseAmbientWatcher(ABC):
 
         # Set handler before registering
         trigger_manager.set_handler(self._on_trigger_raw)
-        trigger = await trigger_manager.register(config)
+        await trigger_manager.register(config)
         self._running = True
 
     async def stop(self) -> None:

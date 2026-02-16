@@ -9,13 +9,11 @@ from __future__ import annotations
 
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
-from typing import Any
 from urllib.parse import quote
 
 import httpx
 from pydantic import BaseModel, Field
 
-from agos.types import new_id
 
 ARXIV_API = "http://export.arxiv.org/api/query"
 ATOM_NS = "{http://www.w3.org/2005/Atom}"

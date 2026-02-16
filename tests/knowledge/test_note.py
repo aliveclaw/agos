@@ -5,7 +5,7 @@ import tempfile
 import pytest
 import pytest_asyncio
 
-from agos.knowledge.note import NoteStore, MemoryNote
+from agos.knowledge.note import NoteStore
 from agos.knowledge.semantic import SemanticWeave
 from agos.knowledge.graph import KnowledgeGraph
 
@@ -45,7 +45,7 @@ async def test_add_with_custom_keywords(note_store):
 async def test_auto_linking(note_store):
     ns = note_store
 
-    n1 = await ns.add("Python asyncio enables concurrent I/O")
+    await ns.add("Python asyncio enables concurrent I/O")
     n2 = await ns.add("Python asyncio uses event loops for concurrency")
 
     # n2 should be linked to n1 (semantic similarity)

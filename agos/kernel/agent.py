@@ -7,7 +7,7 @@ from datetime import datetime
 
 from agos.types import AgentId, AgentState, AgentDefinition, new_id
 from agos.kernel.state_machine import AgentStateMachine
-from agos.llm.base import BaseLLMProvider, LLMMessage, LLMResponse, ToolResult
+from agos.llm.base import BaseLLMProvider, LLMMessage, LLMResponse
 from agos.exceptions import TokenBudgetExceededError
 
 

@@ -13,7 +13,7 @@ the suggestion lifecycle (create, dismiss, act on).
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel, Field

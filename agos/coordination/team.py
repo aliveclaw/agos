@@ -17,7 +17,6 @@ from typing import Any
 
 from agos.types import (
     AgentDefinition,
-    AgentId,
     CoordinationStrategy,
     new_id,
 )

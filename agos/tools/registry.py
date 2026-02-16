@@ -8,7 +8,7 @@ from typing import Any, Callable, Awaitable
 from pydantic import BaseModel
 
 from agos.tools.schema import ToolSchema
-from agos.exceptions import ToolNotFoundError, ToolExecutionError
+from agos.exceptions import ToolNotFoundError
 
 ToolHandler = Callable[..., Awaitable[Any]]
 

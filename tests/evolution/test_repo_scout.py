@@ -4,7 +4,7 @@ import pytest
 
 from agos.evolution.repo_scout import (
     RepoScout, RepoFile, RepoSnapshot, _ext_to_lang,
-    GITHUB_API, GITHUB_RAW, CODE_EXTENSIONS,
+    CODE_EXTENSIONS,
 )
 
 

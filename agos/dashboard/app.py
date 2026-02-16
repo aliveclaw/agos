@@ -6,9 +6,6 @@ Provides REST endpoints and a WebSocket for live event streaming.
 
 from __future__ import annotations
 
-import asyncio
-import json
-from typing import Any
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse

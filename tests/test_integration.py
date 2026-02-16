@@ -18,7 +18,7 @@ from agos.tools.builtins import register_builtin_tools
 from agos.intent.engine import IntentEngine
 from agos.intent.planner import Planner
 from agos.knowledge.manager import TheLoom
-from agos.knowledge.base import Thread, ThreadQuery
+from agos.knowledge.base import ThreadQuery
 from agos.triggers.base import TriggerConfig
 from agos.triggers.manager import TriggerManager
 

@@ -7,14 +7,12 @@ an execution plan. This is what makes agos an OS, not a library.
 from __future__ import annotations
 
 from agos.types import (
-    AgentDefinition,
     CoordinationStrategy,
     ExecutionPlan,
     IntentType,
 )
 from agos.llm.base import BaseLLMProvider, LLMMessage
 from agos.intent.personas import PERSONAS, ORCHESTRATOR
-from agos.exceptions import IntentError
 
 INTENT_SYSTEM_PROMPT = """\
 You are the Intent Engine of agos, an Agentic Operating System.
@@ -75,7 +73,7 @@ class IntentEngine:
 
             return self._parse_plan(response.content, user_input)
 
-        except Exception as e:
+        except Exception:
             # If intent parsing fails, fall back to orchestrator
             return self._fallback_plan(user_input)
 

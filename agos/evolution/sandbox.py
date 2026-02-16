@@ -14,7 +14,6 @@ import os
 import tempfile
 import textwrap
 from datetime import datetime
-from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -180,7 +179,7 @@ class Sandbox:
         start = time.monotonic()
 
         # Wrap code to capture output
-        wrapper = textwrap.dedent(f"""\
+        wrapper = textwrap.dedent("""\
         import sys
         import io
         sys.stdout = io.StringIO()
@@ -190,10 +189,10 @@ class Sandbox:
             output = sys.stdout.getvalue()
             errors = sys.stderr.getvalue()
             if errors:
-                print(f"STDERR: {{errors}}", file=sys.__stderr__)
+                print(f"STDERR: {errors}", file=sys.__stderr__)
             print(output, end="", file=sys.__stdout__)
         except Exception as e:
-            print(f"ERROR: {{type(e).__name__}}: {{e}}", file=sys.__stderr__)
+            print(f"ERROR: {type(e).__name__}: {e}", file=sys.__stderr__)
             sys.exit(1)
         """)
 

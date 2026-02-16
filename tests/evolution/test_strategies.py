@@ -49,16 +49,16 @@ async def semantic(db_path):
 
 @pytest.fixture
 async def loom(db_path):
-    l = TheLoom(db_path)
-    await l.initialize()
-    return l
+    lm = TheLoom(db_path)
+    await lm.initialize()
+    return lm
 
 
 @pytest.fixture
 async def consolidator(db_path):
-    l = TheLoom(db_path)
-    await l.initialize()
-    return Consolidator(l.episodic, l.semantic, l.graph)
+    lm = TheLoom(db_path)
+    await lm.initialize()
+    return Consolidator(lm.episodic, lm.semantic, lm.graph)
 
 
 # ── Softmax Strategy Tests ───────────────────────────────────────
@@ -327,7 +327,6 @@ class TestAdaptiveConfidenceStrategy:
 
         # Check access was recorded
         import aiosqlite
-        import json
         async with aiosqlite.connect(semantic._db_path) as db:
             db.row_factory = aiosqlite.Row
             cursor = await db.execute(

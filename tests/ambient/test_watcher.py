@@ -5,7 +5,6 @@ from datetime import datetime
 
 from agos.ambient.watcher import (
     Observation,
-    BaseAmbientWatcher,
     GitWatcher,
     FileActivityWatcher,
     DailyBriefingWatcher,
@@ -321,8 +320,6 @@ async def test_ambient_manager_start_stop_one():
     mgr = AmbientManager()
     mgr.register(GitWatcher(check_interval=3600))
     mgr.register(FileActivityWatcher(check_interval=3600))
-
-    tm = TriggerManager()
 
     ok = await mgr.start_one("git_watcher")
     assert ok

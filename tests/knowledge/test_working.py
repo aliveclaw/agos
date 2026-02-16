@@ -2,7 +2,7 @@
 
 import pytest
 
-from agos.knowledge.working import WorkingMemory, WorkingMemoryItem
+from agos.knowledge.working import WorkingMemory
 from agos.knowledge.base import Thread
 
 

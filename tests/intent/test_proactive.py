@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 
 from agos.intent.proactive import (
     Suggestion,
-    BaseDetector,
     RepetitiveEditDetector,
     FailurePatternDetector,
     FrequentToolDetector,
@@ -31,9 +30,9 @@ def db_path():
 
 @pytest.fixture
 async def loom(db_path):
-    l = TheLoom(db_path)
-    await l.initialize()
-    return l
+    lm = TheLoom(db_path)
+    await lm.initialize()
+    return lm
 
 
 # ── Suggestion model tests ───────────────────────────────────────

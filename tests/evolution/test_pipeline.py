@@ -1,7 +1,5 @@
 """Tests for the evolution pipeline."""
 
-import pytest
-from datetime import datetime
 
 from agos.evolution.engine import EvolutionProposal, EvolutionReport
 from agos.evolution.analyzer import PaperInsight

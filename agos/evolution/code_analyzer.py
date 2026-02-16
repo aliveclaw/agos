@@ -7,13 +7,12 @@ techniques with actual code snippets that can be adapted for agos.
 from __future__ import annotations
 
 import json
-from typing import Any
 
 from pydantic import BaseModel, Field
 
 from agos.types import new_id
 from agos.llm.base import BaseLLMProvider, LLMMessage
-from agos.evolution.repo_scout import RepoSnapshot, RepoFile
+from agos.evolution.repo_scout import RepoSnapshot
 from agos.evolution.analyzer import AGOS_ARCHITECTURE
 
 CODE_ANALYSIS_PROMPT = """You are an AI systems architect analyzing source code from a research

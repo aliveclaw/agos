@@ -9,12 +9,10 @@ import pytest_asyncio
 from agos.knowledge.manager import TheLoom
 from agos.events.bus import EventBus
 from agos.evolution.engine import EvolutionEngine, EvolutionReport
-from agos.evolution.analyzer import PaperInsight
 from agos.evolution.sandbox import Sandbox
 from agos.evolution.daemon import EvolutionDaemon
 from agos.evolution.pipeline import EvolutionPipelineConfig
 
-from tests.conftest import MockLLMProvider
 
 
 class FakeScout:
