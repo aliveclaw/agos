@@ -2,7 +2,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/agos)](https://pypi.org/project/agos/)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Tests](https://img.shields.io/github/actions/workflow/status/aliveclaw/agenticOS/ci.yml?label=tests)](https://github.com/aliveclaw/agenticOS/actions)
+[![Tests](https://img.shields.io/github/actions/workflow/status/aliveclaw/agos/ci.yml?label=tests)](https://github.com/aliveclaw/agos/actions)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE)
 
 **Your personal AI team. An intelligence layer, not a library.**
@@ -27,12 +27,12 @@ pip install agos
 
 ### Windows Executable
 
-Download `agos.exe` from the [latest release](https://github.com/aliveclaw/agenticOS/releases/latest).
+Download `agos.exe` from the [latest release](https://github.com/aliveclaw/agos/releases/latest).
 
 ### From Source
 
 ```bash
-git clone https://github.com/aliveclaw/agenticOS.git
+git clone https://github.com/aliveclaw/agos.git
 cd agenticOS
 pip install -e ".[dev]"
 ```

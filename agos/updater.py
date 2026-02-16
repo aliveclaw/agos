@@ -22,7 +22,7 @@ GITHUB_RELEASES_URL = "https://api.github.com/repos/{owner}/{repo}/releases/late
 
 async def check_for_update(
     github_owner: str = "aliveclaw",
-    github_repo: str = "agenticOS",
+    github_repo: str = "agos",
 ) -> dict[str, Any]:
     """Check if a newer version is available.
 

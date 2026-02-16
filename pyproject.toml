@@ -18,9 +18,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/aliveclaw/agenticOS"
-Repository = "https://github.com/aliveclaw/agenticOS"
-Issues = "https://github.com/aliveclaw/agenticOS/issues"
+Homepage = "https://github.com/aliveclaw/agos"
+Repository = "https://github.com/aliveclaw/agos"
+Issues = "https://github.com/aliveclaw/agos/issues"
 
 [project.optional-dependencies]
 dev = [

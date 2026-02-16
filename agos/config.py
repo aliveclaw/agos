@@ -24,7 +24,7 @@ class AgosSettings(BaseSettings):
     # Update settings
     auto_update_check: bool = True
     github_owner: str = "aliveclaw"
-    github_repo: str = "agenticOS"
+    github_repo: str = "agos"
 
     model_config = {"env_prefix": "AGOS_"}
 

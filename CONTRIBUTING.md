@@ -6,8 +6,8 @@ Thanks for your interest in contributing to agos.
 
 ```bash
 # Clone the repo
-git clone https://github.com/aliveclaw/agenticOS.git
-cd agenticOS
+git clone https://github.com/aliveclaw/agos.git
+cd agos
 
 # Install in development mode
 pip install -e ".[dev]"

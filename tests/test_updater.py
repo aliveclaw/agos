@@ -122,7 +122,7 @@ async def test_check_github_exe_asset():
         "assets": [
             {
                 "name": "agos.exe",
-                "browser_download_url": "https://github.com/aliveclaw/agenticOS/releases/download/v0.2.0/agos.exe",
+                "browser_download_url": "https://github.com/aliveclaw/agos/releases/download/v0.2.0/agos.exe",
             }
         ],
     }
