@@ -10,6 +10,7 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
         python-version: ["3.11", "3.12"]
@@ -23,7 +24,9 @@ jobs:
       - name: Lint
         run: ruff check agos/ tests/
       - name: Test
-        run: pytest tests/ -v --tb=short
+        run: pytest tests/ -v --tb=short -p no:faulthandler
+        env:
+          PYTHONDONTWRITEBYTECODE: 1
 
   lint:
     runs-on: ubuntu-latest
