@@ -1,0 +1,241 @@
+{
+  "instance_id": "c10a2d2232eb",
+  "agos_version": "0.1.0",
+  "contributed_at": "2026-02-16T21:13:01.341663",
+  "cycles_completed": 6,
+  "strategies_applied": [
+    {
+      "name": "$\\texttt{GPUmonty}$: A GPU-accelerated relativistic Monte Carlo r...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13198v1",
+          "title": "$\\texttt{GPUmonty}$: A GPU-accelerated relativistic Monte Carlo radiative transfer code"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:04:36.998308",
+      "applied_count": 1
+    },
+    {
+      "name": "Semantic Chunking and the Entropy of Natural Language",
+      "module": "knowledge.semantic",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13194v1",
+          "title": "Semantic Chunking and the Entropy of Natural Language"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:04:36.998489",
+      "applied_count": 1
+    },
+    {
+      "name": "CoPE-VideoLM: Codec Primitives For Efficient Video Language Model...",
+      "module": "knowledge.semantic",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13191v1",
+          "title": "CoPE-VideoLM: Codec Primitives For Efficient Video Language Models"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:04:36.998555",
+      "applied_count": 1
+    },
+    {
+      "name": "Optimal Take-off under Fuzzy Clearances",
+      "module": "knowledge.manager",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13166v1",
+          "title": "Optimal Take-off under Fuzzy Clearances"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:06:19.191035",
+      "applied_count": 1
+    },
+    {
+      "name": "Asynchronous Verified Semantic Caching for Tiered LLM Architectur...",
+      "module": "knowledge.semantic",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13165v1",
+          "title": "Asynchronous Verified Semantic Caching for Tiered LLM Architectures"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:06:19.191178",
+      "applied_count": 1
+    },
+    {
+      "name": "In-Context Autonomous Network Incident Response: An End-to-End La...",
+      "module": "evolution",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13156v1",
+          "title": "In-Context Autonomous Network Incident Response: An End-to-End Large Language Model Agent Approach"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:06:19.191238",
+      "applied_count": 1
+    },
+    {
+      "name": "Matter-induced plaquette terms in a $\\mathbb{Z}_2$ lattice gauge ...",
+      "module": "tools",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13192v1",
+          "title": "Matter-induced plaquette terms in a $\\mathbb{Z}_2$ lattice gauge theory"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:08:05.262536",
+      "applied_count": 1
+    },
+    {
+      "name": "Nuclear gradients from auxiliary-field quantum Monte Carlo and th...",
+      "module": "tools",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13187v1",
+          "title": "Nuclear gradients from auxiliary-field quantum Monte Carlo and their application in geometry optimization and transition state search"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:08:05.262674",
+      "applied_count": 1
+    },
+    {
+      "name": "Conversational Image Segmentation: Grounding Abstract Concepts wi...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13195v1",
+          "title": "Conversational Image Segmentation: Grounding Abstract Concepts with Scalable Supervision"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:08:05.262740",
+      "applied_count": 1
+    },
+    {
+      "name": "FlashSchNet: Fast and Accurate Coarse-Grained Neural Network Mole...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13140v1",
+          "title": "FlashSchNet: Fast and Accurate Coarse-Grained Neural Network Molecular Dynamics"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:09:46.267865",
+      "applied_count": 1
+    },
+    {
+      "name": "The Fuzzy Front Ends: Reflections on the Never-Ending Story of Vi...",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13182v1",
+          "title": "The Fuzzy Front Ends: Reflections on the Never-Ending Story of Visualization Co-Design"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:09:46.267915",
+      "applied_count": 1
+    },
+    {
+      "name": "Human Emotion-Mediated Soft Robotic Arts: Exploring the Intersect...",
+      "module": "evolution",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13163v1",
+          "title": "Human Emotion-Mediated Soft Robotic Arts: Exploring the Intersection of Human Emotions, Soft Robotics and Arts"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:09:46.267936",
+      "applied_count": 1
+    },
+    {
+      "name": "Gravitational Background of Alice-Vortices and R7-Branes",
+      "module": "tools",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13196v1",
+          "title": "Gravitational Background of Alice-Vortices and R7-Branes"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:11:25.390275",
+      "applied_count": 1
+    },
+    {
+      "name": "Quantization-Robust LLM Unlearning via Low-Rank Adaptation",
+      "module": "evolution",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13151v1",
+          "title": "Quantization-Robust LLM Unlearning via Low-Rank Adaptation"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:13:01.340244",
+      "applied_count": 1
+    }
+  ],
+  "discovered_patterns": [
+    {
+      "name": "Adaptive Confidence Tracker",
+      "module": "knowledge",
+      "code_snippet": "import math\n\nclass ConfidenceTracker:\n    def __init__(self, decay=0.95):\n        self.decay = decay\n        self.counts = {}\n        self.conf = {}\n    def access(self, key):\n        self.counts[key] = self.counts.get(key, 0) + 1\n        self.conf[key] = 0.5 + 0.5 * (1 - math.exp(-self.counts[key] / 5))\n        return self.conf[key]\n    def decay_all(self):\n        for k in self.conf: self.conf[k] *= self.decay\n\nt = ConfidenceTracker()\nfor _ in range(10): c = t.access('k1')\nassert c > 0.85\nt.de",
+      "sandbox_output": "After 10 accesses: 0.9323, after decay: 0.8857\nPASS: Adaptive confidence tracker validated\n",
+      "source_paper": "2602.13198v1"
+    },
+    {
+      "name": "Softmax Diversity Scorer",
+      "module": "knowledge.semantic",
+      "code_snippet": "import math\nimport random\n\ndef softmax_score(values, temperature=0.3):\n    if not values: return []\n    exp_vals = [math.exp(v / max(temperature, 0.01)) for v in values]\n    total = sum(exp_vals)\n    return [v / total for v in exp_vals]\n\nscores = softmax_score([0.9, 0.7, 0.4, 0.2, 0.1])\nassert abs(sum(scores) - 1.0) < 0.001\nprint(f'Softmax scores: {[round(s,3) for s in scores]}')\nprint('PASS: Softmax diversity scorer validated')\n",
+      "sandbox_output": "Softmax scores: [0.535, 0.275, 0.101, 0.052, 0.037]\nPASS: Softmax diversity scorer validated\n",
+      "source_paper": "2602.13194v1"
+    },
+    {
+      "name": "Layered Memory Retriever",
+      "module": "knowledge.manager",
+      "code_snippet": "class Layer:\n    def __init__(self, name, pri, data):\n        self.name, self.pri, self.data = name, pri, data\n    def query(self, q, n=5):\n        return [d for d in self.data if q.lower() in d.lower()][:n]\n\ndef layered_recall(layers, q, limit=10):\n    out = []\n    for l in sorted(layers, key=lambda x: x.pri, reverse=True):\n        if len(out) >= limit: break\n        out.extend(l.query(q, limit - len(out)))\n    return out\n\nw = Layer('working', 100, ['agent running now', 'current goal: evolve'])",
+      "sandbox_output": "Layered recall: ['agent running now', 'agent completed scan', 'agent learned']\nPASS: Layered retriever validated\n",
+      "source_paper": "2602.13166v1"
+    }
+  ]
+}
