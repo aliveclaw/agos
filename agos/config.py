@@ -26,6 +26,7 @@ class AgosSettings(BaseSettings):
     github_owner: str = "aliveclaw"
     github_repo: str = "agos"
     github_token: str = ""  # GitHub PAT for community contributions (optional)
+    auto_share_every: int = 3  # Auto-share learnings every N evolution cycles (0 = disabled)
 
     model_config = {"env_prefix": "AGOS_"}
 

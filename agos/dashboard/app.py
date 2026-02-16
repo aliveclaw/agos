@@ -100,10 +100,14 @@ class ApiKeyPayload(BaseModel):
 @dashboard_app.get("/api/settings")
 async def get_settings() -> dict:
     has_key = bool(settings.anthropic_api_key)
+    has_gh = bool(settings.github_token)
     return {
         "has_api_key": has_key,
         "api_key_preview": settings.anthropic_api_key[:8] + "..." if has_key else "",
         "model": settings.default_model,
+        "has_github_token": has_gh,
+        "github_token_preview": settings.github_token[:8] + "..." if has_gh else "",
+        "auto_share_every": settings.auto_share_every,
     }
 
 
@@ -656,12 +660,16 @@ tr:hover td { background: rgba(255,255,255,0.02); }
         <div id="evo-pat-list" style="max-height:140px;overflow-y:auto"></div>
         <div class="empty" id="evo-pat-empty" style="padding:12px">No patterns yet</div>
         <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
-            <div class="section-label">Community Sharing</div>
-            <div style="display:flex;gap:8px;margin-top:8px">
-                <input id="share-token" type="password" placeholder="GitHub token (or use env var)" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:monospace;font-size:12px;outline:none" />
-                <button onclick="shareLearnings()" style="background:linear-gradient(135deg,var(--purple),var(--blue));border:none;border-radius:8px;padding:8px 16px;color:#fff;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap">Share via PR</button>
+            <div class="section-label">Federated Learning</div>
+            <div id="fed-status" style="margin-top:8px;font-size:12px;padding:8px 10px;background:var(--bg3);border-radius:8px">
+                <span style="color:var(--text2)">Checking...</span>
             </div>
-            <div id="share-status" style="margin-top:8px;font-size:12px;color:var(--text2)"></div>
+            <div id="fed-last-pr" style="margin-top:6px;font-size:12px;color:var(--text2)"></div>
+            <div style="display:flex;gap:8px;margin-top:10px">
+                <input id="share-token" type="password" placeholder="GitHub token (or use env var)" style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:monospace;font-size:12px;outline:none" />
+                <button onclick="shareLearnings()" style="background:linear-gradient(135deg,var(--purple),var(--blue));border:none;border-radius:8px;padding:8px 16px;color:#fff;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap">Share Now</button>
+            </div>
+            <div id="share-status" style="margin-top:6px;font-size:12px;color:var(--text2)"></div>
         </div>
     </div>
 </div>
@@ -957,7 +965,7 @@ function addEvent(event) {
     div.prepend(el);
     while (div.children.length > 200) div.lastChild.remove();
 }
-try { const ws = new WebSocket('ws://'+location.host+'/ws/events'); ws.onmessage = e => addEvent(JSON.parse(e.data)); } catch(err) {}
+try { const ws = new WebSocket('ws://'+location.host+'/ws/events'); ws.onmessage = e => { const ev = JSON.parse(e.data); addEvent(ev); if (ev.topic === 'evolution.auto_share_success' && ev.data && ev.data.pr_url) { lastSharePR = ev.data.pr_url; } }; } catch(err) {}
 (async () => { const ev = await fetchJSON('/api/events?limit=30'); if (ev && ev.length) ev.reverse().forEach(addEvent); })();
 
 /* ── Settings Modal ── */
@@ -1003,8 +1011,12 @@ fetchJSON('/api/settings').then(s => {
 });
 
 /* ── Evolution State (every 10s) ── */
+let lastSharePR = '';
 async function refreshEvolution() {
-    const data = await fetchJSON('/api/evolution/state');
+    const [data, sett] = await Promise.all([
+        fetchJSON('/api/evolution/state'),
+        fetchJSON('/api/settings'),
+    ]);
     if (!data || !data.available) return;
     document.getElementById('evo-cycles').textContent = data.cycles_completed;
     document.getElementById('evo-strategies').textContent = data.strategies_applied.length;
@@ -1034,6 +1046,24 @@ async function refreshEvolution() {
             '<span style="color:var(--cyan)">' + esc(p.name) + '</span> <span style="color:var(--text2)">(' + esc(p.module) + ')</span></div>'
         ).join('');
     } else { patEmpty.style.display = ''; patList.innerHTML = ''; }
+    // Federated status
+    const fedEl = document.getElementById('fed-status');
+    if (sett && fedEl) {
+        const hasGH = sett.has_github_token;
+        const interval = sett.auto_share_every || 0;
+        if (!hasGH) {
+            fedEl.innerHTML = '<span style="color:var(--yellow)">&#x26A0; No GitHub token</span> — set <code style="color:var(--cyan);font-size:11px">AGOS_GITHUB_TOKEN</code> to enable auto-sharing';
+        } else if (interval <= 0) {
+            fedEl.innerHTML = '<span style="color:var(--text2)">Auto-share disabled</span> — set <code style="color:var(--cyan);font-size:11px">AGOS_AUTO_SHARE_EVERY=3</code>';
+        } else {
+            const nextShare = interval - (data.cycles_completed % interval);
+            fedEl.innerHTML = '<span style="color:var(--green)">&#10003; Active</span> — sharing every <b>' + interval + '</b> cycles · next in <b>' + nextShare + '</b> cycle' + (nextShare > 1 ? 's' : '');
+        }
+    }
+    const prEl = document.getElementById('fed-last-pr');
+    if (prEl && lastSharePR) {
+        prEl.innerHTML = 'Last PR: <a href="' + esc(lastSharePR) + '" target="_blank" style="color:var(--cyan)">' + esc(lastSharePR) + '</a>';
+    }
 }
 
 async function shareLearnings() {

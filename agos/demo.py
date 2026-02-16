@@ -818,6 +818,35 @@ async def run_evolution_cycle(cycle_num: int, bus: EventBus, audit: AuditTrail, 
             "patterns": len(evolution_state.data.discovered_patterns),
         }, source=name)
 
+        # ── Auto-share to upstream (federated learning) ──
+        from agos.config import settings as _settings
+        share_every = _settings.auto_share_every
+        token = _settings.github_token
+        if (share_every > 0 and token
+                and evolution_state.data.cycles_completed % share_every == 0):
+            await bus.emit("evolution.auto_share_start", {
+                "cycle": evolution_state.data.cycles_completed,
+            }, source=name)
+            try:
+                from agos.evolution.contribute import share_learnings
+                contribution = evolution_state.export_contribution()
+                result = await share_learnings(contribution, token)
+                await bus.emit("evolution.auto_share_success", {
+                    "pr_url": result["pr_url"],
+                    "branch": result["branch"],
+                    "cycle": evolution_state.data.cycles_completed,
+                }, source=name)
+                await audit.record(AuditEntry(
+                    agent_id=aid, agent_name=name, action="community_share",
+                    detail=f"PR created: {result['pr_url']}", success=True,
+                ))
+            except Exception as e:
+                await bus.emit("evolution.auto_share_failed", {
+                    "error": str(e)[:200],
+                    "cycle": evolution_state.data.cycles_completed,
+                }, source=name)
+                _logger.warning("Auto-share failed: %s", e)
+
     # ── Final report ──
     dur = round(time.time() - start_time, 1)
     await bus.emit("evolution.cycle_completed", {
