@@ -1,0 +1,18 @@
+services:
+  agos:
+    build: .
+    container_name: agos
+    ports:
+      - "8420:8420"
+    environment:
+      - AGOS_ANTHROPIC_API_KEY=${AGOS_ANTHROPIC_API_KEY:-}
+      - AGOS_GITHUB_TOKEN=${AGOS_GITHUB_TOKEN:-}
+      - AGOS_DASHBOARD_HOST=0.0.0.0
+      - AGOS_DASHBOARD_PORT=8420
+      - AGOS_LOG_LEVEL=INFO
+    volumes:
+      - agos-data:/app/.agos
+    restart: unless-stopped
+
+volumes:
+  agos-data:

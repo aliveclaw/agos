@@ -36,6 +36,9 @@ dev = [
 [project.scripts]
 agos = "agos.cli.main:app"
 
+[tool.setuptools.packages.find]
+include = ["agos*"]
+
 [build-system]
 requires = ["setuptools>=75.0"]
 build-backend = "setuptools.build_meta"

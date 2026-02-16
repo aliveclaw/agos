@@ -15,7 +15,7 @@ import httpx
 from pydantic import BaseModel, Field
 
 
-ARXIV_API = "http://export.arxiv.org/api/query"
+ARXIV_API = "https://export.arxiv.org/api/query"
 ATOM_NS = "{http://www.w3.org/2005/Atom}"
 ARXIV_NS = "{http://arxiv.org/schemas/atom}"
 
@@ -61,17 +61,18 @@ class ArxivScout:
     async def search(self, query: str, max_results: int = 10) -> list[Paper]:
         """Search arxiv for papers matching a query."""
         cat_filter = "+OR+".join(f"cat:{c}" for c in CATEGORIES)
-        search_query = f"all:{quote(query)}+AND+({cat_filter})"
+        # Use quote() for the query but build the full URL manually
+        # to avoid httpx double-encoding the arxiv query syntax
+        encoded_query = quote(query, safe="")
+        search_query = f"all:{encoded_query}+AND+({cat_filter})"
+        url = (
+            f"{ARXIV_API}?search_query={search_query}"
+            f"&max_results={max_results}"
+            f"&sortBy=submittedDate&sortOrder=descending"
+        )
 
-        params = {
-            "search_query": search_query,
-            "max_results": str(max_results),
-            "sortBy": "submittedDate",
-            "sortOrder": "descending",
-        }
-
-        async with httpx.AsyncClient(timeout=self._timeout) as client:
-            resp = await client.get(ARXIV_API, params=params)
+        async with httpx.AsyncClient(timeout=self._timeout, follow_redirects=True) as client:
+            resp = await client.get(url)
             resp.raise_for_status()
 
         return self._parse_atom(resp.text)

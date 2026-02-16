@@ -25,6 +25,7 @@ class AgosSettings(BaseSettings):
     auto_update_check: bool = True
     github_owner: str = "aliveclaw"
     github_repo: str = "agos"
+    github_token: str = ""  # GitHub PAT for community contributions (optional)
 
     model_config = {"env_prefix": "AGOS_"}
 
