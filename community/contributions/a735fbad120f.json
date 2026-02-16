@@ -1,0 +1,825 @@
+{
+  "instance_id": "a735fbad120f",
+  "agos_version": "0.1.0",
+  "contributed_at": "2026-02-16T21:41:27.418683",
+  "cycles_completed": 6,
+  "strategies_applied": [
+    {
+      "name": "$\\texttt{GPUmonty}$: A GPU-accelerated relativistic Monte Carlo r...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13198v1",
+          "title": "$\\texttt{GPUmonty}$: A GPU-accelerated relativistic Monte Carlo radiative transfer code"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:04:37.006464",
+      "applied_count": 1
+    },
+    {
+      "name": "Semantic Chunking and the Entropy of Natural Language",
+      "module": "knowledge.semantic",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13194v1",
+          "title": "Semantic Chunking and the Entropy of Natural Language"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:04:37.006601",
+      "applied_count": 1
+    },
+    {
+      "name": "CoPE-VideoLM: Codec Primitives For Efficient Video Language Model...",
+      "module": "knowledge.semantic",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13191v1",
+          "title": "CoPE-VideoLM: Codec Primitives For Efficient Video Language Models"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:04:37.006672",
+      "applied_count": 1
+    },
+    {
+      "name": "Optimal Take-off under Fuzzy Clearances",
+      "module": "knowledge.manager",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13166v1",
+          "title": "Optimal Take-off under Fuzzy Clearances"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:06:19.193099",
+      "applied_count": 1
+    },
+    {
+      "name": "Asynchronous Verified Semantic Caching for Tiered LLM Architectur...",
+      "module": "knowledge.semantic",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13165v1",
+          "title": "Asynchronous Verified Semantic Caching for Tiered LLM Architectures"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:06:19.193221",
+      "applied_count": 1
+    },
+    {
+      "name": "In-Context Autonomous Network Incident Response: An End-to-End La...",
+      "module": "evolution",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13156v1",
+          "title": "In-Context Autonomous Network Incident Response: An End-to-End Large Language Model Agent Approach"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:06:19.193279",
+      "applied_count": 1
+    },
+    {
+      "name": "Matter-induced plaquette terms in a $\\mathbb{Z}_2$ lattice gauge ...",
+      "module": "tools",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13192v1",
+          "title": "Matter-induced plaquette terms in a $\\mathbb{Z}_2$ lattice gauge theory"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:08:05.342314",
+      "applied_count": 1
+    },
+    {
+      "name": "Nuclear gradients from auxiliary-field quantum Monte Carlo and th...",
+      "module": "tools",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13187v1",
+          "title": "Nuclear gradients from auxiliary-field quantum Monte Carlo and their application in geometry optimization and transition state search"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:08:05.342358",
+      "applied_count": 1
+    },
+    {
+      "name": "Conversational Image Segmentation: Grounding Abstract Concepts wi...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13195v1",
+          "title": "Conversational Image Segmentation: Grounding Abstract Concepts with Scalable Supervision"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:08:05.342374",
+      "applied_count": 1
+    },
+    {
+      "name": "FlashSchNet: Fast and Accurate Coarse-Grained Neural Network Mole...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13140v1",
+          "title": "FlashSchNet: Fast and Accurate Coarse-Grained Neural Network Molecular Dynamics"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:09:47.241973",
+      "applied_count": 1
+    },
+    {
+      "name": "The Fuzzy Front Ends: Reflections on the Never-Ending Story of Vi...",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13182v1",
+          "title": "The Fuzzy Front Ends: Reflections on the Never-Ending Story of Visualization Co-Design"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:09:47.242117",
+      "applied_count": 1
+    },
+    {
+      "name": "Human Emotion-Mediated Soft Robotic Arts: Exploring the Intersect...",
+      "module": "evolution",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13163v1",
+          "title": "Human Emotion-Mediated Soft Robotic Arts: Exploring the Intersection of Human Emotions, Soft Robotics and Arts"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:09:47.242186",
+      "applied_count": 1
+    },
+    {
+      "name": "Gravitational Background of Alice-Vortices and R7-Branes",
+      "module": "tools",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13196v1",
+          "title": "Gravitational Background of Alice-Vortices and R7-Branes"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:11:25.905277",
+      "applied_count": 1
+    },
+    {
+      "name": "Quantization-Robust LLM Unlearning via Low-Rank Adaptation",
+      "module": "evolution",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13151v1",
+          "title": "Quantization-Robust LLM Unlearning via Low-Rank Adaptation"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T21:13:01.774249",
+      "applied_count": 1
+    }
+  ],
+  "discovered_patterns": [
+    {
+      "name": "Adaptive Confidence Tracker",
+      "module": "knowledge",
+      "code_snippet": "import math\n\nclass ConfidenceTracker:\n    def __init__(self, decay=0.95):\n        self.decay = decay\n        self.counts = {}\n        self.conf = {}\n    def access(self, key):\n        self.counts[key] = self.counts.get(key, 0) + 1\n        self.conf[key] = 0.5 + 0.5 * (1 - math.exp(-self.counts[key] / 5))\n        return self.conf[key]\n    def decay_all(self):\n        for k in self.conf: self.conf[k] *= self.decay\n\nt = ConfidenceTracker()\nfor _ in range(10): c = t.access('k1')\nassert c > 0.85\nt.de",
+      "sandbox_output": "After 10 accesses: 0.9323, after decay: 0.8857\nPASS: Adaptive confidence tracker validated\n",
+      "source_paper": "2602.13198v1"
+    },
+    {
+      "name": "Softmax Diversity Scorer",
+      "module": "knowledge.semantic",
+      "code_snippet": "import math\nimport random\n\ndef softmax_score(values, temperature=0.3):\n    if not values: return []\n    exp_vals = [math.exp(v / max(temperature, 0.01)) for v in values]\n    total = sum(exp_vals)\n    return [v / total for v in exp_vals]\n\nscores = softmax_score([0.9, 0.7, 0.4, 0.2, 0.1])\nassert abs(sum(scores) - 1.0) < 0.001\nprint(f'Softmax scores: {[round(s,3) for s in scores]}')\nprint('PASS: Softmax diversity scorer validated')\n",
+      "sandbox_output": "Softmax scores: [0.535, 0.275, 0.101, 0.052, 0.037]\nPASS: Softmax diversity scorer validated\n",
+      "source_paper": "2602.13194v1"
+    },
+    {
+      "name": "Layered Memory Retriever",
+      "module": "knowledge.manager",
+      "code_snippet": "class Layer:\n    def __init__(self, name, pri, data):\n        self.name, self.pri, self.data = name, pri, data\n    def query(self, q, n=5):\n        return [d for d in self.data if q.lower() in d.lower()][:n]\n\ndef layered_recall(layers, q, limit=10):\n    out = []\n    for l in sorted(layers, key=lambda x: x.pri, reverse=True):\n        if len(out) >= limit: break\n        out.extend(l.query(q, limit - len(out)))\n    return out\n\nw = Layer('working', 100, ['agent running now', 'current goal: evolve'])",
+      "sandbox_output": "Layered recall: ['agent running now', 'agent completed scan', 'agent learned']\nPASS: Layered retriever validated\n",
+      "source_paper": "2602.13166v1"
+    }
+  ],
+  "meta_evolution": {
+    "genomes": {
+      "knowledge.semantic": {
+        "component": "knowledge.semantic",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "temperature",
+            "current": null,
+            "default": 0.0,
+            "min_val": 0.0,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Softmax retrieval diversity"
+          },
+          {
+            "name": "track_access",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Access-based confidence tracking"
+          },
+          {
+            "name": "relevance_threshold",
+            "current": null,
+            "default": 0.01,
+            "min_val": 0.001,
+            "max_val": 0.1,
+            "param_type": "float",
+            "description": "Minimum cosine similarity for results"
+          },
+          {
+            "name": "confidence_decay_factor",
+            "current": null,
+            "default": 0.95,
+            "min_val": 0.8,
+            "max_val": 0.99,
+            "param_type": "float",
+            "description": "Confidence decay for unused knowledge"
+          },
+          {
+            "name": "confidence_decay_days",
+            "current": null,
+            "default": 30,
+            "min_val": 7,
+            "max_val": 90,
+            "param_type": "int",
+            "description": "Days inactive before decay kicks in"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-16T21:41:21.137358",
+        "mutations_applied": 0
+      },
+      "knowledge.graph": {
+        "component": "knowledge.graph",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "default_traversal_depth",
+            "current": 2,
+            "default": 1,
+            "min_val": 1,
+            "max_val": 4,
+            "param_type": "int",
+            "description": "Default neighbor traversal hops"
+          },
+          {
+            "name": "edge_weight_decay",
+            "current": 0.986,
+            "default": 0.99,
+            "min_val": 0.9,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Weight decay per consolidation cycle"
+          }
+        ],
+        "fitness_score": 0.36,
+        "last_evaluated": "2026-02-16T21:41:21.137371",
+        "mutations_applied": 2
+      },
+      "knowledge.consolidator": {
+        "component": "knowledge.consolidator",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "older_than_hours",
+            "current": 16,
+            "default": 24,
+            "min_val": 6,
+            "max_val": 168,
+            "param_type": "int",
+            "description": "Consolidate events older than N hours"
+          },
+          {
+            "name": "min_cluster_size",
+            "current": 2,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Minimum events to form a summary"
+          },
+          {
+            "name": "max_concurrent_writes",
+            "current": 4,
+            "default": 5,
+            "min_val": 1,
+            "max_val": 20,
+            "param_type": "int",
+            "description": "Semaphore limit for batch ops"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-16T21:41:21.137381",
+        "mutations_applied": 3
+      },
+      "knowledge.loom": {
+        "component": "knowledge.loom",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "use_layered_recall",
+            "current": true,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Priority-ordered layer retrieval"
+          },
+          {
+            "name": "recall_limit",
+            "current": 17,
+            "default": 10,
+            "min_val": 3,
+            "max_val": 50,
+            "param_type": "int",
+            "description": "Default recall result limit"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-16T21:41:21.137390",
+        "mutations_applied": 2
+      },
+      "intent.engine": {
+        "component": "intent.engine",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "default_strategy",
+            "current": null,
+            "default": "solo",
+            "min_val": null,
+            "max_val": null,
+            "param_type": "str",
+            "description": "Fallback coordination strategy"
+          },
+          {
+            "name": "max_intent_tokens",
+            "current": 610,
+            "default": 500,
+            "min_val": 200,
+            "max_val": 1500,
+            "param_type": "int",
+            "description": "Token limit for intent classification"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-16T21:41:21.137398",
+        "mutations_applied": 1
+      },
+      "intent.personas": {
+        "component": "intent.personas",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "researcher_budget",
+            "current": 197925,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Researcher agent token budget"
+          },
+          {
+            "name": "coder_budget",
+            "current": 260773,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Coder agent token budget"
+          },
+          {
+            "name": "orchestrator_budget",
+            "current": 251799,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Orchestrator agent token budget"
+          },
+          {
+            "name": "researcher_max_turns",
+            "current": 15,
+            "default": 30,
+            "min_val": 5,
+            "max_val": 80,
+            "param_type": "int",
+            "description": "Researcher max turns"
+          },
+          {
+            "name": "coder_max_turns",
+            "current": 41,
+            "default": 40,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Coder max turns"
+          },
+          {
+            "name": "orchestrator_max_turns",
+            "current": 44,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Orchestrator max turns"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-16T21:41:21.137407",
+        "mutations_applied": 6
+      },
+      "orchestration.planner": {
+        "component": "orchestration.planner",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "parallel_threshold",
+            "current": 2,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Min subtasks to trigger parallel execution"
+          },
+          {
+            "name": "pipeline_max_agents",
+            "current": 4,
+            "default": 5,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Max agents in a pipeline"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-16T21:41:21.137416",
+        "mutations_applied": 2
+      },
+      "orchestration.runtime": {
+        "component": "orchestration.runtime",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "max_concurrent_agents",
+            "current": 89,
+            "default": 50,
+            "min_val": 5,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Max agents running simultaneously"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-16T21:41:21.137424",
+        "mutations_applied": 1
+      },
+      "policy.engine": {
+        "component": "policy.engine",
+        "layer": "Identity & Governance",
+        "params": [
+          {
+            "name": "default_max_tokens",
+            "current": null,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 1000000,
+            "param_type": "int",
+            "description": "Default agent token budget"
+          },
+          {
+            "name": "default_max_turns",
+            "current": null,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Default agent turn limit"
+          },
+          {
+            "name": "default_rate_limit",
+            "current": null,
+            "default": 60,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Tool calls per minute"
+          },
+          {
+            "name": "default_read_only",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Default read-only mode"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-16T21:41:21.137435",
+        "mutations_applied": 0
+      },
+      "events.bus": {
+        "component": "events.bus",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "history_limit",
+            "current": null,
+            "default": 500,
+            "min_val": 100,
+            "max_val": 5000,
+            "param_type": "int",
+            "description": "Max events in memory"
+          }
+        ],
+        "fitness_score": 0.87875,
+        "last_evaluated": "2026-02-16T21:41:21.137446",
+        "mutations_applied": 0
+      },
+      "events.tracing": {
+        "component": "events.tracing",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "max_traces",
+            "current": 132,
+            "default": 200,
+            "min_val": 50,
+            "max_val": 1000,
+            "param_type": "int",
+            "description": "Max traces retained"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-16T21:41:21.137454",
+        "mutations_applied": 1
+      }
+    },
+    "recent_mutations": [
+      {
+        "id": "c0a08f26b3b9",
+        "component": "knowledge.graph",
+        "param_name": "edge_weight_decay",
+        "old_value": 0.99,
+        "new_value": 0.986,
+        "reason": "Fitness 0.36 < 0.6, nudging edge_weight_decay",
+        "fitness_before": 0.36,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419039"
+      },
+      {
+        "id": "9f4d67fb9095",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 16,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419077"
+      },
+      {
+        "id": "88f250aa77c8",
+        "component": "knowledge.consolidator",
+        "param_name": "min_cluster_size",
+        "old_value": 3,
+        "new_value": 2,
+        "reason": "Fitness 0.50 < 0.6, adjusting min_cluster_size",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419103"
+      },
+      {
+        "id": "50bc39f46b32",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 10,
+        "new_value": 17,
+        "reason": "Fitness 0.50 < 0.6, adjusting recall_limit",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419165"
+      },
+      {
+        "id": "147c3aab4fbc",
+        "component": "intent.engine",
+        "param_name": "max_intent_tokens",
+        "old_value": 500,
+        "new_value": 610,
+        "reason": "Fitness 0.50 < 0.6, adjusting max_intent_tokens",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419189"
+      },
+      {
+        "id": "dedbd6bf709f",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 200000,
+        "new_value": 197925,
+        "reason": "Fitness 0.50 < 0.6, adjusting researcher_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419210"
+      },
+      {
+        "id": "1640144b7d73",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 200000,
+        "new_value": 260773,
+        "reason": "Fitness 0.50 < 0.6, adjusting coder_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419228"
+      },
+      {
+        "id": "a271bcb111c5",
+        "component": "orchestration.planner",
+        "param_name": "parallel_threshold",
+        "old_value": 3,
+        "new_value": 2,
+        "reason": "Fitness 0.50 < 0.6, adjusting parallel_threshold",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419320"
+      },
+      {
+        "id": "73322914f12b",
+        "component": "orchestration.planner",
+        "param_name": "pipeline_max_agents",
+        "old_value": 5,
+        "new_value": 4,
+        "reason": "Fitness 0.50 < 0.6, adjusting pipeline_max_agents",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419336"
+      },
+      {
+        "id": "b383bfded76a",
+        "component": "orchestration.runtime",
+        "param_name": "max_concurrent_agents",
+        "old_value": 50,
+        "new_value": 89,
+        "reason": "Fitness 0.50 < 0.6, adjusting max_concurrent_agents",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419354"
+      },
+      {
+        "id": "63718835f058",
+        "component": "events.tracing",
+        "param_name": "max_traces",
+        "old_value": 200,
+        "new_value": 132,
+        "reason": "Fitness 0.50 < 0.6, adjusting max_traces",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:36:41.419373"
+      },
+      {
+        "id": "79d88c8a4d23",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 5,
+        "new_value": 4,
+        "reason": "Fitness 0.50 < 0.6, adjusting max_concurrent_writes",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:38:14.619867"
+      },
+      {
+        "id": "657a4007a8d6",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 200000,
+        "new_value": 251799,
+        "reason": "Fitness 0.50 < 0.6, adjusting orchestrator_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:38:14.619900"
+      },
+      {
+        "id": "7fd3f778f0b7",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 30,
+        "new_value": 15,
+        "reason": "Fitness 0.50 < 0.6, adjusting researcher_max_turns",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:38:14.619920"
+      },
+      {
+        "id": "9b869aff31c3",
+        "component": "knowledge.loom",
+        "param_name": "use_layered_recall",
+        "old_value": false,
+        "new_value": true,
+        "reason": "Fitness 0.50 < 0.6, toggling use_layered_recall",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:39:47.896352"
+      },
+      {
+        "id": "22fb4c811061",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 40,
+        "new_value": 41,
+        "reason": "Fitness 0.50 < 0.6, adjusting coder_max_turns",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:39:47.896379"
+      },
+      {
+        "id": "2031536a9d6d",
+        "component": "intent.personas",
+        "param_name": "orchestrator_max_turns",
+        "old_value": 50,
+        "new_value": 44,
+        "reason": "Fitness 0.50 < 0.6, adjusting orchestrator_max_turns",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:39:47.896396"
+      },
+      {
+        "id": "49f4f9c31028",
+        "component": "knowledge.graph",
+        "param_name": "default_traversal_depth",
+        "old_value": 1,
+        "new_value": 2,
+        "reason": "Fitness 0.36 < 0.6, adjusting default_traversal_depth",
+        "fitness_before": 0.36,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-16T21:41:21.137500"
+      }
+    ],
+    "timestamp": "2026-02-16T21:41:21.138236"
+  },
+  "meta_cycles_completed": 18
+}
