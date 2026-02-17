@@ -1721,8 +1721,14 @@ async def run_evolution_cycle(cycle_num: int, bus: EventBus, audit: AuditTrail, 
     integrator.register_strategy(PlannerStrategy(runtime=None, event_bus=bus))
     integrator.register_strategy(IntentPromptStrategy(audit_trail=audit))
 
-    # ── Load evolved strategies from .agos/evolved/ ──
-    for path, strategy in load_evolved_strategies():
+    # ── Load evolved strategies from .agos/evolved/ with live components ──
+    live_components = {
+        "loom": loom,
+        "event_bus": bus,
+        "audit_trail": audit,
+        "sandbox": sandbox,
+    }
+    for path, strategy in load_evolved_strategies(components=live_components):
         try:
             integrator.register_strategy(strategy)
             await bus.emit("evolution.evolved_strategy_loaded", {

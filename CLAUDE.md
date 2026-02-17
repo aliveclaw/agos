@@ -27,4 +27,15 @@ AGOS is an **operating system**, not an application. Think of it like Linux, not
 3. The evolution engine is always running — scanning arxiv, testing improvements, evolving the OS
 4. All actions are audited. All events flow through the EventBus.
 5. Docker is the deployment target — `docker compose up` boots the entire OS
-6. look for old code base that is no longer required. This is OS and need to be frugal and not a bloated engin. user still has to do tasks using their agents, System level token consumption, compute consumption should be less.
+6. Look for old code base that is no longer required. This is OS and need to be frugal and not a bloated engine. User still has to do tasks using their agents. System level token consumption, compute consumption should be less.
+
+## Evolution: MUST BE REAL, NEVER COSMETIC
+
+This is the most important rule for evolution:
+
+- **Evolved code MUST actually execute.** No placeholder `apply()` methods that just set `self._applied = True`. If the evolution engine generates code from a paper, that code must run and change real system behavior.
+- **Every evolved strategy `apply()` must call the pattern code** — hook it into the actual component (knowledge, intent, policy, orchestration) so it modifies live behavior.
+- **No fake versioning** — if v2 of a pattern is the same code as v1 with a different paper ID, that's not evolution, that's waste. Only write a new version if the code actually changed.
+- **Verify with real assertions** — after applying an evolved strategy, the system must prove the behavior changed (e.g., call the new function, check the output differs from before).
+- **Parameter mutations are the gold standard** — MetaEvolver directly modifies running components via real method calls. Code evolution must match this standard.
+- **Delete what doesn't work** — if a pattern fails sandbox or health check, remove it. Don't accumulate dead files.
