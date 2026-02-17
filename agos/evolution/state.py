@@ -6,7 +6,6 @@ persists them to .agos/evolution_state.json, and restores them on boot.
 
 from __future__ import annotations
 
-import json
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -55,6 +54,9 @@ class EvolutionStateData(BaseModel):
     strategies_applied: list[AppliedStrategy] = Field(default_factory=list)
     discovered_patterns: list[DiscoveredPattern] = Field(default_factory=list)
     parameters: dict[str, Any] = Field(default_factory=dict)
+    # Meta-evolution state (ALMA-style all-component evolution)
+    meta_evolution: dict[str, Any] = Field(default_factory=dict)
+    meta_cycles_completed: int = 0
 
 
 class EvolutionState:
@@ -208,6 +210,27 @@ class EvolutionState:
 
         return changes
 
+    # ── Meta-evolution state ────────────────────────────────────
+
+    def save_meta_state(self, meta_evolver) -> None:
+        """Persist meta-evolution genomes and mutations."""
+        self._data.meta_evolution = meta_evolver.export_state()
+        self._data.meta_cycles_completed = sum(
+            g.mutations_applied for g in meta_evolver.all_genomes()
+        )
+
+    def restore_meta_state(self, meta_evolver) -> int:
+        """Restore meta-evolution state. Returns count of restored genomes."""
+        if not self._data.meta_evolution:
+            return 0
+        meta_evolver.restore_state(self._data.meta_evolution)
+        restored = sum(
+            1 for g in meta_evolver.all_genomes()
+            if g.mutations_applied > 0
+        )
+        logger.info("Restored meta-evolution: %d genomes with mutations", restored)
+        return restored
+
     # ── Export for community contribution ────────────────────────
 
     def export_contribution(self) -> dict:
@@ -223,4 +246,6 @@ class EvolutionState:
             "discovered_patterns": [
                 p.model_dump() for p in self._data.discovered_patterns
             ],
+            "meta_evolution": self._data.meta_evolution,
+            "meta_cycles_completed": self._data.meta_cycles_completed,
         }

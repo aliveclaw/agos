@@ -17,8 +17,10 @@ from pydantic import BaseModel
 
 from agos.events.bus import Event
 from agos.config import settings
+from agos.a2a.server import router as a2a_router, set_server as set_a2a_server
 
 dashboard_app = FastAPI(title="AGenticOS dashboard", version="0.1.0")
+dashboard_app.include_router(a2a_router)
 
 _runtime = None
 _event_bus = None
@@ -27,13 +29,26 @@ _policy_engine = None
 _tracer = None
 _loom = None
 _evolution_state = None
+_meta_evolver = None
+_process_manager = None
+_workload_discovery = None
+_agent_registry = None
+_os_agent = None
+_mcp_manager = None
+_approval_gate = None
 _start_time = time.time()
 
 
 def configure(runtime=None, event_bus=None, audit_trail=None,
               policy_engine=None, tracer=None, loom=None,
-              evolution_state=None) -> None:
-    global _runtime, _event_bus, _audit_trail, _policy_engine, _tracer, _loom, _evolution_state
+              evolution_state=None, meta_evolver=None,
+              process_manager=None, workload_discovery=None,
+              agent_registry=None, os_agent=None,
+              mcp_manager=None, approval_gate=None,
+              a2a_server=None) -> None:
+    global _runtime, _event_bus, _audit_trail, _policy_engine, _tracer, _loom
+    global _evolution_state, _meta_evolver, _process_manager, _workload_discovery
+    global _agent_registry, _os_agent, _mcp_manager, _approval_gate
     _runtime = runtime
     _event_bus = event_bus
     _audit_trail = audit_trail
@@ -41,6 +56,33 @@ def configure(runtime=None, event_bus=None, audit_trail=None,
     _tracer = tracer
     _loom = loom
     _evolution_state = evolution_state
+    _meta_evolver = meta_evolver
+    _process_manager = process_manager
+    _workload_discovery = workload_discovery
+    _agent_registry = agent_registry
+    _os_agent = os_agent
+    _mcp_manager = mcp_manager
+    _approval_gate = approval_gate
+    if a2a_server is not None:
+        set_a2a_server(a2a_server)
+
+
+# ── OS Shell — the primary interface to AGOS ────────────────────
+
+
+class CommandPayload(BaseModel):
+    command: str
+
+
+@dashboard_app.post("/api/os/command")
+async def os_command(payload: CommandPayload) -> dict:
+    """The OS shell. Talk to AGOS in natural language.
+
+    'set up openclaw'  |  'what's running'  |  'stop picoclaw'
+    """
+    if _os_agent is None:
+        return {"ok": False, "action": "error", "message": "OS agent not initialized.", "data": {}}
+    return await _os_agent.execute(payload.command)
 
 
 # ── Original endpoints (kept) ────────────────────────────────────
@@ -77,7 +119,9 @@ async def list_audit(agent_id: str = "", action: str = "", limit: int = 50) -> l
 async def system_status() -> dict:
     agents = _runtime.list_agents() if _runtime else []
     return {
+        "status": "ok",
         "version": "0.1.0",
+        "node_role": settings.node_role,
         "agents_total": len(agents),
         "agents_running": sum(1 for a in agents if a["state"] == "running"),
         "agents_completed": sum(1 for a in agents if a["state"] == "completed"),
@@ -87,6 +131,7 @@ async def system_status() -> dict:
         "policies": len(_policy_engine.list_policies()) if _policy_engine else 0,
         "active_spans": _tracer.active_span_count if _tracer else 0,
         "knowledge_available": _loom is not None,
+        "evolution_cycles": _evolution_state.data.cycles_completed if _evolution_state else 0,
         "uptime_s": int(time.time() - _start_time),
     }
 
@@ -127,6 +172,10 @@ async def set_api_key(payload: ApiKeyPayload) -> dict:
     if not key:
         return {"ok": False, "error": "API key cannot be empty"}
     settings.anthropic_api_key = key
+    # Wire LLM into OS agent so it can start thinking
+    if _os_agent is not None:
+        from agos.llm.anthropic import AnthropicProvider
+        _os_agent.set_llm(AnthropicProvider(api_key=key, model=settings.default_model))
     return {"ok": True, "preview": key[:8] + "..."}
 
 
@@ -152,6 +201,64 @@ async def set_federated(payload: FederatedTogglePayload) -> dict:
     }
 
 
+# ── MCP (Model Context Protocol) ────────────────────────────────
+
+
+@dashboard_app.get("/api/mcp/servers")
+async def list_mcp_servers() -> list[dict]:
+    """List configured MCP servers and their connection status."""
+    if _mcp_manager is None:
+        return []
+    return _mcp_manager.list_servers()
+
+
+# ── Approval gate (human-in-the-loop) ──────────────────────────
+
+
+class ApprovalPayload(BaseModel):
+    request_id: str
+    approved: bool
+    reason: str = ""
+
+
+class ApprovalModePayload(BaseModel):
+    mode: str
+
+
+@dashboard_app.get("/api/approval/pending")
+async def approval_pending() -> list[dict]:
+    if _approval_gate is None:
+        return []
+    return _approval_gate.pending_requests()
+
+
+@dashboard_app.post("/api/approval/respond")
+async def approval_respond(payload: ApprovalPayload) -> dict:
+    if _approval_gate is None:
+        return {"ok": False, "error": "Approval gate not configured"}
+    ok = await _approval_gate.respond(payload.request_id, payload.approved, payload.reason)
+    return {"ok": ok}
+
+
+@dashboard_app.get("/api/approval/mode")
+async def get_approval_mode() -> dict:
+    if _approval_gate is None:
+        return {"mode": "auto"}
+    return {"mode": _approval_gate.mode.value}
+
+
+@dashboard_app.post("/api/approval/mode")
+async def set_approval_mode(payload: ApprovalModePayload) -> dict:
+    if _approval_gate is None:
+        return {"ok": False, "error": "Approval gate not configured"}
+    from agos.approval.gate import ApprovalMode
+    try:
+        _approval_gate.set_mode(ApprovalMode(payload.mode))
+        return {"ok": True, "mode": payload.mode}
+    except ValueError:
+        return {"ok": False, "error": f"Invalid mode: {payload.mode}"}
+
+
 # ── Evolution state + community sharing ──────────────────────────
 
 @dashboard_app.get("/api/evolution/state")
@@ -167,6 +274,96 @@ async def evolution_state_endpoint() -> dict:
         "strategies_applied": [s.model_dump() for s in d.strategies_applied],
         "discovered_patterns": [p.model_dump() for p in d.discovered_patterns],
         "parameters": d.parameters,
+    }
+
+
+@dashboard_app.get("/api/evolution/meta")
+async def meta_evolution_endpoint() -> dict:
+    """Per-component evolution status from MetaEvolver."""
+    if _meta_evolver is None:
+        return {"available": False}
+    genomes = []
+    for g in _meta_evolver.all_genomes():
+        params = []
+        for p in g.params:
+            params.append({
+                "name": p.name,
+                "current": p.current,
+                "default": p.default,
+                "min": p.min_val,
+                "max": p.max_val,
+                "type": p.param_type,
+                "description": p.description,
+            })
+        genomes.append({
+            "component": g.component,
+            "layer": g.layer,
+            "fitness": round(g.fitness_score, 3),
+            "mutations_applied": g.mutations_applied,
+            "last_evaluated": g.last_evaluated,
+            "params": params,
+        })
+    recent_mutations = [
+        {
+            "component": m.component,
+            "param": m.param_name,
+            "old": m.old_value,
+            "new": m.new_value,
+            "reason": m.reason,
+            "applied": m.applied,
+            "timestamp": m.timestamp,
+        }
+        for m in _meta_evolver.mutations[-20:]
+    ]
+    recent_signals = [
+        {
+            "component": s.component,
+            "metric": s.metric,
+            "value": round(s.value, 3),
+            "timestamp": s.timestamp,
+        }
+        for s in _meta_evolver.fitness.recent_signals(30)
+    ]
+    return {
+        "available": True,
+        "genomes": genomes,
+        "recent_mutations": recent_mutations,
+        "recent_signals": recent_signals,
+    }
+
+
+@dashboard_app.get("/api/evolution/code")
+async def evolved_code_endpoint() -> dict:
+    """List all evolved code modules written by the evolution engine."""
+    from agos.evolution.codegen import EVOLVED_DIR
+    files = []
+    if EVOLVED_DIR.exists():
+        for f in sorted(EVOLVED_DIR.glob("*.py")):
+            if f.name.startswith("_"):
+                continue
+            try:
+                content = f.read_text(encoding="utf-8")
+                lines = content.splitlines()
+                summary = ""
+                for line in lines[1:10]:
+                    stripped = line.strip().strip('"').strip("'")
+                    if stripped and not stripped.startswith("from") and not stripped.startswith("import"):
+                        summary = stripped
+                        break
+                files.append({
+                    "name": f.stem,
+                    "file": str(f),
+                    "size_bytes": f.stat().st_size,
+                    "lines": len(lines),
+                    "summary": summary[:120],
+                    "modified": f.stat().st_mtime,
+                })
+            except Exception:
+                pass
+    return {
+        "count": len(files),
+        "evolved_dir": str(EVOLVED_DIR),
+        "files": files,
     }
 
 
@@ -333,6 +530,176 @@ async def dependency_health() -> list[dict]:
     return deps
 
 
+# ── User Agent Management — install, start, stop, monitor ────────
+
+
+class SetupPayload(BaseModel):
+    name: str
+    github_url: str = ""
+
+
+@dashboard_app.post("/api/agents/setup")
+async def setup_agent(payload: SetupPayload) -> dict:
+    """One command to rule them all: 'set up openclaw on my system'.
+
+    The OS discovers the agent, installs deps, and starts it.
+    Just give a name (for bundled agents) or a GitHub URL.
+    """
+    if _agent_registry is None:
+        return {"ok": False, "error": "Agent registry not available"}
+    try:
+        agent = await _agent_registry.setup(payload.name, github_url=payload.github_url)
+        ok = agent.status.value in ("running", "installed")
+        return {
+            "ok": ok,
+            "agent_id": agent.id,
+            "name": agent.name,
+            "status": agent.status.value,
+            "error": agent.install_error if not ok else "",
+        }
+    except ValueError as e:
+        return {"ok": False, "error": str(e)}
+
+
+@dashboard_app.get("/api/agents/registry")
+async def list_user_agents() -> dict:
+    """List all user agents (available, installed, running)."""
+    if _agent_registry is None:
+        return {"agents": [], "count": 0}
+    agents = _agent_registry.list_agents()
+    return {"agents": agents, "count": len(agents)}
+
+
+@dashboard_app.post("/api/agents/install/{agent_id}")
+async def install_agent(agent_id: str) -> dict:
+    """Install a discovered agent (install its dependencies)."""
+    if _agent_registry is None:
+        return {"ok": False, "error": "Agent registry not available"}
+    try:
+        agent = await _agent_registry.install(agent_id)
+        return {"ok": True, "agent_id": agent.id, "name": agent.name, "status": agent.status.value}
+    except ValueError as e:
+        return {"ok": False, "error": str(e)}
+
+
+class InstallFromGitHubPayload(BaseModel):
+    url: str
+    name: str = ""
+
+
+@dashboard_app.post("/api/agents/install-from-github")
+async def install_agent_from_github(payload: InstallFromGitHubPayload) -> dict:
+    """Install an agent from a GitHub repo URL."""
+    if _agent_registry is None:
+        return {"ok": False, "error": "Agent registry not available"}
+    try:
+        agent = await _agent_registry.install_from_github(
+            payload.url, name=payload.name or None
+        )
+        return {
+            "ok": agent.status.value != "error",
+            "agent_id": agent.id,
+            "name": agent.name,
+            "status": agent.status.value,
+            "error": agent.install_error,
+        }
+    except Exception as e:
+        return {"ok": False, "error": str(e)[:300]}
+
+
+@dashboard_app.post("/api/agents/{agent_id}/start")
+async def start_agent(agent_id: str) -> dict:
+    """Start a user-installed agent."""
+    if _agent_registry is None:
+        return {"ok": False, "error": "Agent registry not available"}
+    try:
+        agent = await _agent_registry.start(agent_id)
+        return {
+            "ok": True,
+            "agent_id": agent.id,
+            "name": agent.name,
+            "status": agent.status.value,
+            "process_pid": agent.process_pid,
+        }
+    except ValueError as e:
+        return {"ok": False, "error": str(e)}
+
+
+@dashboard_app.post("/api/agents/{agent_id}/stop")
+async def stop_agent(agent_id: str) -> dict:
+    """Stop a running agent."""
+    if _agent_registry is None:
+        return {"ok": False, "error": "Agent registry not available"}
+    try:
+        agent = await _agent_registry.stop(agent_id)
+        return {"ok": True, "agent_id": agent.id, "name": agent.name, "status": agent.status.value}
+    except ValueError as e:
+        return {"ok": False, "error": str(e)}
+
+
+@dashboard_app.delete("/api/agents/{agent_id}")
+async def uninstall_agent(agent_id: str) -> dict:
+    """Uninstall an agent."""
+    if _agent_registry is None:
+        return {"ok": False, "error": "Agent registry not available"}
+    try:
+        await _agent_registry.uninstall(agent_id)
+        return {"ok": True, "agent_id": agent_id}
+    except ValueError as e:
+        return {"ok": False, "error": str(e)}
+
+
+@dashboard_app.get("/api/agents/{agent_id}/output")
+async def agent_output(agent_id: str, lines: int = 50) -> dict:
+    """Get stdout/stderr from a running agent."""
+    if _agent_registry is None or _process_manager is None:
+        return {"stdout": [], "stderr": []}
+    agent = _agent_registry.get_agent(agent_id)
+    if not agent or not agent.process_pid:
+        return {"stdout": [], "stderr": []}
+    return _process_manager.get_output(agent.process_pid, lines=lines)
+
+
+class QuotaPayload(BaseModel):
+    memory_limit_mb: float | None = None
+    token_limit: int | None = None
+    max_restarts: int | None = None
+
+
+@dashboard_app.post("/api/agents/{agent_id}/quota")
+async def set_agent_quota(agent_id: str, payload: QuotaPayload) -> dict:
+    """Update resource quotas for an agent."""
+    if _agent_registry is None:
+        return {"ok": False, "error": "Agent registry not available"}
+    try:
+        agent = await _agent_registry.set_quota(
+            agent_id,
+            memory_limit_mb=payload.memory_limit_mb,
+            token_limit=payload.token_limit,
+            max_restarts=payload.max_restarts,
+        )
+        return {
+            "ok": True,
+            "agent_id": agent.id,
+            "memory_limit_mb": agent.memory_limit_mb,
+            "token_limit": agent.token_limit,
+            "max_restarts": agent.max_restarts,
+        }
+    except ValueError as e:
+        return {"ok": False, "error": str(e)}
+
+
+# ── Low-level process table (system internals) ──────────────────
+
+@dashboard_app.get("/api/processes")
+async def list_processes() -> dict:
+    """Low-level OS process table (system + user processes)."""
+    if _process_manager is None:
+        return {"processes": [], "count": 0}
+    procs = _process_manager.list_processes()
+    return {"processes": procs, "count": len(procs)}
+
+
 # ── WebSocket — live event stream ────────────────────────────────
 
 @dashboard_app.websocket("/ws/events")
@@ -454,9 +821,31 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 /* ── Badges ── */
 .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
 .badge-running { background: rgba(67,233,123,0.12); color: var(--green); }
-.badge-completed { background: rgba(107,122,144,0.15); color: var(--text2); }
-.badge-ready { background: rgba(79,172,254,0.12); color: var(--blue); }
-.badge-error { background: rgba(248,81,73,0.12); color: var(--red); }
+.badge-completed, .badge-stopped { background: rgba(107,122,144,0.15); color: var(--text2); }
+.badge-ready, .badge-installed { background: rgba(79,172,254,0.12); color: var(--blue); }
+.badge-available { background: rgba(210,168,255,0.12); color: var(--purple, #d2a8ff); }
+.badge-error, .badge-crashed { background: rgba(248,81,73,0.12); color: var(--red); }
+.badge-installing { background: rgba(255,200,56,0.12); color: var(--yellow, #e3b341); }
+.rt-badge { display:inline-block; padding:2px 8px; border-radius:8px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+.rt-nodejs { background:rgba(67,233,123,0.1); color:#43e97b; }
+.rt-python { background:rgba(79,172,254,0.1); color:#4facfe; }
+.rt-go { background:rgba(0,173,216,0.1); color:#00add8; }
+.rt-rust { background:rgba(222,165,132,0.1); color:#dea584; }
+.rt-unknown { background:rgba(107,122,144,0.1); color:var(--text2); }
+.ag-btn { padding:3px 10px; border:1px solid var(--border); border-radius:6px; background:var(--bg2); color:var(--text); font-size:11px; cursor:pointer; transition:all 0.15s; }
+.ag-btn:hover { background:var(--bg3, #30363d); }
+.ag-btn.ag-start { border-color:var(--green); color:var(--green); }
+.ag-btn.ag-start:hover { background:rgba(67,233,123,0.1); }
+.ag-btn.ag-stop { border-color:var(--red); color:var(--red); }
+.ag-btn.ag-stop:hover { background:rgba(248,81,73,0.1); }
+.os-shell { display:flex; align-items:flex-start; gap:8px; margin:12px 20px; padding:10px 14px; background:var(--bg2); border:1px solid var(--border); border-radius:10px; flex-wrap:wrap; font-family:'SF Mono',Consolas,monospace; }
+.shell-prompt { color:var(--green); font-weight:700; font-size:14px; padding:6px 0; white-space:nowrap; }
+.shell-input { flex:1; min-width:200px; background:transparent; border:none; color:var(--text); font-size:14px; font-family:inherit; outline:none; padding:6px 0; }
+.shell-input::placeholder { color:var(--text2); opacity:0.5; }
+.shell-run { background:var(--green); color:var(--bg); border:none; border-radius:6px; width:32px; height:32px; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.shell-run:hover { opacity:0.85; }
+.shell-output { width:100%; margin-top:4px; font-size:13px; color:var(--text2); white-space:pre-wrap; line-height:1.5; max-height:200px; overflow-y:auto; display:none; }
+.shell-output.active { display:block; }
 
 /* ── Feed ── */
 .feed { max-height: 400px; overflow-y: auto; }
@@ -511,6 +900,15 @@ tr:hover td { background: rgba(255,255,255,0.02); }
     </div>
 </header>
 
+<!-- ═══ OS SHELL — talk to AGOS ═══ -->
+<div class="os-shell">
+    <div class="shell-prompt">agos&gt;</div>
+    <input type="text" id="os-cmd" class="shell-input" placeholder="set up openclaw on my system..." autocomplete="off"
+           onkeydown="if(event.key==='Enter')runCommand()">
+    <button class="shell-run" onclick="runCommand()">&#9654;</button>
+    <div class="shell-output" id="os-output"></div>
+</div>
+
 <div class="widget-grid" id="widget-grid">
 
 <!-- ═══ SYSTEM VITALS ═══ -->
@@ -562,7 +960,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
     </div>
 </div>
 
-<!-- ═══ AGENTS ═══ -->
+<!-- ═══ AGENTS (User-Installed) ═══ -->
 <div class="widget size-2" id="w-agents" data-wid="agents">
     <div class="widget-header" draggable="true">
         <div class="widget-title"><span class="grip">&#x2801;&#x2801;</span> Agents</div>
@@ -574,8 +972,8 @@ tr:hover td { background: rgba(255,255,255,0.02); }
         </div>
     </div>
     <div class="widget-body">
-        <table><thead><tr><th>ID</th><th>Name</th><th>Role</th><th>State</th><th>Tokens</th><th>Turns</th></tr></thead><tbody id="ag-table"></tbody></table>
-        <div class="empty" id="ag-empty">No agents spawned yet</div>
+        <table><thead><tr><th>Name</th><th>Runtime</th><th>Status</th><th>Memory</th><th>Tokens</th><th>Actions</th></tr></thead><tbody id="ag-table"></tbody></table>
+        <div class="empty" id="ag-empty">No agents discovered yet</div>
     </div>
 </div>
 
@@ -706,6 +1104,33 @@ tr:hover td { background: rgba(255,255,255,0.02); }
     </div>
 </div>
 
+<!-- ═══ META-EVOLUTION ═══ -->
+<div class="widget size-2" id="w-meta" data-wid="meta">
+    <div class="widget-header" draggable="true">
+        <div class="widget-title"><span class="grip">&#x2801;&#x2801;</span> Meta-Evolution <span style="font-size:10px;color:var(--cyan);margin-left:6px">ALMA</span></div>
+        <div class="widget-controls">
+            <button class="sz-btn" data-sz="1" onclick="setSize('meta',1)">1</button>
+            <button class="sz-btn active" data-sz="2" onclick="setSize('meta',2)">2</button>
+            <button class="sz-btn" data-sz="3" onclick="setSize('meta',3)">3</button>
+            <button class="sz-btn" data-sz="4" onclick="setSize('meta',4)">4</button>
+        </div>
+    </div>
+    <div class="widget-body">
+        <div class="mini-stats">
+            <div class="mini-stat"><div class="mini-val" style="color:var(--cyan)" id="meta-genomes">0</div><div class="mini-lbl">Genomes</div></div>
+            <div class="mini-stat"><div class="mini-val" style="color:var(--green)" id="meta-mutations">0</div><div class="mini-lbl">Mutations</div></div>
+            <div class="mini-stat"><div class="mini-val" style="color:var(--yellow)" id="meta-signals">0</div><div class="mini-lbl">Signals</div></div>
+            <div class="mini-stat"><div class="mini-val" style="color:var(--red)" id="meta-underperf">0</div><div class="mini-lbl">Low Fitness</div></div>
+        </div>
+        <div class="section-label">Component Genomes</div>
+        <div id="meta-genome-list" style="max-height:300px;overflow-y:auto"></div>
+        <div class="empty" id="meta-genome-empty" style="padding:12px">Waiting for meta-evolution data...</div>
+        <div class="section-label" style="margin-top:14px">Recent Mutations</div>
+        <div id="meta-mutation-list" style="max-height:180px;overflow-y:auto"></div>
+        <div class="empty" id="meta-mut-empty" style="padding:12px">No mutations yet</div>
+    </div>
+</div>
+
 </div><!-- /widget-grid -->
 
 <!-- ═══ SETTINGS MODAL ═══ -->
@@ -734,6 +1159,20 @@ tr:hover td { background: rgba(255,255,255,0.02); }
                     <button onclick="saveGHToken()" style="background:linear-gradient(135deg,var(--purple),var(--blue));border:none;border-radius:8px;padding:0 16px;color:#fff;font-weight:700;font-size:12px;cursor:pointer">Save</button>
                 </div>
                 <div id="gh-token-status" style="margin-top:8px;font-size:12px;color:var(--text2)"></div>
+                <!-- Two ways to set token -->
+                <div style="margin-top:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--text2)">
+                    <div style="font-weight:600;color:var(--text);margin-bottom:4px">Two ways to set your token:</div>
+                    <div style="margin-bottom:3px"><span style="color:var(--cyan)">1.</span> Here in Settings — stored in memory, lost on container restart</div>
+                    <div><span style="color:var(--cyan)">2.</span> Environment variable <code style="color:var(--cyan);background:var(--bg3);padding:1px 5px;border-radius:3px;font-size:10px">AGOS_GITHUB_TOKEN=ghp_xxx</code> in docker-compose.yml — persists across restarts</div>
+                </div>
+                <!-- Security notice -->
+                <div style="margin-top:10px;padding:10px 12px;background:rgba(67,233,123,0.05);border:1px solid rgba(67,233,123,0.15);border-radius:8px;font-size:11px;color:var(--text2)">
+                    <div style="font-weight:600;color:var(--green);margin-bottom:4px">&#x1F512; Your repo is safe</div>
+                    <div style="line-height:1.5">Your token only authenticates <b style="color:var(--text)">your own</b> GitHub account. Other AGOS instances use <b style="color:var(--text)">their own</b> tokens. The contribution flow is:<br>
+                    <span style="color:var(--cyan)">Their instance</span> &#x2192; forks your repo &#x2192; commits to <b style="color:var(--text)">their fork</b> &#x2192; opens a PR &#x2192; <b style="color:var(--green)">you review &amp; merge</b><br>
+                    No one can push directly to your repo. You are always the gatekeeper.</div>
+                    <div style="margin-top:6px;color:var(--text2)">Classic PAT scope needed: <code style="color:var(--purple);background:var(--bg3);padding:1px 5px;border-radius:3px;font-size:10px">repo</code> (that's all)</div>
+                </div>
             </div>
 
             <!-- Federated Learning Toggle -->
@@ -777,8 +1216,8 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 /* ═══════════════════════════════════════════════════════════════════
    LAYOUT ENGINE — drag-to-swap, resize, persist
    ═══════════════════════════════════════════════════════════════════ */
-const WIDGETS = ['vitals','agents','events','codebase','audit','deps','evolution'];
-const DEFAULT_SIZES = {vitals:2, agents:2, events:2, codebase:2, audit:2, deps:2, evolution:2};
+const WIDGETS = ['vitals','agents','events','codebase','audit','deps','evolution','meta'];
+const DEFAULT_SIZES = {vitals:2, agents:2, events:2, codebase:2, audit:2, deps:2, evolution:2, meta:2};
 let layout = { order: [...WIDGETS], sizes: {...DEFAULT_SIZES} };
 
 function loadLayout() {
@@ -896,6 +1335,58 @@ const HCIRC = 2 * Math.PI * 60;
 async function fetchJSON(url) {
     try { return await (await fetch(url)).json(); } catch { return null; }
 }
+async function agentAction(id, action) {
+    // Shortcut: route through the OS shell for consistency
+    const nameMap = {};
+    const reg = await fetchJSON('/api/agents/registry');
+    if (reg) reg.agents.forEach(a => nameMap[a.id] = a.name);
+    const name = nameMap[id] || id;
+    if (action === 'install') await runCmd('set up ' + name);
+    else if (action === 'start') await runCmd('start ' + name);
+    else if (action === 'stop') await runCmd('stop ' + name);
+}
+async function runCommand() {
+    const input = document.getElementById('os-cmd');
+    const cmd = input.value.trim();
+    if (!cmd) return;
+    input.value = '';
+    await runCmd(cmd);
+}
+async function runCmd(cmd) {
+    const out = document.getElementById('os-output');
+    out.classList.add('active');
+    out.textContent = 'agos> ' + cmd + '\nThinking...';
+    let dots = 0;
+    const ticker = setInterval(() => {
+        dots++;
+        const secs = dots * 2;
+        out.textContent = 'agos> ' + cmd + '\nThinking' + '.'.repeat((dots % 3) + 1) + ' (' + secs + 's)';
+    }, 2000);
+    try {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 300000);
+        const res = await fetch('/api/os/command', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({command: cmd}),
+            signal: ctrl.signal,
+        });
+        clearTimeout(timer);
+        const data = await res.json();
+        const icon = data.ok ? '\u2713' : '\u2717';
+        let msg = data.message || JSON.stringify(data);
+        if (data.data && data.data.turns) msg += '\n\n[' + data.data.turns + ' turns, ' + (data.data.tokens_used||0).toLocaleString() + ' tokens]';
+        out.textContent = 'agos> ' + cmd + '\n' + icon + ' ' + msg;
+    } catch(e) {
+        if (e.name === 'AbortError') {
+            out.textContent = 'agos> ' + cmd + '\nTimed out after 5 minutes. The OS is still working — check Events tab.';
+        } else {
+            out.textContent = 'agos> ' + cmd + '\nError: ' + e.message;
+        }
+    } finally {
+        clearInterval(ticker);
+    }
+}
 function setGauge(id, pct) {
     const off = CIRC * (1 - pct / 100);
     const el = document.getElementById(id);
@@ -909,12 +1400,13 @@ function esc(s) { const d = document.createElement('div'); d.textContent = s||''
 
 /* ── Vitals + Status + Agents (every 2s) ── */
 async function refreshFast() {
-    const [status, vitals, agents] = await Promise.all([
-        fetchJSON('/api/status'), fetchJSON('/api/vitals'), fetchJSON('/api/agents')
+    const [status, vitals, agentReg] = await Promise.all([
+        fetchJSON('/api/status'), fetchJSON('/api/vitals'), fetchJSON('/api/agents/registry')
     ]);
     if (status) {
-        document.getElementById('v-agents').textContent = status.agents_running;
-        document.getElementById('v-agents-sub').textContent = status.agents_total + ' total';
+        const agRunning = agentReg ? agentReg.agents.filter(a => a.status === 'running').length : 0;
+        document.getElementById('v-agents').textContent = agRunning;
+        document.getElementById('v-agents-sub').textContent = (agentReg ? agentReg.count : 0) + ' total';
         document.getElementById('v-events').textContent = eventCount;
         document.getElementById('v-audit').textContent = status.audit_entries;
         document.getElementById('v-uptime').textContent = fmtUptime(status.uptime_s || 0);
@@ -933,19 +1425,30 @@ async function refreshFast() {
         document.getElementById('v-load').textContent = (vitals.load_avg||[]).join('  ');
         document.getElementById('v-procs').textContent = vitals.processes;
     }
-    // Agents table
+    // Agents table (user-installed agents from registry)
     const agBody = document.getElementById('ag-table');
     const agEmpty = document.getElementById('ag-empty');
-    if (agents && agents.length) {
+    const agents = agentReg ? agentReg.agents : [];
+    if (agents.length) {
         agEmpty.style.display = 'none';
-        agBody.innerHTML = agents.slice(-20).reverse().map(a => '<tr>' +
-            '<td style="font-family:monospace;font-size:11px;color:var(--text2)">' + (a.id||'').slice(0,10) + '</td>' +
-            '<td style="font-weight:600">' + esc(a.name) + '</td>' +
-            '<td style="color:var(--text2)">' + esc(a.role) + '</td>' +
-            '<td><span class="badge badge-' + a.state + '">' + a.state + '</span></td>' +
-            '<td style="font-family:monospace">' + (a.tokens_used||0).toLocaleString() + '</td>' +
-            '<td style="font-family:monospace">' + (a.turns||0) + '</td>' +
-        '</tr>').join('');
+        agBody.innerHTML = agents.map(a => {
+            const st = a.status;
+            const mem = a.memory_mb !== undefined ? a.memory_mb + '/' + a.memory_limit_mb + ' MB' : a.memory_limit_mb + ' MB limit';
+            const tok = a.token_count !== undefined ? a.token_count.toLocaleString() : '-';
+            let actions = '';
+            if (st === 'available') actions = '<button class="ag-btn" onclick="agentAction(\'' + a.id + '\',\'install\')">Install</button>';
+            else if (st === 'installed' || st === 'stopped' || st === 'crashed') actions = '<button class="ag-btn ag-start" onclick="agentAction(\'' + a.id + '\',\'start\')">Start</button>';
+            else if (st === 'running') actions = '<button class="ag-btn ag-stop" onclick="agentAction(\'' + a.id + '\',\'stop\')">Stop</button>';
+            else actions = '<span style="color:var(--text2)">' + st + '</span>';
+            return '<tr>' +
+                '<td style="font-weight:600">' + esc(a.display_name || a.name) + '</td>' +
+                '<td><span class="rt-badge rt-' + a.runtime + '">' + a.runtime + '</span></td>' +
+                '<td><span class="badge badge-' + st + '">' + st + '</span></td>' +
+                '<td style="font-family:monospace;font-size:11px">' + mem + '</td>' +
+                '<td style="font-family:monospace;font-size:11px">' + tok + '</td>' +
+                '<td>' + actions + '</td>' +
+            '</tr>';
+        }).join('');
     } else { if (agEmpty) agEmpty.style.display = ''; if (agBody) agBody.innerHTML = ''; }
 }
 
@@ -1212,17 +1715,81 @@ async function shareLearnings() {
     }
 }
 
+/* ── Meta-Evolution (every 10s) ── */
+async function refreshMeta() {
+    const data = await fetchJSON('/api/evolution/meta');
+    if (!data || !data.available) return;
+    const genomes = data.genomes || [];
+    const mutations = data.recent_mutations || [];
+    const signals = data.recent_signals || [];
+
+    document.getElementById('meta-genomes').textContent = genomes.length;
+    document.getElementById('meta-mutations').textContent = mutations.filter(m => m.applied).length;
+    document.getElementById('meta-signals').textContent = signals.length;
+    document.getElementById('meta-underperf').textContent = genomes.filter(g => g.fitness < 0.6).length;
+
+    const gList = document.getElementById('meta-genome-list');
+    const gEmpty = document.getElementById('meta-genome-empty');
+    if (genomes.length) {
+        gEmpty.style.display = 'none';
+        // Group by layer
+        const layers = {};
+        genomes.forEach(g => { if (!layers[g.layer]) layers[g.layer] = []; layers[g.layer].push(g); });
+        let html = '';
+        Object.entries(layers).forEach(([layer, gs]) => {
+            html += '<div style="padding:4px 8px;margin-top:6px;font-size:10px;text-transform:uppercase;color:var(--text2);letter-spacing:1px;font-weight:600">' + esc(layer) + '</div>';
+            gs.forEach(g => {
+                const fitnessColor = g.fitness >= 0.7 ? 'var(--green)' : g.fitness >= 0.5 ? 'var(--yellow)' : 'var(--red)';
+                const barWidth = Math.max(5, g.fitness * 100);
+                const mutated = g.params.filter(p => p.current !== null && p.current !== p.default).length;
+                html += '<div style="padding:6px 8px;border-bottom:1px solid rgba(35,45,63,0.4)">';
+                html += '<div style="display:flex;justify-content:space-between;align-items:center">';
+                html += '<span style="color:var(--cyan);font-size:12px;font-weight:600;font-family:monospace">' + esc(g.component) + '</span>';
+                html += '<div style="display:flex;align-items:center;gap:8px">';
+                if (mutated > 0) html += '<span style="font-size:10px;color:var(--purple)">' + mutated + ' evolved</span>';
+                html += '<span style="font-size:12px;font-weight:700;color:' + fitnessColor + '">' + (g.fitness * 100).toFixed(0) + '%</span>';
+                html += '</div></div>';
+                html += '<div style="margin-top:4px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden"><div style="height:100%;width:' + barWidth + '%;background:' + fitnessColor + ';border-radius:2px;transition:width 1s ease"></div></div>';
+                // Show mutated params
+                if (mutated > 0) {
+                    html += '<div style="margin-top:4px;padding-left:8px">';
+                    g.params.filter(p => p.current !== null && p.current !== p.default).forEach(p => {
+                        html += '<div style="font-size:10px;color:var(--text2);font-family:monospace">' + esc(p.name) + ': <span style="color:var(--text2);text-decoration:line-through">' + esc(String(p.default)) + '</span> &rarr; <span style="color:var(--green)">' + esc(String(p.current)) + '</span></div>';
+                    });
+                    html += '</div>';
+                }
+                html += '</div>';
+            });
+        });
+        gList.innerHTML = html;
+    } else { gEmpty.style.display = ''; gList.innerHTML = ''; }
+
+    const mList = document.getElementById('meta-mutation-list');
+    const mEmpty = document.getElementById('meta-mut-empty');
+    if (mutations.length) {
+        mEmpty.style.display = 'none';
+        mList.innerHTML = mutations.slice().reverse().map(m =>
+            '<div style="padding:5px 8px;border-bottom:1px solid rgba(35,45,63,0.4);font-size:11px">' +
+            '<div style="display:flex;justify-content:space-between"><span style="color:var(--cyan);font-family:monospace">' + esc(m.component) + '.' + esc(m.param) + '</span>' +
+            '<span style="color:' + (m.applied ? 'var(--green)' : 'var(--red)') + '">' + (m.applied ? '&#10003;' : '&#10007;') + '</span></div>' +
+            '<div style="color:var(--text2);font-size:10px">' + esc(String(m.old)) + ' &rarr; <span style="color:var(--green)">' + esc(String(m.new)) + '</span> &middot; ' + esc(m.reason.slice(0,60)) + '</div></div>'
+        ).join('');
+    } else { mEmpty.style.display = ''; mList.innerHTML = ''; }
+}
+
 /* ── Boot ── */
 refreshFast();
 refreshCodebase();
 refreshAudit();
 refreshDeps();
 refreshEvolution();
+refreshMeta();
 setInterval(refreshFast, 2000);
 setInterval(refreshCodebase, 30000);
 setInterval(refreshAudit, 10000);
 setInterval(refreshDeps, 60000);
 setInterval(refreshEvolution, 10000);
+setInterval(refreshMeta, 10000);
 </script>
 </body>
 </html>"""

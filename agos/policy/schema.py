@@ -39,6 +39,12 @@ class AgentPolicy(BaseModel):
     # Rate limiting
     max_tool_calls_per_minute: int = 60
 
+    # Sandbox isolation
+    sandbox_level: str = "none"  # "none", "process", "strict"
+    sandbox_memory_limit_mb: int = 512
+    sandbox_cpu_time_limit_s: int = 60
+    sandbox_allowed_paths: list[str] = Field(default_factory=list)
+
     def can_use_tool(self, tool_name: str) -> bool:
         """Check if a tool is permitted under this policy."""
         if tool_name in self.denied_tools:

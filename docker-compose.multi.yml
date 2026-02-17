@@ -1,0 +1,169 @@
+# Multi-instance AGenticOS — 5 nodes with role-specialized evolution
+# Usage: docker compose -f docker-compose.multi.yml up -d --build
+#
+# Each node specializes in evolving a different OS layer:
+#   Node 1 (8421): Knowledge — RAG, memory, retrieval, semantic search
+#   Node 2 (8422): Intent — classification, personas, proactive detection
+#   Node 3 (8423): Orchestration — A2A, coordination, scheduling, federation
+#   Node 4 (8424): Policy — OWASP security, governance, OpenID identity
+#   Node 5 (8425): General — cross-layer, meta-learning, ALMA self-improvement
+#
+# Dashboards: http://localhost:8421 through http://localhost:8425
+# All nodes auto-discover each other via A2A protocol on the agos-mesh network.
+
+services:
+  agos-node-1:
+    build: .
+    container_name: agos-node-1
+    ports:
+      - "8421:8420"
+    networks:
+      - agos-mesh
+    environment:
+      - AGOS_ANTHROPIC_API_KEY=${AGOS_ANTHROPIC_API_KEY:-}
+      - AGOS_GITHUB_TOKEN=${AGOS_GITHUB_TOKEN:-}
+      - AGOS_AUTO_SHARE_EVERY=${AGOS_AUTO_SHARE_EVERY:-3}
+      - AGOS_NODE_ROLE=knowledge
+      - AGOS_EVOLUTION_INITIAL_DELAY=0
+      - AGOS_A2A_ENABLED=true
+      - AGOS_A2A_REMOTE_AGENTS=http://agos-node-2:8420,http://agos-node-3:8420,http://agos-node-4:8420,http://agos-node-5:8420
+      - AGOS_DASHBOARD_HOST=0.0.0.0
+      - AGOS_DASHBOARD_PORT=8420
+      - AGOS_LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8420/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    mem_limit: 2g
+    volumes:
+      - agos-node1-data:/app/.agos
+    restart: unless-stopped
+
+  agos-node-2:
+    build: .
+    container_name: agos-node-2
+    ports:
+      - "8422:8420"
+    networks:
+      - agos-mesh
+    environment:
+      - AGOS_ANTHROPIC_API_KEY=${AGOS_ANTHROPIC_API_KEY:-}
+      - AGOS_GITHUB_TOKEN=${AGOS_GITHUB_TOKEN:-}
+      - AGOS_AUTO_SHARE_EVERY=${AGOS_AUTO_SHARE_EVERY:-3}
+      - AGOS_NODE_ROLE=intent
+      - AGOS_EVOLUTION_INITIAL_DELAY=60
+      - AGOS_A2A_ENABLED=true
+      - AGOS_A2A_REMOTE_AGENTS=http://agos-node-1:8420,http://agos-node-3:8420,http://agos-node-4:8420,http://agos-node-5:8420
+      - AGOS_DASHBOARD_HOST=0.0.0.0
+      - AGOS_DASHBOARD_PORT=8420
+      - AGOS_LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8420/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    mem_limit: 2g
+    volumes:
+      - agos-node2-data:/app/.agos
+    restart: unless-stopped
+
+  agos-node-3:
+    build: .
+    container_name: agos-node-3
+    ports:
+      - "8423:8420"
+    networks:
+      - agos-mesh
+    environment:
+      - AGOS_ANTHROPIC_API_KEY=${AGOS_ANTHROPIC_API_KEY:-}
+      - AGOS_GITHUB_TOKEN=${AGOS_GITHUB_TOKEN:-}
+      - AGOS_AUTO_SHARE_EVERY=${AGOS_AUTO_SHARE_EVERY:-3}
+      - AGOS_NODE_ROLE=orchestration
+      - AGOS_EVOLUTION_INITIAL_DELAY=120
+      - AGOS_A2A_ENABLED=true
+      - AGOS_A2A_REMOTE_AGENTS=http://agos-node-1:8420,http://agos-node-2:8420,http://agos-node-4:8420,http://agos-node-5:8420
+      - AGOS_DASHBOARD_HOST=0.0.0.0
+      - AGOS_DASHBOARD_PORT=8420
+      - AGOS_LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8420/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    mem_limit: 2g
+    volumes:
+      - agos-node3-data:/app/.agos
+    restart: unless-stopped
+
+  agos-node-4:
+    build: .
+    container_name: agos-node-4
+    ports:
+      - "8424:8420"
+    networks:
+      - agos-mesh
+    environment:
+      - AGOS_ANTHROPIC_API_KEY=${AGOS_ANTHROPIC_API_KEY:-}
+      - AGOS_GITHUB_TOKEN=${AGOS_GITHUB_TOKEN:-}
+      - AGOS_AUTO_SHARE_EVERY=${AGOS_AUTO_SHARE_EVERY:-3}
+      - AGOS_NODE_ROLE=policy
+      - AGOS_EVOLUTION_INITIAL_DELAY=180
+      - AGOS_A2A_ENABLED=true
+      - AGOS_A2A_REMOTE_AGENTS=http://agos-node-1:8420,http://agos-node-2:8420,http://agos-node-3:8420,http://agos-node-5:8420
+      - AGOS_DASHBOARD_HOST=0.0.0.0
+      - AGOS_DASHBOARD_PORT=8420
+      - AGOS_LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8420/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    mem_limit: 2g
+    volumes:
+      - agos-node4-data:/app/.agos
+    restart: unless-stopped
+
+  agos-node-5:
+    build: .
+    container_name: agos-node-5
+    ports:
+      - "8425:8420"
+    networks:
+      - agos-mesh
+    environment:
+      - AGOS_ANTHROPIC_API_KEY=${AGOS_ANTHROPIC_API_KEY:-}
+      - AGOS_GITHUB_TOKEN=${AGOS_GITHUB_TOKEN:-}
+      - AGOS_AUTO_SHARE_EVERY=${AGOS_AUTO_SHARE_EVERY:-3}
+      - AGOS_NODE_ROLE=general
+      - AGOS_EVOLUTION_INITIAL_DELAY=240
+      - AGOS_A2A_ENABLED=true
+      - AGOS_A2A_REMOTE_AGENTS=http://agos-node-1:8420,http://agos-node-2:8420,http://agos-node-3:8420,http://agos-node-4:8420
+      - AGOS_DASHBOARD_HOST=0.0.0.0
+      - AGOS_DASHBOARD_PORT=8420
+      - AGOS_LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8420/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    mem_limit: 2g
+    volumes:
+      - agos-node5-data:/app/.agos
+    restart: unless-stopped
+
+networks:
+  agos-mesh:
+    driver: bridge
+
+volumes:
+  agos-node1-data:
+  agos-node2-data:
+  agos-node3-data:
+  agos-node4-data:
+  agos-node5-data:

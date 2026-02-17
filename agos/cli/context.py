@@ -38,6 +38,7 @@ from agos.intent.proactive import (
     RepetitiveEditDetector, FailurePatternDetector,
     FrequentToolDetector, IdleProjectDetector,
 )
+from agos.mcp.client import MCPManager
 
 
 class AgosContext:
@@ -89,6 +90,13 @@ class AgosContext:
         self.ambient_manager.register(FileActivityWatcher())
         self.ambient_manager.register(DailyBriefingWatcher())
 
+        # MCP — Model Context Protocol
+        self.mcp_manager = MCPManager(
+            registry=self.tool_registry,
+            event_bus=self.event_bus,
+        )
+        self._mcp_initialized = False
+
         # Proactive engine
         self.proactive_engine = ProactiveEngine()
         self.proactive_engine.register_detector(RepetitiveEditDetector())
@@ -131,6 +139,18 @@ class AgosContext:
         if self.proactive_engine._loom is None:
             self.proactive_engine._loom = self.loom
             self.proactive_engine._event_bus = self.event_bus
+
+        # Auto-connect to configured MCP servers
+        if settings.mcp_auto_connect and not self._mcp_initialized:
+            from agos.mcp.config import load_mcp_configs
+            mcp_configs = await load_mcp_configs(settings.workspace_dir)
+            for mc in mcp_configs:
+                if mc.enabled:
+                    try:
+                        await self.mcp_manager.add_server(mc)
+                    except Exception:
+                        pass  # Log but don't fail startup
+            self._mcp_initialized = True
 
         if self.evolution_engine is None:
             self.evolution_engine = EvolutionEngine(

@@ -24,7 +24,7 @@ _SUBCOMMANDS = {
     "ps", "init", "status", "agent", "system", "ask", "recall", "timeline",
     "watch", "schedule", "triggers", "team",
     "audit", "policy", "dashboard", "evolve", "ambient", "proactive",
-    "update", "version",
+    "update", "version", "mcp",
     "--help", "-h", "--install-completion", "--show-completion",
 }
 
@@ -1008,6 +1008,98 @@ def version_cmd():
     """Show agos version."""
     from agos import __version__
     console.print(f"agos v{__version__}")
+
+
+@_app.command("mcp")
+def mcp(
+    list_servers: bool = typer.Option(False, "--list", "-l", help="List configured MCP servers"),
+    add: str = typer.Option("", "--add", "-a", help="Add MCP server (name:command:arg1,arg2)"),
+    remove: str = typer.Option("", "--remove", "-r", help="Remove MCP server by name"),
+    status: bool = typer.Option(False, "--status", help="Show live connection status"),
+):
+    """Manage MCP (Model Context Protocol) server connections.
+
+    MCP servers expose tools that AGOS agents can use. Add servers like
+    databases, file systems, or APIs and agents automatically get access.
+
+    Examples:
+        agos mcp --list
+        agos mcp --add sqlite:npx:-y,@modelcontextprotocol/server-sqlite
+        agos mcp --remove sqlite
+        agos mcp --status
+    """
+    from agos.cli.context import AgosContext, run_async
+    from agos.config import settings
+    from agos.mcp.client import MCPServerConfig
+    from agos.mcp.config import (
+        load_mcp_configs, add_mcp_config, remove_mcp_config,
+    )
+    from rich.table import Table
+
+    if add:
+        # Parse format: name:command:arg1,arg2
+        parts = add.split(":", 2)
+        if len(parts) < 2:
+            console.print("[red]Format: name:command:arg1,arg2[/red]")
+            raise SystemExit(1)
+        name = parts[0]
+        command = parts[1]
+        args = parts[2].split(",") if len(parts) > 2 else []
+
+        config = MCPServerConfig(name=name, command=command, args=args)
+        run_async(add_mcp_config(settings.workspace_dir, config))
+        console.print(f"[green]Added MCP server '{name}'[/green] ({command} {' '.join(args)})")
+        return
+
+    if remove:
+        run_async(remove_mcp_config(settings.workspace_dir, remove))
+        console.print(f"[dim]Removed MCP server '{remove}'[/dim]")
+        return
+
+    # List or status — show configured servers
+    configs = run_async(load_mcp_configs(settings.workspace_dir))
+
+    if not configs:
+        console.print("[dim]No MCP servers configured. Use --add to add one.[/dim]")
+        return
+
+    if status:
+        ctx = AgosContext.get()
+
+        async def _connect():
+            for config in configs:
+                if config.enabled:
+                    try:
+                        await ctx.mcp_manager.add_server(config)
+                    except Exception as e:
+                        console.print(f"[red]{config.name}:[/red] {e}")
+
+        with console.status("[bold cyan]connecting to MCP servers...", spinner="dots"):
+            run_async(_connect())
+
+        servers = ctx.mcp_manager.list_servers()
+        table = Table(title="MCP Servers (Live)")
+        table.add_column("Name", style="cyan")
+        table.add_column("Connected", style="green")
+        table.add_column("Tools", style="white")
+        for s in servers:
+            table.add_row(
+                s["name"],
+                "yes" if s["connected"] else "[red]no[/red]",
+                str(s["tool_count"]),
+            )
+        console.print(table)
+        return
+
+    # Default: list configured servers
+    table = Table(title="MCP Servers")
+    table.add_column("Name", style="cyan")
+    table.add_column("Command", style="white")
+    table.add_column("Args", style="dim")
+    table.add_column("Enabled", style="green")
+    for c in configs:
+        table.add_row(c.name, c.command, " ".join(c.args), "yes" if c.enabled else "[red]no[/red]")
+    console.print(table)
 
 
 def app(args: list[str] | None = None) -> None:

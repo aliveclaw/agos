@@ -33,3 +33,9 @@ Thumbs.db
 # Coverage
 htmlcov/
 .coverage
+
+# Claude Code settings (may contain API keys in permissions)
+.claude/
+
+# Runtime reports
+reports/

@@ -36,17 +36,75 @@ class Paper(BaseModel):
 
 # Topics the evolution engine searches for
 SEARCH_TOPICS = [
+    # Knowledge & Memory
     "agentic memory systems",
-    "multi-agent coordination LLM",
-    "LLM agent architecture",
-    "autonomous agent self-improvement",
-    "agent tool use planning",
     "knowledge graph reasoning agents",
-    "meta-learning agent memory",
-    "agent reflection self-evolution",
     "retrieval augmented generation agents",
+    # Intent & Intelligence
+    "LLM intent classification planning",
+    "agent persona role specialization",
+    "proactive AI anomaly detection",
+    # Orchestration & Coordination
+    "multi-agent coordination LLM",
     "LLM agent workflow orchestration",
+    "task scheduling distributed agents",
+    # Policy & Governance
+    "AI safety policy enforcement agents",
+    "LLM rate limiting access control",
+    "audit trail accountability AI systems",
+    # Experience & Observability
+    "agent observability distributed tracing",
+    "event driven architecture AI agents",
+    # Cross-cutting
+    "autonomous agent self-improvement",
+    "meta-learning agent architecture",
 ]
+
+# Industry-specific topics per node role (OWASP, OpenID, domain experts)
+INDUSTRY_TOPICS: dict[str, list[str]] = {
+    "knowledge": [
+        "RAG retrieval augmented generation optimization",
+        "vector database indexing large scale",
+        "episodic memory consolidation agents",
+        "semantic memory graph neural networks",
+    ],
+    "intent": [
+        "intent classification transformer architectures",
+        "conversational AI multi-turn planning",
+        "proactive agent anomaly detection systems",
+        "user intent disambiguation LLM",
+    ],
+    "orchestration": [
+        "agent-to-agent protocol interoperability",
+        "workflow orchestration autonomous agents",
+        "federated multi-agent task delegation",
+        "distributed agent consensus protocols",
+    ],
+    "policy": [
+        "OWASP LLM AI application security risks",
+        "prompt injection detection defense LLM",
+        "AI governance compliance frameworks",
+        "LLM red teaming adversarial robustness",
+        "AI agent audit trail accountability",
+        "OpenID AI agent identity authentication",
+    ],
+    "general": [
+        "meta-learning agent self-improvement ALMA",
+        "autonomous AI systems architecture design",
+        "decentralized AI governance protocols",
+        "OpenID foundation AI identity management",
+    ],
+}
+
+
+def get_topics_for_role(role: str) -> list[str]:
+    """Return search topics for a node role: specialized + shared general."""
+    role_specific = INDUSTRY_TOPICS.get(role, [])
+    shared = SEARCH_TOPICS[:4]  # always include top 4 general topics
+    if role == "general":
+        return SEARCH_TOPICS + INDUSTRY_TOPICS.get("general", [])
+    return role_specific + shared
+
 
 # Arxiv categories we care about
 CATEGORIES = ["cs.AI", "cs.MA", "cs.CL", "cs.SE", "cs.LG"]

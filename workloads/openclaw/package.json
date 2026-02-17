@@ -1,0 +1,9 @@
+{
+  "name": "openclaw",
+  "version": "1.0.0",
+  "description": "OpenClaw — AI personal assistant agent running on AGOS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
+}

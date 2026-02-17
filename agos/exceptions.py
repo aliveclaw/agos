@@ -39,3 +39,11 @@ class IntegrationError(AgosError):
 
 class IntegrationRollbackError(AgosError):
     """Failed to rollback an integration."""
+
+
+class ApprovalTimeoutError(AgosError):
+    """Tool call approval timed out."""
+
+
+class ApprovalRejectedError(AgosError):
+    """Tool call was rejected by human operator."""

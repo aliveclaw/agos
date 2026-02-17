@@ -21,12 +21,27 @@ class AgosSettings(BaseSettings):
     evolution_days_lookback: int = 7
     evolution_max_papers: int = 20
 
+    # Node specialization (for multi-node fleet diversity)
+    node_role: str = "general"  # knowledge|intent|orchestration|policy|general
+    evolution_initial_delay: int = 0  # Seconds to wait before first evolution cycle (stagger fleet)
+
     # Update settings
     auto_update_check: bool = True
     github_owner: str = "aliveclaw"
     github_repo: str = "agos"
     github_token: str = ""  # GitHub PAT for community contributions (optional)
-    auto_share_every: int = 3  # Auto-share learnings every N evolution cycles (0 = disabled)
+    auto_share_every: int = 0  # Auto-share via PR disabled by default (evolution writes code locally instead)
+
+    # MCP (Model Context Protocol) settings
+    mcp_auto_connect: bool = True  # Auto-connect to configured MCP servers on startup
+
+    # A2A (Agent-to-Agent) protocol settings
+    a2a_enabled: bool = True  # Expose AGOS as an A2A server
+    a2a_remote_agents: str = ""  # Comma-separated URLs of remote A2A agents to auto-discover
+
+    # Approval settings (dashboard human-in-the-loop)
+    approval_mode: str = "auto"  # "auto", "confirm-dangerous", "confirm-all"
+    approval_timeout_seconds: int = 300  # 5 minutes
 
     model_config = {"env_prefix": "AGOS_"}
 
