@@ -1,20 +1,17 @@
 """Tests for A2A protocol data models."""
 
-import pytest
 
 from agos.a2a.models import (
     A2AArtifact,
     A2AMessage,
     A2APart,
     A2ATask,
-    AgentCapabilities,
     AgentCard,
     AgentProvider,
     AgentSkill,
     JsonRpcRequest,
     JsonRpcResponse,
     TaskState,
-    TaskStatus,
 )
 
 

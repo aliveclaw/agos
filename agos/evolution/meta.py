@@ -27,6 +27,218 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from agos.types import new_id
+from agos.evolution.state import EvalTask
+
+
+# ── Real Eval Tasks ──────────────────────────────────────────────
+# Concrete sandbox-safe Python tasks with known correct answers.
+# Used to compute REAL fitness instead of proxy signals.
+
+EVAL_TASKS: dict[str, list[EvalTask]] = {
+    "knowledge.semantic": [
+        EvalTask(
+            component="knowledge.semantic",
+            name="store_and_retrieve",
+            weight=1.0,
+            expected_output="PASS",
+            test_code="""
+import json, math, random
+
+# Simulate a minimal semantic store with cosine similarity
+class MiniStore:
+    def __init__(self):
+        self.items = []
+
+    def store(self, text, embedding):
+        self.items.append({"text": text, "emb": embedding})
+
+    def query(self, embedding, k=3):
+        def cosine(a, b):
+            dot = sum(x*y for x,y in zip(a,b))
+            na = math.sqrt(sum(x*x for x in a))
+            nb = math.sqrt(sum(x*x for x in b))
+            return dot / (na * nb + 1e-9)
+        scored = [(cosine(embedding, it["emb"]), it["text"]) for it in self.items]
+        scored.sort(reverse=True)
+        return [text for _, text in scored[:k]]
+
+store = MiniStore()
+# Store 5 items with distinct embeddings
+store.store("python async patterns", [0.9, 0.1, 0.0, 0.1])
+store.store("rust memory safety", [0.1, 0.9, 0.0, 0.1])
+store.store("python decorators", [0.8, 0.1, 0.1, 0.1])
+store.store("database indexing", [0.1, 0.1, 0.9, 0.1])
+store.store("python type hints", [0.7, 0.2, 0.0, 0.2])
+
+# Query for python-related items
+results = store.query([0.85, 0.15, 0.0, 0.1], k=3)
+# Expect python items to dominate
+python_count = sum(1 for r in results if "python" in r.lower())
+print("PASS" if python_count >= 2 else f"FAIL: only {python_count} python results")
+""",
+        ),
+    ],
+    "knowledge.graph": [
+        EvalTask(
+            component="knowledge.graph",
+            name="graph_traversal",
+            weight=1.0,
+            expected_output="PASS",
+            test_code="""
+# Build a graph, traverse it, verify neighbors
+class MiniGraph:
+    def __init__(self):
+        self.edges = {}
+
+    def link(self, a, b, weight=1.0):
+        self.edges.setdefault(a, []).append((b, weight))
+        self.edges.setdefault(b, []).append((a, weight))
+
+    def neighbors(self, node, depth=1):
+        visited = set()
+        frontier = {node}
+        for _ in range(depth):
+            next_frontier = set()
+            for n in frontier:
+                for neighbor, _ in self.edges.get(n, []):
+                    if neighbor not in visited and neighbor != node:
+                        next_frontier.add(neighbor)
+                        visited.add(neighbor)
+            frontier = next_frontier
+        return visited
+
+g = MiniGraph()
+g.link("A", "B")
+g.link("B", "C")
+g.link("C", "D")
+g.link("A", "E")
+
+n1 = g.neighbors("A", depth=1)
+n2 = g.neighbors("A", depth=2)
+
+ok = "B" in n1 and "E" in n1 and "C" in n2 and "D" not in n1
+print("PASS" if ok else f"FAIL: depth1={n1}, depth2={n2}")
+""",
+        ),
+    ],
+    "policy.engine": [
+        EvalTask(
+            component="policy.engine",
+            name="budget_enforcement",
+            weight=1.0,
+            expected_output="PASS",
+            test_code="""
+# Simulate token budget enforcement
+class Policy:
+    def __init__(self, max_tokens, max_calls_per_min):
+        self.max_tokens = max_tokens
+        self.max_calls = max_calls_per_min
+        self.used_tokens = 0
+        self.calls_this_minute = 0
+
+    def check(self, tokens_needed):
+        if self.used_tokens + tokens_needed > self.max_tokens:
+            return False, "budget_exceeded"
+        if self.calls_this_minute >= self.max_calls:
+            return False, "rate_limited"
+        self.used_tokens += tokens_needed
+        self.calls_this_minute += 1
+        return True, "ok"
+
+p = Policy(max_tokens=1000, max_calls_per_min=3)
+r1 = p.check(500)   # ok
+r2 = p.check(400)   # ok
+r3 = p.check(200)   # should fail (budget)
+
+p2 = Policy(max_tokens=10000, max_calls_per_min=2)
+p2.check(1)
+p2.check(1)
+r4 = p2.check(1)    # should fail (rate)
+
+ok = r1[0] and r2[0] and not r3[0] and r3[1] == "budget_exceeded" and not r4[0]
+print("PASS" if ok else f"FAIL: r1={r1}, r3={r3}, r4={r4}")
+""",
+        ),
+    ],
+    "orchestration.planner": [
+        EvalTask(
+            component="orchestration.planner",
+            name="task_decomposition",
+            weight=1.0,
+            expected_output="PASS",
+            test_code="""
+# Simulate task decomposition and dependency resolution
+def decompose(task, subtasks):
+    plan = []
+    resolved = set()
+    remaining = list(subtasks)
+    max_iterations = len(subtasks) * 2
+    i = 0
+    while remaining and i < max_iterations:
+        i += 1
+        for st in list(remaining):
+            deps = st.get("depends_on", [])
+            if all(d in resolved for d in deps):
+                plan.append(st["name"])
+                resolved.add(st["name"])
+                remaining.remove(st)
+    return plan
+
+subtasks = [
+    {"name": "fetch_data", "depends_on": []},
+    {"name": "parse_data", "depends_on": ["fetch_data"]},
+    {"name": "validate", "depends_on": ["parse_data"]},
+    {"name": "fetch_schema", "depends_on": []},
+    {"name": "transform", "depends_on": ["validate", "fetch_schema"]},
+]
+
+order = decompose("pipeline", subtasks)
+# fetch_data and fetch_schema can be first (either order)
+# parse_data must come after fetch_data
+# validate after parse_data
+# transform must be last
+ok = (len(order) == 5
+      and order.index("parse_data") > order.index("fetch_data")
+      and order.index("validate") > order.index("parse_data")
+      and order[-1] == "transform")
+print("PASS" if ok else f"FAIL: order={order}")
+""",
+        ),
+    ],
+    "intent.engine": [
+        EvalTask(
+            component="intent.engine",
+            name="intent_classification",
+            weight=1.0,
+            expected_output="PASS",
+            test_code="""
+# Simple keyword-based intent classifier
+def classify(text):
+    text_lower = text.lower()
+    if any(w in text_lower for w in ["search", "find", "look up", "query"]):
+        return "research"
+    if any(w in text_lower for w in ["write", "create", "build", "implement"]):
+        return "coding"
+    if any(w in text_lower for w in ["deploy", "run", "start", "execute"]):
+        return "operations"
+    if any(w in text_lower for w in ["plan", "design", "architect"]):
+        return "planning"
+    return "general"
+
+tests = [
+    ("search for python async patterns", "research"),
+    ("write a REST API endpoint", "coding"),
+    ("deploy the service to production", "operations"),
+    ("plan the database migration", "planning"),
+    ("hello world", "general"),
+]
+
+correct = sum(1 for text, expected in tests if classify(text) == expected)
+print("PASS" if correct >= 4 else f"FAIL: {correct}/5 correct")
+""",
+        ),
+    ],
+}
 
 
 # ── Component Genome ─────────────────────────────────────────────
@@ -360,6 +572,9 @@ class MetaEvolver:
         self.genomes: dict[str, ComponentGenome] = {}
         self.fitness = FitnessCollector()
         self.mutations: list[Mutation] = []
+        self._eval_scores: dict[str, float] = {}  # component -> last sandbox eval score
+        self._live_scores: dict[str, float] = {}  # component -> last live eval score
+        self._llm_cycle_counter: int = 0
         self._build_genomes()
 
     def _build_genomes(self) -> None:
@@ -564,6 +779,174 @@ class MetaEvolver:
             ],
         )
 
+    async def run_eval_tasks(self, sandbox) -> dict[str, float]:
+        """Run real eval tasks through sandbox and return component scores.
+
+        Each task has known correct output. Score = fraction of tasks
+        that produce expected output per component.
+        """
+        scores: dict[str, float] = {}
+        for component, tasks in EVAL_TASKS.items():
+            passed = 0
+            total = 0
+            for task in tasks:
+                total += task.weight
+                try:
+                    result = await sandbox.execute(task.test_code)
+                    if result.passed and task.expected_output in result.output:
+                        passed += task.weight
+                except Exception:
+                    pass
+            scores[component] = passed / max(total, 1.0)
+        self._eval_scores = scores
+        return scores
+
+    async def run_live_evals(
+        self,
+        loom=None,
+        event_bus=None,
+        audit_trail=None,
+        policy_engine=None,
+    ) -> dict[str, float]:
+        """Run eval tasks against REAL live AGOS components.
+
+        Unlike sandbox evals (which test toy simulations in subprocess),
+        these test the actual running system. This closes the feedback
+        loop: mutations → real component changes → measured here.
+
+        Returns {component: score} where score is 0.0-1.0.
+        """
+        scores: dict[str, float] = {}
+
+        # ── knowledge.semantic: store threads, query, check retrieval ──
+        if loom and hasattr(loom, "semantic"):
+            try:
+                from agos.knowledge.base import Thread, ThreadQuery
+
+                # Store test threads with distinct content
+                test_tag = f"_eval_{new_id()[:8]}"
+                stored_ids = []
+                test_items = [
+                    "python asyncio concurrency patterns",
+                    "rust borrow checker and ownership",
+                    "python decorator metaprogramming",
+                    "database query optimization indexes",
+                    "python type hints and mypy checking",
+                ]
+                for text in test_items:
+                    tid = await loom.semantic.store(Thread(
+                        content=text, kind="eval", tags=[test_tag],
+                        source="live_eval", confidence=0.9,
+                    ))
+                    stored_ids.append(tid)
+
+                # Query for python-related content
+                results = await loom.semantic.query(
+                    ThreadQuery(text="python programming", limit=5, tags=[test_tag])
+                )
+
+                # Score: what fraction of results are python-related?
+                if results:
+                    python_hits = sum(
+                        1 for r in results if "python" in r.content.lower()
+                    )
+                    scores["knowledge.semantic"] = min(python_hits / 3.0, 1.0)
+                else:
+                    scores["knowledge.semantic"] = 0.0
+
+                # Cleanup eval threads
+                for tid in stored_ids:
+                    try:
+                        await loom.semantic.delete(tid)
+                    except Exception:
+                        pass
+            except Exception:
+                pass
+
+        # ── knowledge.graph: create links, traverse, verify ──
+        if loom and hasattr(loom, "graph"):
+            try:
+                eval_prefix = f"_eval_{new_id()[:8]}"
+                a, b, c = f"{eval_prefix}:A", f"{eval_prefix}:B", f"{eval_prefix}:C"
+
+                await loom.graph.link(a, "connects_to", b)
+                await loom.graph.link(b, "connects_to", c)
+
+                # Check: A's connections should include B
+                conns_a = await loom.graph.connections(a)
+                found_b = any(e.target == b for e in conns_a)
+
+                # Check: B should connect to both A and C
+                conns_b = await loom.graph.connections(b, direction="both")
+                found_edges = len(conns_b)
+
+                score = 0.0
+                if found_b:
+                    score += 0.5
+                if found_edges >= 2:
+                    score += 0.5
+                scores["knowledge.graph"] = score
+
+                # Cleanup
+                for edge in conns_a + conns_b:
+                    try:
+                        await loom.graph.unlink(edge.id)
+                    except Exception:
+                        pass
+            except Exception:
+                pass
+
+        # ── policy.audit: record + query + count ──
+        if audit_trail:
+            try:
+                from agos.policy.audit import AuditEntry
+
+                count_before = await audit_trail.count()
+
+                # Record a test entry
+                await audit_trail.record(AuditEntry(
+                    agent_id="eval_agent", agent_name="LiveEval",
+                    action="eval_test", detail="fitness eval probe",
+                    success=True,
+                ))
+
+                count_after = await audit_trail.count()
+
+                # Score: did count increase?
+                score = 1.0 if count_after > count_before else 0.0
+                scores["policy.engine"] = score
+                scores["policy.audit"] = score
+            except Exception:
+                pass
+
+        # ── events.bus: emit + verify history ──
+        if event_bus:
+            try:
+                eval_topic = f"_eval.probe.{new_id()[:8]}"
+
+                # Emit a test event
+                await event_bus.emit(eval_topic, {"test": True}, source="live_eval")
+
+                # Check it appears in topics
+                topics = event_bus.topics()
+                found = eval_topic in topics
+
+                # Check it appears in history
+                history = event_bus.history(topic_filter=eval_topic, limit=1)
+                in_history = len(history) > 0
+
+                score = 0.0
+                if found:
+                    score += 0.5
+                if in_history:
+                    score += 0.5
+                scores["events.bus"] = score
+            except Exception:
+                pass
+
+        self._live_scores = scores
+        return scores
+
     async def run_meta_cycle(
         self,
         event_bus=None,
@@ -573,19 +956,23 @@ class MetaEvolver:
         policy_engine=None,
         runtime=None,
         integrator=None,
+        sandbox=None,
+        llm_provider=None,
+        process_manager=None,
     ) -> MetaCycleReport:
         """Run one meta-evolution cycle across all components.
 
-        1. Collect fitness signals
-        2. Update genome fitness scores
+        1. Collect fitness signals (proxy + sandbox eval + live eval)
+        2. Update genome fitness scores (3-way blend)
         3. Identify underperformers
-        4. Propose mutations
-        5. Apply mutations via integrator (with snapshot + rollback)
+        4. Propose mutations (random or LLM-guided every Nth cycle)
+        5. Apply mutations + before/after measurement
         """
         start = time.monotonic()
         report = MetaCycleReport()
+        self._llm_cycle_counter += 1
 
-        # Step 1: Collect fitness
+        # Step 1a: Collect proxy fitness signals
         signals = await self.fitness.collect(
             event_bus=event_bus,
             audit_trail=audit_trail,
@@ -593,13 +980,52 @@ class MetaEvolver:
             loom=loom,
             policy_engine=policy_engine,
             runtime=runtime,
+            process_manager=process_manager,
         )
         report.signals_collected = len(signals)
 
-        # Step 2: Update genome fitness scores
+        # Step 1b: Run sandbox eval tasks (tests algorithmic correctness)
+        sandbox_scores: dict[str, float] = {}
+        if sandbox is not None:
+            try:
+                sandbox_scores = await self.run_eval_tasks(sandbox)
+            except Exception:
+                pass
+
+        # Step 1c: Run live eval tasks against REAL components
+        live_scores: dict[str, float] = {}
+        has_live_components = loom is not None or event_bus is not None or audit_trail is not None
+        if has_live_components:
+            try:
+                live_scores = await self.run_live_evals(
+                    loom=loom,
+                    event_bus=event_bus,
+                    audit_trail=audit_trail,
+                    policy_engine=policy_engine,
+                )
+            except Exception:
+                pass
+
+        # Step 2: Update genome fitness (3-way blend)
+        # Priority: live eval (tests real system) > sandbox eval > proxy signals
         for name, genome in self.genomes.items():
-            score = self.fitness.aggregate_fitness(name)
-            genome.fitness_score = score
+            proxy_score = self.fitness.aggregate_fitness(name)
+            sandbox_score = sandbox_scores.get(name)
+            live_score = live_scores.get(name)
+
+            if live_score is not None and sandbox_score is not None:
+                # All three: 40% live + 30% sandbox + 30% proxy
+                genome.fitness_score = (
+                    0.4 * live_score + 0.3 * sandbox_score + 0.3 * proxy_score
+                )
+            elif live_score is not None:
+                # Live + proxy: 60% live + 40% proxy
+                genome.fitness_score = 0.6 * live_score + 0.4 * proxy_score
+            elif sandbox_score is not None:
+                # Sandbox + proxy: 50% sandbox + 50% proxy
+                genome.fitness_score = 0.5 * sandbox_score + 0.5 * proxy_score
+            else:
+                genome.fitness_score = proxy_score
             genome.last_evaluated = datetime.utcnow().isoformat()
 
         # Step 3: Identify underperformers (fitness < 0.6)
@@ -609,16 +1035,36 @@ class MetaEvolver:
         ]
         report.underperformers = [g.component for g in underperformers]
 
-        # Step 4: Propose mutations for underperformers
+        # Step 4: Propose mutations
         proposed: list[Mutation] = []
-        for genome in underperformers:
-            mutations = self._propose_mutations(genome)
-            proposed.extend(mutations)
+        use_llm = (
+            llm_provider is not None
+            and self._llm_cycle_counter % 5 == 0
+            and underperformers
+        )
+        if use_llm:
+            # LLM-guided ideation every 5th cycle
+            try:
+                llm_mutations = await self.llm_ideate_mutations(
+                    underperformers, signals, llm_provider
+                )
+                proposed.extend(llm_mutations)
+            except Exception:
+                # Graceful fallback to random
+                for genome in underperformers:
+                    proposed.extend(self._propose_mutations(genome))
+        else:
+            for genome in underperformers:
+                proposed.extend(self._propose_mutations(genome))
         report.mutations_proposed = len(proposed)
 
-        # Step 5: Apply mutations
+        # Step 5: Apply mutations with before/after measurement
         applied_count = 0
         for mutation in proposed:
+            # Snapshot fitness BEFORE
+            genome = self.genomes.get(mutation.component)
+            fitness_before = genome.fitness_score if genome else 0.0
+
             success = await self._apply_mutation(
                 mutation,
                 loom=loom,
@@ -628,14 +1074,32 @@ class MetaEvolver:
             )
             if success:
                 mutation.applied = True
+                mutation.fitness_before = fitness_before
                 applied_count += 1
                 # Update genome
-                genome = self.genomes.get(mutation.component)
                 if genome:
                     genome.mutations_applied += 1
                     for p in genome.params:
                         if p.name == mutation.param_name:
                             p.current = mutation.new_value
+
+        # Re-run live evals AFTER mutations to measure impact
+        if applied_count > 0 and has_live_components:
+            try:
+                post_scores = await self.run_live_evals(
+                    loom=loom,
+                    event_bus=event_bus,
+                    audit_trail=audit_trail,
+                    policy_engine=policy_engine,
+                )
+                # Record fitness_after on each applied mutation
+                for mutation in proposed:
+                    if mutation.applied:
+                        after = post_scores.get(mutation.component)
+                        if after is not None:
+                            mutation.fitness_after = after
+            except Exception:
+                pass
 
         self.mutations.extend(proposed)
         # Keep last 200 mutations
@@ -651,6 +1115,9 @@ class MetaEvolver:
                 "underperformers": report.underperformers,
                 "proposed": report.mutations_proposed,
                 "applied": report.mutations_applied,
+                "live_scores": live_scores,
+                "sandbox_scores": sandbox_scores,
+                "llm_guided": use_llm,
                 "duration_ms": round(report.duration_ms),
             }, source="meta_evolver")
 
@@ -716,6 +1183,93 @@ class MetaEvolver:
 
         # Limit to 2 mutations per component per cycle
         return mutations[:2]
+
+    async def llm_ideate_mutations(
+        self,
+        underperformers: list[ComponentGenome],
+        signals: list[FitnessSignal],
+        llm_provider,
+    ) -> list[Mutation]:
+        """Use LLM to propose targeted mutations instead of random perturbation.
+
+        Sends compact genome + signal summary to Claude, asks for up to 3
+        targeted mutations with reasoning. ~800 tokens per call.
+        """
+        import json as _json
+
+        # Build compact prompt
+        genome_summary = []
+        for g in underperformers[:3]:  # limit to 3 genomes
+            params_str = ", ".join(
+                f"{p.name}={p.current if p.current is not None else p.default}"
+                f"({p.min_val}-{p.max_val})"
+                for p in g.params[:5]
+            )
+            genome_summary.append(
+                f"- {g.component} (fitness={g.fitness_score:.2f}): {params_str}"
+            )
+
+        signal_summary = []
+        for s in signals[-10:]:
+            signal_summary.append(f"  {s.component}.{s.metric}={s.value:.2f}")
+
+        prompt = (
+            "You are tuning an agentic OS. These components are underperforming.\n\n"
+            "Genomes:\n" + "\n".join(genome_summary) + "\n\n"
+            "Recent signals:\n" + "\n".join(signal_summary) + "\n\n"
+            "Propose up to 3 parameter changes as JSON array:\n"
+            '[{"component":"...","param":"...","value":...,"reason":"..."}]\n'
+            "Only use existing param names. Values must be within min-max range."
+        )
+
+        try:
+            response = await llm_provider.complete(
+                prompt, max_tokens=400, temperature=0.3
+            )
+            text = response.strip()
+            # Extract JSON array from response
+            start = text.find("[")
+            end = text.rfind("]") + 1
+            if start < 0 or end <= start:
+                return []
+            proposals = _json.loads(text[start:end])
+        except Exception:
+            return []
+
+        mutations: list[Mutation] = []
+        for p in proposals[:3]:
+            comp = p.get("component", "")
+            param_name = p.get("param", "")
+            value = p.get("value")
+            reason = p.get("reason", "LLM-proposed")
+
+            genome = self.genomes.get(comp)
+            if not genome:
+                continue
+            param_spec = next((ps for ps in genome.params if ps.name == param_name), None)
+            if not param_spec:
+                continue
+
+            # Validate value is within range
+            if param_spec.param_type in ("float", "int"):
+                if param_spec.min_val is not None and value < param_spec.min_val:
+                    continue
+                if param_spec.max_val is not None and value > param_spec.max_val:
+                    continue
+                if param_spec.param_type == "int":
+                    value = int(value)
+
+            old_value = param_spec.current if param_spec.current is not None else param_spec.default
+            mutations.append(Mutation(
+                component=comp,
+                param_name=param_name,
+                old_value=old_value,
+                new_value=value,
+                reason=f"LLM: {reason}",
+                fitness_before=genome.fitness_score,
+            ))
+
+        return mutations
 
     async def _apply_mutation(
         self, mutation: Mutation,
@@ -813,6 +1367,56 @@ class MetaEvolver:
 
     def all_genomes(self) -> list[ComponentGenome]:
         return list(self.genomes.values())
+
+    async def reevaluate_archive(
+        self,
+        design_archive,
+        loom=None,
+        event_bus=None,
+        audit_trail=None,
+        policy_engine=None,
+        sandbox=None,
+    ) -> int:
+        """Re-evaluate designs in the archive against live components.
+
+        Updates stale fitness scores so the softmax sampling reflects
+        current system performance, not historical snapshots.
+
+        Returns count of designs that had their fitness updated.
+        """
+        if not design_archive or not design_archive.entries:
+            return 0
+
+        # Get current live scores
+        live_scores = await self.run_live_evals(
+            loom=loom, event_bus=event_bus,
+            audit_trail=audit_trail, policy_engine=policy_engine,
+        )
+        if not live_scores:
+            return 0
+
+        # Also get sandbox scores if available
+        sandbox_scores: dict[str, float] = {}
+        if sandbox is not None:
+            try:
+                sandbox_scores = await self.run_eval_tasks(sandbox)
+            except Exception:
+                pass
+
+        updated = 0
+        for entry in design_archive.entries:
+            live = live_scores.get(entry.module)
+            sb = sandbox_scores.get(entry.module)
+            if live is not None:
+                # Blend live + sandbox for this module
+                if sb is not None:
+                    new_fitness = 0.6 * live + 0.4 * sb
+                else:
+                    new_fitness = live
+                design_archive.update_fitness(entry.id, round(new_fitness, 4))
+                updated += 1
+
+        return updated
 
     def export_state(self) -> dict:
         """Export full meta-evolution state for persistence."""

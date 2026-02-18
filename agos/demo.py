@@ -31,7 +31,8 @@ from agos.evolution.sandbox import Sandbox
 from agos.evolution.engine import EvolutionProposal
 from agos.evolution.state import EvolutionState
 from agos.evolution.meta import MetaEvolver
-from agos.evolution.codegen import evolve_code, load_evolved_strategies
+from agos.evolution.codegen import evolve_code, iterate_strategy, load_evolved_strategies
+from agos.evolution.state import DesignArchive, DesignEntry
 from agos.config import settings as _settings
 from agos.knowledge.base import Thread
 
@@ -295,7 +296,6 @@ async def profile_system(aid, name, bus: EventBus, audit: AuditTrail) -> list[st
 async def scan_network(aid, name, bus: EventBus, audit: AuditTrail) -> list[str]:
     """Network connectivity check."""
     findings = []
-    import socket
     for host in ["pypi.org", "github.com", "arxiv.org"]:
         try:
             start = time.time()
@@ -1471,7 +1471,9 @@ def _select_topics(cycle_num: int) -> list[str]:
 
 
 async def run_evolution_cycle(cycle_num: int, bus: EventBus, audit: AuditTrail, loom,
-                              evolution_state: EvolutionState | None = None) -> None:
+                              evolution_state: EvolutionState | None = None,
+                              design_archive: DesignArchive | None = None,
+                              llm_provider=None) -> None:
     """Run one full evolution cycle with real research and real integration."""
     aid = new_id()
     name = "EvolutionEngine"
@@ -1826,12 +1828,90 @@ async def run_evolution_cycle(cycle_num: int, bus: EventBus, audit: AuditTrail, 
                 }, source=name)
                 _logger.warning("Auto-share failed: %s", e)
 
+    # ── Phase 4.5: ALMA iterate-on-strategy (every Nth cycle) ──
+    iterate_interval = _settings.evolution_alma_iterate_interval
+    if (design_archive is not None and llm_provider is not None
+            and cycle_num % iterate_interval == 0 and design_archive.entries):
+        await bus.emit("evolution.alma_iterate_start", {
+            "cycle": cycle_num, "archive_size": len(design_archive.entries),
+        }, source=name)
+
+        # Sample 2 designs from archive via softmax
+        candidates = design_archive.sample(min(2, len(design_archive.entries)))
+        iterate_sandbox = Sandbox(timeout=10)
+        for candidate in candidates:
+            signals_str = f"fitness={candidate.current_fitness:.2f}"
+            improved = await iterate_strategy(
+                existing_code=candidate.code_snippet,
+                fitness=candidate.current_fitness,
+                signals=signals_str,
+                module=candidate.module,
+                sandbox=iterate_sandbox,
+                llm_provider=llm_provider,
+            )
+            if improved:
+                from agos.evolution.codegen import _hash_pattern
+                child = DesignEntry(
+                    strategy_name=f"{candidate.strategy_name}_gen{candidate.generation + 1}",
+                    module=candidate.module,
+                    code_hash=_hash_pattern(improved),
+                    code_snippet=improved[:3000],
+                    current_fitness=candidate.current_fitness,  # inherits until eval
+                    generation=candidate.generation + 1,
+                    parent_id=candidate.id,
+                    source_paper=candidate.source_paper,
+                )
+                design_archive.add(child)
+
+                # Also evolve it as a real file
+                try:
+                    evo_result = await evolve_code(
+                        pattern_name=child.strategy_name,
+                        pattern_code=improved,
+                        source_paper=candidate.source_paper,
+                        agos_module=candidate.module,
+                        sandbox=iterate_sandbox,
+                    )
+                    if evo_result["success"]:
+                        await bus.emit("evolution.alma_iterated", {
+                            "parent": candidate.strategy_name,
+                            "child": child.strategy_name,
+                            "generation": child.generation,
+                            "file": evo_result["file_path"],
+                        }, source=name)
+                except Exception as e:
+                    _logger.warning("ALMA iterate codegen failed: %s", e)
+            await asyncio.sleep(0.5)
+
+        # Persist archive
+        if evolution_state is not None:
+            evolution_state.save_design_archive(design_archive)
+
+    # ── Add sandbox-passed patterns to design archive ──
+    if design_archive is not None:
+        for proposal in proposals:
+            for i, pat in enumerate(proposal.code_patterns):
+                if pat.code_snippet and i < len(proposal.sandbox_results):
+                    sr = proposal.sandbox_results[i]
+                    if sr.passed:
+                        from agos.evolution.codegen import _hash_pattern
+                        entry = DesignEntry(
+                            strategy_name=pat.name,
+                            module=pat.agos_module,
+                            code_hash=_hash_pattern(pat.code_snippet),
+                            code_snippet=pat.code_snippet[:3000],
+                            current_fitness=0.5,  # initial neutral fitness
+                            source_paper=proposal.insight.paper_id,
+                        )
+                        design_archive.add(entry)
+
     # ── Final report ──
     dur = round(time.time() - start_time, 1)
     await bus.emit("evolution.cycle_completed", {
         "cycle": cycle_num, "papers": len(papers), "new": len(unseen),
         "insights": len(insights), "proposals": len(proposals),
         "integrated": integrated, "duration_s": dur,
+        "archive_size": len(design_archive.entries) if design_archive else 0,
     }, source=name)
 
     await loom.episodic.store(Thread(
@@ -1848,7 +1928,9 @@ async def run_evolution_cycle(cycle_num: int, bus: EventBus, audit: AuditTrail, 
 async def evolution_loop(bus: EventBus, audit: AuditTrail, loom,
                          evolution_state: EvolutionState | None = None,
                          meta_evolver: MetaEvolver | None = None,
-                         policy_engine=None, tracer=None, runtime=None) -> None:
+                         policy_engine=None, tracer=None, runtime=None,
+                         design_archive: DesignArchive | None = None,
+                         llm_provider=None) -> None:
     """Continuously run evolution cycles + meta-evolution."""
     await asyncio.sleep(10)  # Wait for boot + initial agents
     # Stagger delay for multi-node fleet (avoid simultaneous arxiv hits)
@@ -1856,10 +1938,19 @@ async def evolution_loop(bus: EventBus, audit: AuditTrail, loom,
     if initial_delay > 0:
         await asyncio.sleep(initial_delay)
     cycle = evolution_state.data.cycles_completed if evolution_state else 0
+
+    # Create sandbox for meta-evolution eval tasks
+    meta_sandbox = Sandbox(timeout=10)
+
     while True:
         cycle += 1
         try:
-            await run_evolution_cycle(cycle, bus, audit, loom, evolution_state=evolution_state)
+            await run_evolution_cycle(
+                cycle, bus, audit, loom,
+                evolution_state=evolution_state,
+                design_archive=design_archive,
+                llm_provider=llm_provider,
+            )
         except Exception as e:
             await bus.emit("evolution.error", {"cycle": cycle, "error": str(e)[:200]}, source="EvolutionEngine")
 
@@ -1873,18 +1964,42 @@ async def evolution_loop(bus: EventBus, audit: AuditTrail, loom,
                     loom=loom,
                     policy_engine=policy_engine,
                     runtime=runtime,
+                    sandbox=meta_sandbox,
+                    llm_provider=llm_provider,
                 )
                 await bus.emit("meta.cycle_completed", {
                     "signals": report.signals_collected,
                     "underperformers": report.underperformers,
                     "mutations_proposed": report.mutations_proposed,
                     "mutations_applied": report.mutations_applied,
+                    "eval_scores": meta_evolver._eval_scores,
+                    "live_scores": meta_evolver._live_scores,
+                    "llm_cycle": meta_evolver._llm_cycle_counter,
                     "duration_ms": round(report.duration_ms),
                 }, source="meta_evolver")
+
+                # Re-evaluate archive fitness against live components
+                if design_archive is not None and design_archive.entries:
+                    try:
+                        updated = await meta_evolver.reevaluate_archive(
+                            design_archive,
+                            loom=loom, event_bus=bus,
+                            audit_trail=audit, policy_engine=policy_engine,
+                            sandbox=meta_sandbox,
+                        )
+                        if updated > 0:
+                            await bus.emit("evolution.archive_reevaluated", {
+                                "updated": updated,
+                                "archive_size": len(design_archive.entries),
+                            }, source="meta_evolver")
+                    except Exception:
+                        pass
 
                 # Persist meta state alongside evolution state
                 if evolution_state is not None:
                     evolution_state.save_meta_state(meta_evolver)
+                    if design_archive is not None:
+                        evolution_state.save_design_archive(design_archive)
                     evolution_state.save(loom)
             except Exception as e:
                 await bus.emit("meta.error", {
@@ -1906,49 +2021,101 @@ async def _load_community_contributions(loom, bus: EventBus) -> int:
     - Non-contributors: load only contributions older than 7 days (weekly bundled)
 
     This incentivizes instances to share their learnings for real-time access.
+
+    Also loads evolved code files from community/evolved/*/ into local
+    .agos/evolved/ so they can be used without re-discovering the same papers.
     """
     from agos.config import settings as _settings
     from datetime import datetime, timedelta
 
     contrib_dir = pathlib.Path("community/contributions")
-    if not contrib_dir.exists():
-        return 0
+    evolved_dir = pathlib.Path("community/evolved")
 
     is_contributor = bool(_settings.github_token and _settings.auto_share_every > 0)
     cutoff = datetime.utcnow() - timedelta(days=7)
 
     loaded = 0
     skipped = 0
-    for f in sorted(contrib_dir.glob("*.json")):
-        try:
-            data = _json.loads(f.read_text(encoding="utf-8"))
 
-            # Reciprocity gate: non-contributors only get week-old contributions
-            if not is_contributor:
-                contributed_at = data.get("contributed_at", "")
-                if contributed_at:
-                    try:
-                        ts = datetime.fromisoformat(contributed_at)
-                        if ts > cutoff:
-                            skipped += 1
-                            continue
-                    except ValueError:
-                        pass
+    # ── Load strategy metadata from contribution JSONs ──
+    if contrib_dir.exists():
+        for f in sorted(contrib_dir.glob("*.json")):
+            try:
+                data = _json.loads(f.read_text(encoding="utf-8"))
 
-            for s in data.get("strategies_applied", []):
-                name = s.get("name", "")
-                module = s.get("module", "")
-                if name and module:
-                    await loom.semantic.store(Thread(
-                        content=f"Community strategy: {name} for {module}",
-                        kind="community_strategy",
-                        tags=["community", "evolution", module],
-                        metadata={"source_instance": data.get("instance_id", ""), "strategy": name},
-                        source=f"community:{f.stem}",
-                    ))
-                    loaded += 1
-        except Exception as e:
-            _logger.warning("Failed to load community contribution %s: %s", f, e)
+                # Reciprocity gate: non-contributors only get week-old contributions
+                if not is_contributor:
+                    contributed_at = data.get("contributed_at", "")
+                    if contributed_at:
+                        try:
+                            ts = datetime.fromisoformat(contributed_at)
+                            if ts > cutoff:
+                                skipped += 1
+                                continue
+                        except ValueError:
+                            pass
+
+                for s in data.get("strategies_applied", []):
+                    name = s.get("name", "")
+                    module = s.get("module", "")
+                    if name and module:
+                        await loom.semantic.store(Thread(
+                            content=f"Community strategy: {name} for {module}",
+                            kind="community_strategy",
+                            tags=["community", "evolution", module],
+                            metadata={"source_instance": data.get("instance_id", ""), "strategy": name},
+                            source=f"community:{f.stem}",
+                        ))
+                        loaded += 1
+            except Exception as e:
+                _logger.warning("Failed to load community contribution %s: %s", f, e)
+
+    # ── Load evolved code files from community/evolved/*/ ──
+    code_loaded = 0
+    if evolved_dir.exists():
+        local_evolved = pathlib.Path(".agos/evolved")
+        local_evolved.mkdir(parents=True, exist_ok=True)
+
+        # Collect existing code hashes to avoid duplicates
+        existing_hashes: set[str] = set()
+        for existing in local_evolved.glob("*.py"):
+            try:
+                content = existing.read_text(encoding="utf-8")
+                for line in content.splitlines():
+                    if line.strip().startswith("PATTERN_HASH"):
+                        existing_hashes.add(line.strip())
+                        break
+            except Exception:
+                pass
+
+        for instance_dir in sorted(evolved_dir.iterdir()):
+            if not instance_dir.is_dir():
+                continue
+            for py_file in sorted(instance_dir.glob("*.py")):
+                if py_file.name.startswith("_"):
+                    continue
+                try:
+                    code = py_file.read_text(encoding="utf-8")
+
+                    # Check dedup by PATTERN_HASH
+                    code_hash_line = ""
+                    for line in code.splitlines():
+                        if line.strip().startswith("PATTERN_HASH"):
+                            code_hash_line = line.strip()
+                            break
+
+                    if code_hash_line and code_hash_line in existing_hashes:
+                        continue  # Already have this pattern
+
+                    # Copy to local evolved dir
+                    target = local_evolved / py_file.name
+                    if not target.exists():
+                        target.write_text(code, encoding="utf-8")
+                        if code_hash_line:
+                            existing_hashes.add(code_hash_line)
+                        code_loaded += 1
+                except Exception as e:
+                    _logger.warning("Failed to load community evolved code %s: %s", py_file, e)
 
     if skipped > 0:
         await bus.emit("evolution.community_gated", {
@@ -1956,7 +2123,12 @@ async def _load_community_contributions(loom, bus: EventBus) -> int:
             "reason": "non-contributor: only weekly updates loaded",
         }, source="kernel")
 
-    return loaded
+    if code_loaded > 0:
+        await bus.emit("evolution.community_code_loaded", {
+            "files": code_loaded,
+        }, source="kernel")
+
+    return loaded + code_loaded
 
 
 async def run_demo(runtime, bus: EventBus, audit: AuditTrail,
@@ -2050,6 +2222,29 @@ async def run_demo(runtime, bus: EventBus, audit: AuditTrail,
         if n > 0:
             await bus.emit("evolution.community_loaded", {"strategies": n}, source="kernel")
 
+    # ── Initialize ALMA design archive ──
+    design_archive = None
+    if evolution_state is not None:
+        design_archive = evolution_state.restore_design_archive()
+        if design_archive.entries:
+            await bus.emit("evolution.archive_restored", {
+                "designs": len(design_archive.entries),
+                "best_fitness": max(e.current_fitness for e in design_archive.entries),
+            }, source="kernel")
+
+    # ── Initialize LLM provider for ALMA features (if API key available) ──
+    llm_provider = None
+    api_key = _settings.anthropic_api_key
+    if api_key:
+        try:
+            from agos.evolution.llm_provider import LLMProvider
+            llm_provider = LLMProvider(api_key=api_key, model=_settings.default_model)
+            await bus.emit("evolution.llm_ready", {
+                "model": _settings.default_model,
+            }, source="kernel")
+        except Exception as e:
+            _logger.info("LLM provider not available for ALMA features: %s", e)
+
     await bus.emit("system.ready", {"version": "0.1.0", "evolution": loom is not None}, source="kernel")
 
     # Launch evolution in background
@@ -2061,6 +2256,8 @@ async def run_demo(runtime, bus: EventBus, audit: AuditTrail,
             policy_engine=policy_engine,
             tracer=tracer,
             runtime=runtime,
+            design_archive=design_archive,
+            llm_provider=llm_provider,
         ))
 
     # Agent task cycle

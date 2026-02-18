@@ -31,7 +31,6 @@ from agos.a2a.models import (
     TaskState,
     TaskStatus,
 )
-from agos.types import new_id
 
 _logger = logging.getLogger(__name__)
 

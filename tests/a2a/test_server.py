@@ -5,8 +5,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 from fastapi.testclient import TestClient
 
-from agos.a2a.server import A2AServer, router, set_server
-from agos.a2a.models import TaskState
+from agos.a2a.server import A2AServer, set_server
 from agos.dashboard.app import dashboard_app
 
 

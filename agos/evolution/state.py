@@ -2,11 +2,16 @@
 
 Captures the runtime parameters modified by integration strategies,
 persists them to .agos/evolution_state.json, and restores them on boot.
+
+Includes ALMA-inspired DesignArchive for tracking strategy lineage and
+softmax-based selection pressure.
 """
 
 from __future__ import annotations
 
 import logging
+import math
+import random
 from datetime import datetime
 from pathlib import Path
 from typing import Any, TYPE_CHECKING
@@ -44,6 +49,141 @@ class DiscoveredPattern(BaseModel):
     source_paper: str = ""
 
 
+# ── ALMA-inspired Design Archive ─────────────────────────────────
+
+
+class DesignEntry(BaseModel):
+    """A single design in the archive — tracks lineage for iterative improvement."""
+
+    id: str = Field(default_factory=new_id)
+    strategy_name: str
+    module: str  # target agos module (e.g. "knowledge.semantic")
+    code_hash: str = ""
+    code_snippet: str = ""  # the actual pattern code (truncated for persistence)
+    fitness_scores: list[float] = Field(default_factory=list)  # history
+    current_fitness: float = 0.0
+    generation: int = 0  # 0 = original, 1+ = iterated children
+    parent_id: str = ""  # lineage tracking
+    source_paper: str = ""
+    created_at: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+
+
+class DesignArchive:
+    """ALMA-style population archive with softmax selection pressure.
+
+    Maintains a bounded set of designs. High-fitness designs are
+    sampled more often (softmax) but all have non-zero probability,
+    encouraging open-ended exploration.
+    """
+
+    def __init__(self, max_size: int = 50, temperature: float = 0.3) -> None:
+        self.entries: list[DesignEntry] = []
+        self.max_size = max_size
+        self.temperature = temperature
+
+    def add(self, entry: DesignEntry) -> None:
+        """Add a design, evicting lowest-fitness if over capacity."""
+        self.entries.append(entry)
+        if len(self.entries) > self.max_size:
+            self.entries.sort(key=lambda e: e.current_fitness)
+            self.entries.pop(0)  # remove lowest fitness
+
+    def sample(self, n: int) -> list[DesignEntry]:
+        """ALMA softmax sampling: P(d) ~ exp(fitness / temp).
+
+        Weighted random without replacement.
+        """
+        if not self.entries or n <= 0:
+            return []
+        n = min(n, len(self.entries))
+
+        # Compute softmax weights
+        temp = max(self.temperature, 0.01)  # prevent div-by-zero
+        scores = [e.current_fitness for e in self.entries]
+        max_score = max(scores) if scores else 0
+        # Subtract max for numerical stability
+        weights = [math.exp((s - max_score) / temp) for s in scores]
+        total = sum(weights)
+        if total == 0:
+            # Uniform fallback
+            return random.sample(self.entries, n)
+
+        probs = [w / total for w in weights]
+
+        # Weighted sample without replacement
+        indices = list(range(len(self.entries)))
+        selected: list[int] = []
+        remaining_probs = list(probs)
+        for _ in range(n):
+            r = random.random() * sum(remaining_probs)
+            cumulative = 0.0
+            for i, idx in enumerate(indices):
+                if idx in selected:
+                    continue
+                cumulative += remaining_probs[i]
+                if cumulative >= r:
+                    selected.append(idx)
+                    remaining_probs[i] = 0.0
+                    break
+            else:
+                # Fallback: pick first unselected
+                for i, idx in enumerate(indices):
+                    if idx not in selected:
+                        selected.append(idx)
+                        remaining_probs[i] = 0.0
+                        break
+
+        return [self.entries[i] for i in selected]
+
+    def best(self, n: int = 5) -> list[DesignEntry]:
+        """Top N designs by fitness."""
+        return sorted(self.entries, key=lambda e: e.current_fitness, reverse=True)[:n]
+
+    def by_module(self, module: str) -> list[DesignEntry]:
+        """Filter designs by target module."""
+        return [e for e in self.entries if e.module == module]
+
+    def update_fitness(self, design_id: str, fitness: float) -> None:
+        """Update a design's fitness score."""
+        for entry in self.entries:
+            if entry.id == design_id:
+                entry.fitness_scores.append(fitness)
+                entry.current_fitness = fitness
+                return
+
+    def to_dict(self) -> dict:
+        """Serialize for persistence."""
+        return {
+            "max_size": self.max_size,
+            "temperature": self.temperature,
+            "entries": [e.model_dump() for e in self.entries],
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> DesignArchive:
+        """Restore from persisted data."""
+        archive = cls(
+            max_size=data.get("max_size", 50),
+            temperature=data.get("temperature", 0.3),
+        )
+        for entry_data in data.get("entries", []):
+            archive.entries.append(DesignEntry(**entry_data))
+        return archive
+
+
+class EvalTask(BaseModel):
+    """A concrete evaluation task with known correct answers.
+
+    Run in sandbox to produce real fitness scores instead of proxy signals.
+    """
+
+    component: str  # target component (e.g. "knowledge.semantic")
+    name: str
+    test_code: str  # Python code to execute in sandbox
+    expected_output: str = ""  # substring expected in output
+    weight: float = 1.0  # importance weight for fitness blending
+
+
 class EvolutionStateData(BaseModel):
     """The full persisted evolution state."""
 
@@ -57,6 +197,8 @@ class EvolutionStateData(BaseModel):
     # Meta-evolution state (ALMA-style all-component evolution)
     meta_evolution: dict[str, Any] = Field(default_factory=dict)
     meta_cycles_completed: int = 0
+    # ALMA design archive (persisted across restarts)
+    design_archive: dict[str, Any] = Field(default_factory=dict)
 
 
 class EvolutionState:
@@ -231,10 +373,38 @@ class EvolutionState:
         logger.info("Restored meta-evolution: %d genomes with mutations", restored)
         return restored
 
+    # ── Design Archive ─────────────────────────────────────────────
+
+    def save_design_archive(self, archive: DesignArchive) -> None:
+        """Persist the design archive into state data."""
+        self._data.design_archive = archive.to_dict()
+
+    def restore_design_archive(self) -> DesignArchive:
+        """Restore design archive from persisted state."""
+        if self._data.design_archive:
+            return DesignArchive.from_dict(self._data.design_archive)
+        return DesignArchive()
+
     # ── Export for community contribution ────────────────────────
 
-    def export_contribution(self) -> dict:
-        """Export state as a community contribution dict."""
+    def export_contribution(self, evolved_dir: Path | None = None) -> dict:
+        """Export state as a community contribution dict.
+
+        Includes actual evolved code files so other instances can
+        use them directly without re-discovering the same papers.
+        """
+        # Collect evolved .py files from disk
+        evolved_files: dict[str, str] = {}
+        d = evolved_dir or Path(".agos/evolved")
+        if d.exists():
+            for py_file in sorted(d.glob("*.py")):
+                if py_file.name.startswith("_"):
+                    continue
+                try:
+                    evolved_files[py_file.name] = py_file.read_text(encoding="utf-8")
+                except Exception:
+                    pass
+
         return {
             "instance_id": self._data.instance_id,
             "agos_version": self._data.agos_version,
@@ -248,4 +418,6 @@ class EvolutionState:
             ],
             "meta_evolution": self._data.meta_evolution,
             "meta_cycles_completed": self._data.meta_cycles_completed,
+            "evolved_code": evolved_files,
+            "design_archive": self._data.design_archive,
         }

@@ -25,6 +25,10 @@ class AgosSettings(BaseSettings):
     node_role: str = "general"  # knowledge|intent|orchestration|policy|general
     evolution_initial_delay: int = 0  # Seconds to wait before first evolution cycle (stagger fleet)
 
+    # ALMA-inspired evolution settings
+    evolution_llm_ideation_interval: int = 5   # LLM ideation every Nth meta-cycle
+    evolution_alma_iterate_interval: int = 5   # Iterate on archive every Nth evolution cycle
+
     # Update settings
     auto_update_check: bool = True
     github_owner: str = "aliveclaw"
