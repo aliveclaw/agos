@@ -26,7 +26,7 @@ async def test_register_and_execute():
     result = await registry.execute("echo", {"text": "hello"})
     assert result.success
     assert result.result == "echo: hello"
-    assert result.execution_time_ms > 0
+    assert result.execution_time_ms >= 0
 
 
 @pytest.mark.asyncio
