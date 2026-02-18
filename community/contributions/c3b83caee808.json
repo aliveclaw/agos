@@ -1,0 +1,1489 @@
+{
+  "instance_id": "c3b83caee808",
+  "agos_version": "0.1.0",
+  "contributed_at": "2026-02-18T09:05:54.616560",
+  "cycles_completed": 225,
+  "strategies_applied": [
+    {
+      "name": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through ...",
+      "module": "intent.personas",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15028v1",
+          "title": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through Privacy and Personalization"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:26:00.333485",
+      "applied_count": 1
+    },
+    {
+      "name": "Text Style Transfer with Parameter-efficient LLM Finetuning and R...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15013v1",
+          "title": "Text Style Transfer with Parameter-efficient LLM Finetuning and Round-trip Translation"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:26:52.567749",
+      "applied_count": 1
+    },
+    {
+      "name": "Boundary Point Jailbreaking of Black-Box LLMs",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15001v1",
+          "title": "Boundary Point Jailbreaking of Black-Box LLMs"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:28:30.440747",
+      "applied_count": 1
+    },
+    {
+      "name": "The Geometry of Alignment Collapse: When Fine-Tuning Breaks Safet...",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15799v1",
+          "title": "The Geometry of Alignment Collapse: When Fine-Tuning Breaks Safety"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:21:32.582817",
+      "applied_count": 1
+    },
+    {
+      "name": "Operationalising the Superficial Alignment Hypothesis via Task Co...",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15829v1",
+          "title": "Operationalising the Superficial Alignment Hypothesis via Task Complexity"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T03:01:21.350227",
+      "applied_count": 1
+    }
+  ],
+  "discovered_patterns": [
+    {
+      "name": "Adaptive Persona Tuner",
+      "module": "intent.personas",
+      "code_snippet": "class PersonaStats:\n    def __init__(self, name, budget, max_turns):\n        self.name = name\n        self.budget = budget\n        self.max_turns = max_turns\n        self.task_results = []\n    def record(self, success, tokens_used, turns_used):\n        self.task_results.append({\n            'success': success, 'tokens': tokens_used, 'turns': turns_used\n        })\n    def tune(self):\n        if len(self.task_results) < 3: return\n        recent = self.task_results[-5:]\n        avg_tokens = sum(r['",
+      "sandbox_output": "",
+      "source_paper": "2602.15028v1"
+    },
+    {
+      "name": "Intent Classifier",
+      "module": "intent",
+      "code_snippet": "import math\n\nINTENT_RULES = {\n    'research': ['search', 'find', 'look up', 'investigate', 'analyze'],\n    'code': ['write', 'implement', 'fix', 'refactor', 'build'],\n    'review': ['review', 'check', 'audit', 'inspect', 'validate'],\n    'monitor': ['watch', 'track', 'alert', 'detect', 'observe'],\n    'automate': ['schedule', 'trigger', 'automate', 'repeat', 'cron'],\n}\n\ndef classify_intent(text):\n    text_lower = text.lower()\n    scores = {}\n    for intent, keywords in INTENT_RULES.items():\n    ",
+      "sandbox_output": "Classified 4 intents correctly\nPASS: Intent classifier validated\n",
+      "source_paper": "2602.15001v1"
+    }
+  ],
+  "meta_evolution": {
+    "genomes": {
+      "knowledge.semantic": {
+        "component": "knowledge.semantic",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "temperature",
+            "current": null,
+            "default": 0.0,
+            "min_val": 0.0,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Softmax retrieval diversity"
+          },
+          {
+            "name": "track_access",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Access-based confidence tracking"
+          },
+          {
+            "name": "relevance_threshold",
+            "current": null,
+            "default": 0.01,
+            "min_val": 0.001,
+            "max_val": 0.1,
+            "param_type": "float",
+            "description": "Minimum cosine similarity for results"
+          },
+          {
+            "name": "confidence_decay_factor",
+            "current": null,
+            "default": 0.95,
+            "min_val": 0.8,
+            "max_val": 0.99,
+            "param_type": "float",
+            "description": "Confidence decay for unused knowledge"
+          },
+          {
+            "name": "confidence_decay_days",
+            "current": null,
+            "default": 30,
+            "min_val": 7,
+            "max_val": 90,
+            "param_type": "int",
+            "description": "Days inactive before decay kicks in"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T09:03:39.166226",
+        "mutations_applied": 0
+      },
+      "knowledge.graph": {
+        "component": "knowledge.graph",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "default_traversal_depth",
+            "current": 2,
+            "default": 1,
+            "min_val": 1,
+            "max_val": 4,
+            "param_type": "int",
+            "description": "Default neighbor traversal hops"
+          },
+          {
+            "name": "edge_weight_decay",
+            "current": 0.9919,
+            "default": 0.99,
+            "min_val": 0.9,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Weight decay per consolidation cycle"
+          }
+        ],
+        "fitness_score": 0.9249999999999999,
+        "last_evaluated": "2026-02-18T09:03:39.166294",
+        "mutations_applied": 2
+      },
+      "knowledge.consolidator": {
+        "component": "knowledge.consolidator",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "older_than_hours",
+            "current": 24,
+            "default": 24,
+            "min_val": 6,
+            "max_val": 168,
+            "param_type": "int",
+            "description": "Consolidate events older than N hours"
+          },
+          {
+            "name": "min_cluster_size",
+            "current": 6,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Minimum events to form a summary"
+          },
+          {
+            "name": "max_concurrent_writes",
+            "current": 4,
+            "default": 5,
+            "min_val": 1,
+            "max_val": 20,
+            "param_type": "int",
+            "description": "Semaphore limit for batch ops"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T09:03:39.166337",
+        "mutations_applied": 63
+      },
+      "knowledge.loom": {
+        "component": "knowledge.loom",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "use_layered_recall",
+            "current": true,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Priority-ordered layer retrieval"
+          },
+          {
+            "name": "recall_limit",
+            "current": 35,
+            "default": 10,
+            "min_val": 3,
+            "max_val": 50,
+            "param_type": "int",
+            "description": "Default recall result limit"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T09:03:39.166377",
+        "mutations_applied": 13
+      },
+      "intent.engine": {
+        "component": "intent.engine",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "default_strategy",
+            "current": null,
+            "default": "solo",
+            "min_val": null,
+            "max_val": null,
+            "param_type": "str",
+            "description": "Fallback coordination strategy"
+          },
+          {
+            "name": "max_intent_tokens",
+            "current": 800,
+            "default": 500,
+            "min_val": 200,
+            "max_val": 1500,
+            "param_type": "int",
+            "description": "Token limit for intent classification"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T09:03:39.166416",
+        "mutations_applied": 2
+      },
+      "intent.personas": {
+        "component": "intent.personas",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "researcher_budget",
+            "current": 350000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Researcher agent token budget"
+          },
+          {
+            "name": "coder_budget",
+            "current": 300000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Coder agent token budget"
+          },
+          {
+            "name": "orchestrator_budget",
+            "current": 300000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Orchestrator agent token budget"
+          },
+          {
+            "name": "researcher_max_turns",
+            "current": 15,
+            "default": 30,
+            "min_val": 5,
+            "max_val": 80,
+            "param_type": "int",
+            "description": "Researcher max turns"
+          },
+          {
+            "name": "coder_max_turns",
+            "current": 15,
+            "default": 40,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Coder max turns"
+          },
+          {
+            "name": "orchestrator_max_turns",
+            "current": 40,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Orchestrator max turns"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T09:03:39.166456",
+        "mutations_applied": 85
+      },
+      "orchestration.planner": {
+        "component": "orchestration.planner",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "parallel_threshold",
+            "current": 4,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Min subtasks to trigger parallel execution"
+          },
+          {
+            "name": "pipeline_max_agents",
+            "current": 4,
+            "default": 5,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Max agents in a pipeline"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T09:03:39.166495",
+        "mutations_applied": 2
+      },
+      "orchestration.runtime": {
+        "component": "orchestration.runtime",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "max_concurrent_agents",
+            "current": 29,
+            "default": 50,
+            "min_val": 5,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Max agents running simultaneously"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T09:03:39.166534",
+        "mutations_applied": 1
+      },
+      "policy.engine": {
+        "component": "policy.engine",
+        "layer": "Identity & Governance",
+        "params": [
+          {
+            "name": "default_max_tokens",
+            "current": null,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 1000000,
+            "param_type": "int",
+            "description": "Default agent token budget"
+          },
+          {
+            "name": "default_max_turns",
+            "current": null,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Default agent turn limit"
+          },
+          {
+            "name": "default_rate_limit",
+            "current": null,
+            "default": 60,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Tool calls per minute"
+          },
+          {
+            "name": "default_read_only",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Default read-only mode"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T09:03:39.166652",
+        "mutations_applied": 0
+      },
+      "events.bus": {
+        "component": "events.bus",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "history_limit",
+            "current": null,
+            "default": 500,
+            "min_val": 100,
+            "max_val": 5000,
+            "param_type": "int",
+            "description": "Max events in memory"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T09:03:39.166734",
+        "mutations_applied": 0
+      },
+      "events.tracing": {
+        "component": "events.tracing",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "max_traces",
+            "current": 57,
+            "default": 200,
+            "min_val": 50,
+            "max_val": 1000,
+            "param_type": "int",
+            "description": "Max traces retained"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T09:03:39.166776",
+        "mutations_applied": 1
+      }
+    },
+    "recent_mutations": [
+      {
+        "id": "e7a986edab59",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 450000,
+        "new_value": 350000,
+        "reason": "LLM: Reduce orchestrator budget from 450000 to 350000 to help address the 100% policy violation rate while maintaining coordination capability",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:44:07.582627"
+      },
+      {
+        "id": "08d408532678",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce researcher max turns from 25 to 15 to limit resource consumption and policy violations while keeping research effective",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:44:07.582665"
+      },
+      {
+        "id": "145ef4fa859d",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 8,
+        "reason": "LLM: Reduce consolidation threshold from 12 to 8 hours to process knowledge more frequently, supporting the high activity levels shown in signals",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:44:07.582688"
+      },
+      {
+        "id": "528889ca76c0",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 300000,
+        "new_value": 400000,
+        "reason": "LLM: Increase from 300k to 400k to provide more resources for research tasks, potentially reducing policy violations caused by resource constraints",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:48:28.401051"
+      },
+      {
+        "id": "58a73c814375",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: Increase from 15 to 25 turns to allow coding tasks to complete properly without hitting turn limits that may cause policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:48:28.401095"
+      },
+      {
+        "id": "26fff36ed037",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 8,
+        "new_value": 24,
+        "reason": "LLM: Increase consolidation threshold from 8 to 24 hours to reduce frequent consolidation overhead that may be impacting system performance",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:48:28.401123"
+      },
+      {
+        "id": "7cdbd45e09df",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 37,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:49:10.331692"
+      },
+      {
+        "id": "637a37b28077",
+        "component": "intent.engine",
+        "param_name": "max_intent_tokens",
+        "old_value": 459,
+        "new_value": 800,
+        "reason": "LLM: Current 459 tokens may be too restrictive given 100% policy violations, causing intents to be truncated and violate policies. Increasing to 800 allows more complete intent specification.",
+        "fitness_before": 0.25,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:54:10.469328"
+      },
+      {
+        "id": "31e430e487c1",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 37,
+        "new_value": 72,
+        "reason": "LLM: Current 37 hours may be too aggressive for consolidation given high activity levels (1.00). Increasing to 72 hours allows knowledge to mature more before consolidation, improving quality.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:54:10.469404"
+      },
+      {
+        "id": "6eed85cfd9b3",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: With perfect retrieval rates and high topic diversity, the current limit of 15 may be constraining recall breadth. Increasing to 25 allows richer context assembly while staying efficient.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:54:10.469441"
+      },
+      {
+        "id": "450ff850632f",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 72,
+        "new_value": 48,
+        "reason": "LLM: Reduce from 72 to 48 hours to consolidate knowledge more frequently, helping reduce policy violations by keeping knowledge more current and organized",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:04:13.258220"
+      },
+      {
+        "id": "a185b3515edc",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 10,
+        "reason": "LLM: Reduce from 15 to 10 turns to limit researcher exploration scope, preventing excessive resource usage that may be causing policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:04:13.258281"
+      },
+      {
+        "id": "34b993d5ef67",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 25,
+        "new_value": 20,
+        "reason": "LLM: Reduce from 25 to 20 turns to constrain coder execution cycles, helping prevent runaway processes that contribute to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:04:13.258313"
+      },
+      {
+        "id": "3fcd719c0bce",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 10,
+        "new_value": 6,
+        "reason": "LLM: Reduce researcher turn limit to prevent policy violations from excessive exploration cycles",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:08:22.100650"
+      },
+      {
+        "id": "e7207693fb49",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 20,
+        "new_value": 12,
+        "reason": "LLM: Constrain coder iterations to reduce policy violations from overly aggressive code generation",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:08:22.100701"
+      },
+      {
+        "id": "b9506959909a",
+        "component": "knowledge.consolidator",
+        "param_name": "min_cluster_size",
+        "old_value": 4,
+        "new_value": 6,
+        "reason": "LLM: Increase cluster size threshold to create more stable knowledge consolidation and reduce churn",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:08:22.100734"
+      },
+      {
+        "id": "9513382021b8",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 24,
+        "reason": "LLM: Reduce from 48 to 24 hours to consolidate knowledge more frequently, helping reduce policy violations by ensuring fresher, more relevant knowledge is available for decision-making",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:13:37.984888"
+      },
+      {
+        "id": "0bd33acdb105",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 350000,
+        "new_value": 450000,
+        "reason": "LLM: Increase orchestrator budget from 350000 to 450000 to give it more resources to coordinate between researcher and coder personas, potentially reducing policy violations through better oversight",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:13:37.984975"
+      },
+      {
+        "id": "54c9cb6ebf06",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 6,
+        "new_value": 8,
+        "reason": "LLM: Increase researcher max turns from 6 to 8 to allow more thorough analysis before action, which should help reduce policy violations by ensuring better informed decisions",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:13:37.985021"
+      },
+      {
+        "id": "2d66be514283",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 14,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:17:16.486773"
+      },
+      {
+        "id": "9859e0486998",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 3,
+        "new_value": 1,
+        "reason": "LLM: Policy violation rate of 1.00 suggests too many concurrent operations are bypassing controls - reducing to minimum concurrent writes should enforce better serialization and policy compliance",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:20:13.047435"
+      },
+      {
+        "id": "2fde8d9068ee",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 450000,
+        "new_value": 500000,
+        "reason": "LLM: With perfect knowledge retrieval but poor fitness, the orchestrator needs maximum budget to properly coordinate and enforce policies across the system",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:20:13.047542"
+      },
+      {
+        "id": "e42295cee8f9",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 8,
+        "new_value": 15,
+        "reason": "LLM: High activity level but poor performance suggests researchers need more turns to properly validate findings and ensure policy compliance before consolidation",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:20:13.047609"
+      },
+      {
+        "id": "b493214b885b",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 1,
+        "new_value": 8,
+        "reason": "LLM: Increase from 1 to 8 to reduce write bottlenecks that may be causing policy violations due to resource contention and delayed knowledge updates",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:27:21.684583"
+      },
+      {
+        "id": "858d1b9bd7da",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 500000,
+        "new_value": 350000,
+        "reason": "LLM: Reduce from 500000 to 350000 to force more disciplined resource allocation and reduce policy violations from excessive orchestrator spending",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:27:21.684645"
+      },
+      {
+        "id": "a2f52916a8ac",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: Increase from 15 to 25 turns to allow researchers more time to properly validate actions and reduce rushed decisions causing policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:27:21.684677"
+      },
+      {
+        "id": "84b01f9ae2ed",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 14,
+        "new_value": 8,
+        "reason": "LLM: Reduce consolidation delay to help manage the high policy violation rate by processing knowledge updates more frequently, allowing better policy compliance tracking",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:32:23.546517"
+      },
+      {
+        "id": "c5e5ee4a6eaa",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce researcher turn limit to prevent excessive exploration that may be contributing to policy violations while maintaining research capability",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:32:23.546596"
+      },
+      {
+        "id": "f47b93ac1672",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 350000,
+        "new_value": 200000,
+        "reason": "LLM: Reduce orchestrator budget to enforce tighter coordination and resource management, which should help reduce the 100% policy violation rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:32:23.546637"
+      },
+      {
+        "id": "167ce378b8d7",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 200000,
+        "new_value": 140329,
+        "reason": "Fitness 0.50 < 0.6, adjusting orchestrator_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:34:44.052497"
+      },
+      {
+        "id": "8d933f4af3b7",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 8,
+        "new_value": 24,
+        "reason": "LLM: Increase consolidation threshold to reduce write frequency and policy violations while maintaining knowledge quality",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:38:12.532041"
+      },
+      {
+        "id": "23a6b0f3a884",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 10,
+        "reason": "LLM: Reduce researcher turn limit to prevent excessive resource consumption that may be causing policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:38:12.532135"
+      },
+      {
+        "id": "50133d73163b",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 8,
+        "new_value": 4,
+        "reason": "LLM: Limit concurrent writes to reduce system load and potential write conflicts contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:38:12.532192"
+      },
+      {
+        "id": "e517c98037d8",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 45,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:39:54.552008"
+      },
+      {
+        "id": "2ba4d920ea40",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 140329,
+        "new_value": 300000,
+        "reason": "LLM: Low orchestrator budget (140329) compared to researcher (400000) and coder (250000) budgets likely causes poor coordination, contributing to 100% policy violation rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:42:36.523834"
+      },
+      {
+        "id": "8de7c4fc9b88",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 45,
+        "new_value": 24,
+        "reason": "LLM: Reduce from 45 to 24 hours to consolidate knowledge more frequently, helping maintain better system coherence and potentially reducing policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:42:36.523992"
+      },
+      {
+        "id": "367ffc05fda6",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 10,
+        "new_value": 15,
+        "reason": "LLM: Increase from 10 to 15 turns to allow more thorough research phases, which should improve decision quality and reduce policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:42:36.524027"
+      },
+      {
+        "id": "296dc76b4136",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 6,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:44:53.587890"
+      },
+      {
+        "id": "a8cba1fc99ca",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 12,
+        "reason": "LLM: Increase consolidation frequency to reduce memory pressure and policy violations by processing knowledge more regularly",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:47:36.268861"
+      },
+      {
+        "id": "51c3a7764099",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: Increase researcher turns to allow more thorough exploration and reduce rushed decisions that may cause policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:47:36.268898"
+      },
+      {
+        "id": "f86abf4f12b3",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 25,
+        "new_value": 35,
+        "reason": "LLM: Increase recall capacity to provide better context for decision-making and reduce policy violations from insufficient information",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:47:36.268920"
+      },
+      {
+        "id": "0bd8a70fda4d",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 400000,
+        "new_value": 450000,
+        "reason": "LLM: High policy violation rate suggests budget constraints are forcing suboptimal decisions. Increasing researcher budget allows more thorough analysis before acting.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:53:24.292602"
+      },
+      {
+        "id": "17007c4aebb1",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 250000,
+        "new_value": 400000,
+        "reason": "LLM: Significant budget increase for coder persona to enable more careful implementation and reduce policy violations through better code quality.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:53:24.292700"
+      },
+      {
+        "id": "b2b72ae7fbd1",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 40,
+        "reason": "LLM: More turns allow researcher to gather sufficient context and make informed decisions, reducing rushed actions that likely cause policy violations.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:53:24.292762"
+      },
+      {
+        "id": "28c079ae8bec",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 450000,
+        "new_value": 350000,
+        "reason": "LLM: Reduce researcher budget to limit resource consumption and decrease policy violations while keeping sufficient capacity for complex tasks",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:58:58.875771"
+      },
+      {
+        "id": "c634456b56f8",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 400000,
+        "new_value": 300000,
+        "reason": "LLM: Lower coder budget to reduce computational overhead and policy violations while maintaining adequate coding capability",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:58:58.875808"
+      },
+      {
+        "id": "027f4b376dc1",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 40,
+        "new_value": 25,
+        "reason": "LLM: Decrease researcher turn limit to prevent excessive iteration cycles that may be causing policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:58:58.875832"
+      },
+      {
+        "id": "58f41619aff0",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 24,
+        "reason": "LLM: Double consolidation delay to reduce aggressive knowledge processing that may be contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T09:03:44.108500"
+      },
+      {
+        "id": "34014e4f3d74",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce researcher turn limit to prevent excessive exploration that could trigger policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T09:03:44.108535"
+      },
+      {
+        "id": "5400792710a5",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 12,
+        "new_value": 15,
+        "reason": "LLM: Increase coder turn limit slightly to allow more thorough, compliant code generation while staying within policy bounds",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T09:03:44.108557"
+      }
+    ],
+    "timestamp": "2026-02-18T09:03:45.359881"
+  },
+  "meta_cycles_completed": 169,
+  "design_archive": {
+    "max_size": 50,
+    "temperature": 0.3,
+    "entries": [
+      {
+        "id": "9290d5f00a97",
+        "strategy_name": "Intent Classifier",
+        "module": "intent",
+        "code_hash": "4ac8e6acb747ea3a",
+        "code_snippet": "import math\n\nINTENT_RULES = {\n    'research': ['search', 'find', 'look up', 'investigate', 'analyze'],\n    'code': ['write', 'implement', 'fix', 'refactor', 'build'],\n    'review': ['review', 'check', 'audit', 'inspect', 'validate'],\n    'monitor': ['watch', 'track', 'alert', 'detect', 'observe'],\n    'automate': ['schedule', 'trigger', 'automate', 'repeat', 'cron'],\n}\n\ndef classify_intent(text):\n    text_lower = text.lower()\n    scores = {}\n    for intent, keywords in INTENT_RULES.items():\n        score = sum(1 for kw in keywords if kw in text_lower)\n        if score > 0:\n            scores[intent] = score\n    if not scores:\n        return 'unknown', 0.0\n    best = max(scores, key=scores.get)\n    conf = scores[best] / max(len(INTENT_RULES[best]), 1)\n    return best, round(conf, 3)\n\ntests = [\n    ('search for recent papers on memory', 'research'),\n    ('write a function to sort items', 'code'),\n    ('review the security audit logs', 'review'),\n    ('watch for anomalies and alert', 'monitor'),\n]\nfor text, expected in tests:\n    intent, conf = classify_intent(text)\n    assert intent == expected, f'{text!r}: got {intent}, expected {expected}'\nprint(f'Classified {len(tests)} intents correctly')\nprint('PASS: Intent classifier validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-17T21:28:30.442428"
+      },
+      {
+        "id": "5875ff8fd203",
+        "strategy_name": "Intent Classifier",
+        "module": "intent",
+        "code_hash": "4ac8e6acb747ea3a",
+        "code_snippet": "import math\n\nINTENT_RULES = {\n    'research': ['search', 'find', 'look up', 'investigate', 'analyze'],\n    'code': ['write', 'implement', 'fix', 'refactor', 'build'],\n    'review': ['review', 'check', 'audit', 'inspect', 'validate'],\n    'monitor': ['watch', 'track', 'alert', 'detect', 'observe'],\n    'automate': ['schedule', 'trigger', 'automate', 'repeat', 'cron'],\n}\n\ndef classify_intent(text):\n    text_lower = text.lower()\n    scores = {}\n    for intent, keywords in INTENT_RULES.items():\n        score = sum(1 for kw in keywords if kw in text_lower)\n        if score > 0:\n            scores[intent] = score\n    if not scores:\n        return 'unknown', 0.0\n    best = max(scores, key=scores.get)\n    conf = scores[best] / max(len(INTENT_RULES[best]), 1)\n    return best, round(conf, 3)\n\ntests = [\n    ('search for recent papers on memory', 'research'),\n    ('write a function to sort items', 'code'),\n    ('review the security audit logs', 'review'),\n    ('watch for anomalies and alert', 'monitor'),\n]\nfor text, expected in tests:\n    intent, conf = classify_intent(text)\n    assert intent == expected, f'{text!r}: got {intent}, expected {expected}'\nprint(f'Classified {len(tests)} intents correctly')\nprint('PASS: Intent classifier validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T02:21:32.587556"
+      },
+      {
+        "id": "e828978242a0",
+        "strategy_name": "Intent Classifier",
+        "module": "intent",
+        "code_hash": "4ac8e6acb747ea3a",
+        "code_snippet": "import math\n\nINTENT_RULES = {\n    'research': ['search', 'find', 'look up', 'investigate', 'analyze'],\n    'code': ['write', 'implement', 'fix', 'refactor', 'build'],\n    'review': ['review', 'check', 'audit', 'inspect', 'validate'],\n    'monitor': ['watch', 'track', 'alert', 'detect', 'observe'],\n    'automate': ['schedule', 'trigger', 'automate', 'repeat', 'cron'],\n}\n\ndef classify_intent(text):\n    text_lower = text.lower()\n    scores = {}\n    for intent, keywords in INTENT_RULES.items():\n        score = sum(1 for kw in keywords if kw in text_lower)\n        if score > 0:\n            scores[intent] = score\n    if not scores:\n        return 'unknown', 0.0\n    best = max(scores, key=scores.get)\n    conf = scores[best] / max(len(INTENT_RULES[best]), 1)\n    return best, round(conf, 3)\n\ntests = [\n    ('search for recent papers on memory', 'research'),\n    ('write a function to sort items', 'code'),\n    ('review the security audit logs', 'review'),\n    ('watch for anomalies and alert', 'monitor'),\n]\nfor text, expected in tests:\n    intent, conf = classify_intent(text)\n    assert intent == expected, f'{text!r}: got {intent}, expected {expected}'\nprint(f'Classified {len(tests)} intents correctly')\nprint('PASS: Intent classifier validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15829v1",
+        "created_at": "2026-02-18T03:01:21.354425"
+      },
+      {
+        "id": "da9394353e6a",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "9c0e7e5eab826c3d",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'examine', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|examine|research)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'evidence']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'code', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|program|code|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b', r'\\bmethod\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'algorithm']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'assess', 'evaluate', 'examine'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|assess|evaluate|examine)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard)\\b', r'\\bfor\\s+(anomalies|errors|issues)\\b'],\n                'context': ['anomalies', 'errors', 'performance', 'metrics', 'status', 'health']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine)\\b', r'\\bevery\\s+\\d+\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'routine']\n            }\n        }\n        \n    def _calculate_keyword_score(self, text_lower, intent_data):\n        return sum(1 for kw in intent_data['keywords'] if kw in text_lower)\n    \n    def _calculate_pattern_score(self, text_lower, intent_data):\n        score = 0\n        for pattern in intent_data['patterns']:\n            matches = len(re.findall(pattern, text_lower, re.IGNORECASE))\n            score += matches * 1.5  # Pattern matches weighted higher\n        return score\n    \n    def _calculate_context_score(self, text_lower, intent_data):\n        return sum(0.5 for ctx in intent_data['context'] if ctx in text_lower)\n    \n    def _calculate_confidence(self, score, max_possible_score):\n        if max_possible_score == 0:\n            return 0.0\n        # Use sigmoid function for smoother confidence scaling\n        normalized = score / max_possible_score\n        return round(1 / (1 + math.exp(-5 * (normalized - 0.5))), 3)\n    \n    def ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "9290d5f00a97",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T07:23:42.259839"
+      },
+      {
+        "id": "a875aeae6876",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "38058d9cca59c385",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict\n\nINTENT_RULES = {\n    'research': {\n        'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n        'patterns': [r'\\b(what|how|why|where|when)\\b', r'\\bfind.*about\\b', r'\\bresearch\\b', r'\\bpapers?\\b'],\n        'weight': 1.0\n    },\n    'code': {\n        'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'debug', 'optimize'],\n        'patterns': [r'\\bfunction\\b', r'\\bclass\\b', r'\\bcode\\b', r'\\bbug\\b', r'\\bapi\\b', r'\\balgorithm\\b'],\n        'weight': 1.2\n    },\n    'review': {\n        'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'assess', 'evaluate', 'test'],\n        'patterns': [r'\\breview\\b', r'\\baudit\\b', r'\\bcheck.*for\\b', r'\\bvalidate\\b', r'\\blogs?\\b'],\n        'weight': 1.1\n    },\n    'monitor': {\n        'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'scan', 'supervise', 'guard'],\n        'patterns': [r'\\bwatch.*for\\b', r'\\bmonitor\\b', r'\\balert\\b', r'\\banomali\\w+\\b', r'\\bmetrics?\\b'],\n        'weight': 1.0\n    },\n    'automate': {\n        'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'pipeline', 'workflow'],\n        'patterns': [r'\\bschedule\\b', r'\\bautomat\\w+\\b', r'\\btrigger\\b', r'\\bworkflow\\b', r'\\bpipeline\\b'],\n        'weight': 1.0\n    }\n}\n\nclass IntentClassifier:\n    def __init__(self):\n        self.rules = INTENT_RULES\n        self.compiled_patterns = {}\n        for intent, config in self.rules.items():\n            self.compiled_patterns[intent] = [re.compile(pattern, re.IGNORECASE) \n                                            for pattern in config['patterns']]\n    \n    def extract_features(self, text):\n        \"\"\"Extract various features from text for intent classification\"\"\"\n        features = {\n            'length': len(text.split()),\n            'has_question': '?' in text,\n            'has_imperative': text.strip().endswith(('!', '.')),\n            'word_count': len(text.split()),\n            'char_count': len(text)\n        }\n        return features\n    \n    def calculate_keyword_score(self, text, intent_config):\n        \"\"\"Calculate score based on keyword matches\"\"\"\n        text_lower = text.lower()\n        matches = sum(1 for kw in intent_config['keywords'] if kw in text_lower)\n        return matches / len(intent_config['keywords']) if intent_config['keywords'] else 0\n    \n    def calculate_pattern_score(self, text, intent):\n        \"\"\"Calculate score based on regex pattern matches\"\"\"\n        patterns = self.compiled_patterns.get(intent, [])\n        if not patterns:\n            return 0\n        matches = sum(1 for pattern in patterns if pattern.search(text))\n        return matches / len(patterns)\n    \n    def calculate_context_score(self, text, intent):\n        \"\"\"Calculate contextual score based on text features\"\"\"\n        features = self.extract_features(text)\n        contex",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "5875ff8fd203",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T07:24:03.928825"
+      },
+      {
+        "id": "f700b6759ad1",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "a32a4098ed82ead3",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|research)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'details']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug)\\b'],\n                'context': ['function', 'class', 'script', 'application', 'module', 'algorithm', 'bug', 'feature']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess|evaluate)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'performance']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'scan'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard|scan)\\b'],\n                'context': ['anomalies', 'changes', 'events', 'metrics', 'status', 'health', 'errors']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'periodic'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine|periodic)\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'deployment']\n            }\n        }\n        \n    def extract_features(self, text):\n        text_lower = text.lower()\n        features = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            # Keyword matching with position weighting\n            keyword_score = 0\n            for i, word in enumerate(text_lower.split()):\n                if word in config['keywords']:\n                    # Earlier words get higher weight\n                    position_weight = 1.0 / (1 + i * 0.1)\n                    keyword_score += position_weight\n            \n            # Pattern matching\n            pattern_score = 0\n            for pattern in config['patterns']:\n                matches = re.findall(pattern, text_lower)\n                pattern_score += len(matches) * 1.5\n            \n            # Context scoring\n            context_score = 0\n            for context_word in config['context']:\n                if context_word in text_lower:\n                    context_score += 0.8\n ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "e828978242a0",
+        "source_paper": "2602.15829v1",
+        "created_at": "2026-02-18T07:28:48.716954"
+      },
+      {
+        "id": "1949c4cc3572",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "4a9877e0e2418e89",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn'],\n                'patterns': [r'\\b(what|how|why|when|where)\\b', r'\\bpapers?\\b', r'\\bresearch\\b', r'\\bdata\\b'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'debug'],\n                'patterns': [r'\\bfunction\\b', r'\\bclass\\b', r'\\bcode\\b', r'\\bbug\\b', r'\\bapi\\b', r'\\bscript\\b'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess'],\n                'patterns': [r'\\breview\\b', r'\\baudit\\b', r'\\btest\\b', r'\\bquality\\b', r'\\bsecurity\\b'],\n                'weight': 1.1\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'scan', 'supervise'],\n                'patterns': [r'\\balert\\b', r'\\banomal\\w*\\b', r'\\bmetrics?\\b', r'\\blogs?\\b', r'\\bstatus\\b'],\n                'weight': 1.0\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'pipeline', 'workflow'],\n                'patterns': [r'\\bschedule\\b', r'\\bcron\\b', r'\\bautomat\\w*\\b', r'\\bworkflow\\b', r'\\bpipeline\\b'],\n                'weight': 1.3\n            }\n        }\n        \n    def _extract_features(self, text):\n        text_lower = text.lower()\n        words = re.findall(r'\\b\\w+\\b', text_lower)\n        word_count = Counter(words)\n        \n        features = {\n            'length': len(text),\n            'word_count': len(words),\n            'unique_words': len(set(words)),\n            'avg_word_length': sum(len(w) for w in words) / max(len(words), 1),\n            'question_words': sum(1 for w in words if w in ['what', 'how', 'why', 'when', 'where']),\n            'action_words': sum(1 for w in words if w in ['write', 'create', 'build', 'make', 'do']),\n        }\n        return features, text_lower, word_count\n    \n    def classify_intent(self, text):\n        if not text.strip():\n            return 'unknown', 0.0\n            \n        features, text_lower, word_count = self._extract_features(text)\n        scores = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            # Keyword matching with frequency weighting\n            keyword_score = 0\n            for keyword in config['keywords']:\n                if keyword in text_lower:\n                    # Weight by keyword frequency and inverse document frequency\n                    freq = text_lower.count(keyword)\n                    keyword_score += freq * (1 + math.log(len(keyword)))\n            \n            # ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "9290d5f00a97",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T07:32:29.773897"
+      },
+      {
+        "id": "31c2f57e58a7",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "fcac86e712d04269",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'examine', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|examine|research)\\b'],\n                'context': ['papers', 'data', 'information', 'results', 'literature', 'sources']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'module', 'algorithm']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise)\\b', r'\\bfor\\s+(anomalies|errors|issues)\\b'],\n                'context': ['anomalies', 'errors', 'performance', 'system', 'metrics', 'status']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine)\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'recurring']\n            }\n        }\n        \n    def _extract_features(self, text):\n        text_lower = text.lower()\n        features = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            # Keyword matching with position weighting\n            keyword_score = 0\n            for i, word in enumerate(text_lower.split()):\n                if word in config['keywords']:\n                    # Earlier words get higher weight\n                    position_weight = 1.0 / (1 + i * 0.1)\n                    keyword_score += position_weight\n            \n            # Pattern matching\n            pattern_score = 0\n            for pattern in config['patterns']:\n                matches = re.findall(pattern, text_lower)\n                pattern_score += len(matches) * 1.5\n            \n            # Context matching\n            context_score = 0\n            for context_word in config['context']:\n                if context_word in text_lower:\n                    context_score += 0.8\n ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "5875ff8fd203",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T07:32:55.871047"
+      },
+      {
+        "id": "d57748c9ae6b",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "58f05cf1ed0a5fc8",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|research)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'details']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program)\\b', r'\\b(function|class|method|script)\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'code', 'bug', 'error']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'performance', 'compliance', 'standards']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'scan'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|scan)\\b', r'\\b(anomal|error|issue|problem)\\w*\\b'],\n                'context': ['system', 'performance', 'errors', 'anomalies', 'metrics', 'status', 'health']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'pipeline', 'workflow'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|pipeline|workflow)\\b'],\n                'context': ['task', 'job', 'process', 'routine', 'recurring', 'periodic', 'automatic']\n            }\n        }\n    \n    def extract_features(self, text):\n        text_lower = text.lower()\n        features = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            # Keyword matching with position weighting\n            for i, word in enumerate(text_lower.split()):\n                if word in config['keywords']:\n                    # Earlier words get higher weight\n                    position_weight = 1.0 - (i * 0.1)\n                    features[f'{intent}_keyword'] += max(0.1, position_weight)\n            \n            # Pattern matching\n            for pattern in config['patterns']:\n                matches = len(re.findall(pattern, text_lower))\n                features[f'{intent}_pattern'] += matches * 1.5\n            \n            # Context matching\n            context_score = sum(1 for ctx in config['context'] if ctx in text_lower)\n            features[f'{int",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "e828978242a0",
+        "source_paper": "2602.15829v1",
+        "created_at": "2026-02-18T07:37:45.794739"
+      },
+      {
+        "id": "2394d188e03e",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "3521941807d61bc3",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|learn|examine)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'details']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'module', 'algorithm']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'assess', 'evaluate', 'examine'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|assess|evaluate|examine)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'performance']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard)\\b', r'\\bfor\\s+(anomalies|changes|issues)\\b'],\n                'context': ['anomalies', 'changes', 'issues', 'errors', 'performance', 'system', 'metrics']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'periodic'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine|periodic)\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'routine']\n            }\n        }\n        \n    def extract_features(self, text):\n        text_lower = text.lower()\n        features = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            # Keyword matching with position weighting\n            for i, word in enumerate(text_lower.split()):\n                if word in config['keywords']:\n                    # Earlier words get higher weight\n                    position_weight = 1.0 / (i + 1) * 0.5 + 0.5\n                    features[f'{intent}_keyword'] += position_weight\n            \n            # Pattern matching\n            for pattern in config['patterns']:\n                matches = len(re.findall(pattern, text_lower))\n                features[f'{intent}_pattern'] += matches * 1.5\n            \n            # Context matching\n            for context_word in config['context']:\n                if context_word in text_lower:\n                    features[f'{int",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "9290d5f00a97",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T07:38:06.045780"
+      },
+      {
+        "id": "2506ef03f176",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "82dd221c2520ac44",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|research)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'articles', 'sources']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug)\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'module', 'bug', 'feature']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess|evaluate)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards', 'requirements']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'scan'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard|scan)\\b'],\n                'context': ['anomalies', 'changes', 'performance', 'errors', 'metrics', 'status', 'health']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'workflow'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine|workflow)\\b'],\n                'context': ['task', 'job', 'process', 'pipeline', 'deployment', 'backup', 'maintenance']\n            }\n        }\n        \n    def extract_features(self, text):\n        text_lower = text.lower()\n        features = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            # Keyword matching with position weighting\n            keyword_score = 0\n            for i, word in enumerate(text_lower.split()):\n                if word in config['keywords']:\n                    # Earlier words get higher weight\n                    position_weight = 1.0 / (1 + i * 0.1)\n                    keyword_score += position_weight\n            \n            # Pattern matching\n            pattern_score = 0\n            for pattern in config['patterns']:\n                matches = re.findall(pattern, text_lower)\n                pattern_score += len(matches) * 1.5\n            \n            # Context matching\n            context_score = 0\n            for context_word in config['context']:\n                if context_word in text_lower:\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "9290d5f00a97",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T07:42:13.272342"
+      },
+      {
+        "id": "63c1ac008f98",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "ccb655e37a446b1f",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|learn)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'details']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'code'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|program|code)\\b', r'\\bfunction\\b', r'\\bclass\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'software']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard)\\b', r'\\bfor\\s+(anomalies|changes|issues)\\b'],\n                'context': ['anomalies', 'changes', 'issues', 'performance', 'system', 'metrics']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine)\\b', r'\\bevery\\s+\\w+\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'routine']\n            }\n        }\n    \n    def extract_features(self, text):\n        text_lower = text.lower()\n        features = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            # Keyword matching with position weighting\n            for i, word in enumerate(text_lower.split()):\n                if word in config['keywords']:\n                    # Earlier words get higher weight\n                    position_weight = 1.0 / (1 + i * 0.1)\n                    features[f'{intent}_keyword'] += position_weight\n            \n            # Pattern matching\n            for pattern in config['patterns']:\n                matches = len(re.findall(pattern, text_lower))\n                features[f'{intent}_pattern'] += matches * 1.5\n            \n            # Context scoring\n            context_score = sum(1 for ctx in config['context'] if ctx in text_lower)\n            features[f'{intent}_context'] += context_score * 0.8\n        \n        return features\n    \n    def classify_intent(",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "e828978242a0",
+        "source_paper": "2602.15829v1",
+        "created_at": "2026-02-18T07:47:58.084288"
+      },
+      {
+        "id": "fdfa8cee69f6",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "9d7c97f3cbc9a1f2",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n                'phrases': [r'search for', r'look up', r'find out', r'research on', r'analyze the', r'investigate'],\n                'context': ['papers', 'information', 'data', 'results', 'literature', 'sources']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'phrases': [r'write a', r'implement', r'build a', r'create a', r'fix the', r'refactor'],\n                'context': ['function', 'class', 'module', 'script', 'application', 'bug', 'error']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'phrases': [r'review the', r'check for', r'audit', r'inspect', r'validate'],\n                'context': ['logs', 'code', 'security', 'performance', 'quality', 'compliance']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard'],\n                'phrases': [r'watch for', r'track', r'monitor', r'detect', r'alert on'],\n                'context': ['anomalies', 'changes', 'errors', 'performance', 'system', 'metrics']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'phrases': [r'schedule', r'automate', r'set up', r'trigger when', r'run automatically'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'routine']\n            }\n        }\n        \n    def _calculate_keyword_score(self, text, intent_data):\n        text_lower = text.lower()\n        keyword_matches = sum(1 for kw in intent_data['keywords'] if kw in text_lower)\n        return keyword_matches / len(intent_data['keywords'])\n    \n    def _calculate_phrase_score(self, text, intent_data):\n        text_lower = text.lower()\n        phrase_matches = sum(1 for pattern in intent_data['phrases'] \n                           if re.search(pattern, text_lower))\n        return phrase_matches / len(intent_data['phrases']) if intent_data['phrases'] else 0\n    \n    def _calculate_context_score(self, text, intent_data):\n        text_lower = text.lower()\n        context_matches = sum(1 for ctx in intent_data['context'] if ctx in text_lower)\n        return context_matches / len(intent_data['context']) if intent_data['context'] else 0\n    \n    def _calculate_composite_score(self, text, intent_data):\n        keyword_score = self._calculate_keyword_score(text, intent_data)\n        phrase_score = self._calculate_phrase_score(text, i",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "9290d5f00a97",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T07:48:19.823215"
+      },
+      {
+        "id": "bb365141f5f4",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "d0dde69da5e84e7f",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn'],\n                'patterns': [r'\\b(what|how|why|when|where)\\b', r'\\bpapers?\\b', r'\\bresearch\\b', r'\\bstudy\\b'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'debug'],\n                'patterns': [r'\\bfunction\\b', r'\\bclass\\b', r'\\bcode\\b', r'\\bscript\\b', r'\\bbug\\b', r'\\berror\\b'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess'],\n                'patterns': [r'\\breview\\b', r'\\baudit\\b', r'\\bcheck\\b', r'\\bvalidate\\b'],\n                'weight': 1.1\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'scan', 'surveillance'],\n                'patterns': [r'\\bwatch\\b', r'\\bmonitor\\b', r'\\balert\\b', r'\\banomal\\w+\\b', r'\\bdetect\\b'],\n                'weight': 1.0\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'periodic'],\n                'patterns': [r'\\bschedule\\b', r'\\bautomat\\w+\\b', r'\\bcron\\b', r'\\bbatch\\b', r'\\broutine\\b'],\n                'weight': 1.3\n            }\n        }\n        \n    def _calculate_keyword_score(self, text_lower, intent_data):\n        keywords = intent_data['keywords']\n        score = 0\n        for keyword in keywords:\n            if keyword in text_lower:\n                # Bonus for exact word boundaries\n                if re.search(rf'\\b{re.escape(keyword)}\\b', text_lower):\n                    score += 1.5\n                else:\n                    score += 1.0\n        return score\n    \n    def _calculate_pattern_score(self, text_lower, intent_data):\n        patterns = intent_data['patterns']\n        score = 0\n        for pattern in patterns:\n            matches = len(re.findall(pattern, text_lower, re.IGNORECASE))\n            score += matches * 2.0  # Pattern matches are weighted higher\n        return score\n    \n    def _calculate_context_bonus(self, text_lower, intent):\n        bonus = 0\n        # Context-aware bonuses\n        if intent == 'code' and any(word in text_lower for word in ['python', 'javascript', 'java', 'c++', 'function', 'method']):\n            bonus += 0.5\n        elif intent == 'research' and any(word in text_lower for word in ['paper', 'article', 'study', 'research', 'academic']):\n            bonus += 0.5\n        elif intent == 'monitor' and any(word in text_lower for word in ['system', 'log', 'error', 'performance']):\n            bonus += 0.5\n        return bonus\n    \n    def class",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "5875ff8fd203",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T07:53:44.501076"
+      },
+      {
+        "id": "86723319e6a6",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "798aa756b2f43cbb",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n                'phrases': [r'search for', r'look up', r'find out', r'research on', r'analyze the', r'investigate'],\n                'context': ['papers', 'information', 'data', 'results', 'literature', 'sources'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'phrases': [r'write a', r'implement', r'build a', r'create a', r'fix the', r'refactor'],\n                'context': ['function', 'class', 'module', 'script', 'application', 'bug', 'error'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'phrases': [r'review the', r'check for', r'audit', r'inspect', r'validate'],\n                'context': ['logs', 'code', 'security', 'performance', 'quality', 'compliance'],\n                'weight': 0.9\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard'],\n                'phrases': [r'watch for', r'track', r'monitor', r'detect', r'alert on'],\n                'context': ['anomalies', 'changes', 'errors', 'performance', 'system', 'metrics'],\n                'weight': 1.1\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'phrases': [r'schedule', r'automate', r'set up', r'trigger when', r'run automatically'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'routine'],\n                'weight': 1.3\n            }\n        }\n        self.confidence_threshold = 0.3\n        self.learning_history = defaultdict(list)\n        \n    def _calculate_keyword_score(self, text, keywords):\n        text_lower = text.lower()\n        matches = sum(1 for keyword in keywords if keyword in text_lower)\n        return matches / len(keywords) if keywords else 0\n    \n    def _calculate_phrase_score(self, text, phrases):\n        text_lower = text.lower()\n        matches = sum(1 for phrase in phrases if re.search(phrase, text_lower))\n        return matches / len(phrases) if phrases else 0\n    \n    def _calculate_context_score(self, text, context_words):\n        text_lower = text.lower()\n        matches = sum(1 for word in context_words if word in text_lower)\n        return matches / len(context_words) if context_words else 0\n    \n    def _calculate_semantic_similarity(self, text, intent):\n        words = re.findall(r'\\b\\w+\\b', t",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "fdfa8cee69f6",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T08:00:32.024865"
+      },
+      {
+        "id": "7d3291ffdfe2",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "5774acd616752934",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine', 'query', 'retrieve'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|research|query|retrieve)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'details', 'documentation', 'sources'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug', 'compile', 'deploy'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug|compile|deploy)\\b'],\n                'context': ['function', 'class', 'script', 'application', 'module', 'algorithm', 'bug', 'feature', 'api', 'library'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate', 'test'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess|evaluate|test)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'performance', 'results', 'output'],\n                'weight': 1.1\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'scan', 'notify'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard|scan|notify)\\b'],\n                'context': ['anomalies', 'changes', 'events', 'metrics', 'status', 'health', 'errors', 'performance'],\n                'weight': 1.0\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'periodic', 'orchestrate'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine|periodic|orchestrate)\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'deployment', 'execution'],\n                'weight': 1.3\n            }\n        }\n        self.confidence_threshold = 0.3\n        self.learning_buffer = defaultdict(list)\n    \n    def classify(self, text):\n        text_lower = text.lower()\n        scores = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            score = 0.0\n            \n            # Keyword matching with TF-IDF-like scoring\n            keyword_count = sum(1 for keyword in config['keywords'] if keyword in text_lower)\n            if keyword_count > 0:\n                score += (keyword_count / len(config['keywords'])) * 2.0\n            \n            # Pattern matching with re",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "f700b6759ad1",
+        "source_paper": "2602.15829v1",
+        "created_at": "2026-02-18T08:01:19.044497"
+      },
+      {
+        "id": "6e01f2feb42f",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "5e3dad5e131cd6aa",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'examine', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|examine|research)\\b'],\n                'context': ['papers', 'data', 'information', 'results', 'literature', 'sources'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'module', 'algorithm'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards'],\n                'weight': 0.9\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise)\\b', r'\\bfor\\s+(anomalies|errors|issues)\\b'],\n                'context': ['anomalies', 'errors', 'performance', 'system', 'metrics', 'status'],\n                'weight': 1.1\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine)\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'recurring'],\n                'weight': 1.3\n            }\n        }\n        self.confidence_threshold = 0.3\n        self.learning_history = defaultdict(list)\n    \n    def classify(self, text):\n        text_lower = text.lower()\n        scores = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            score = 0.0\n            \n            # Keyword matching with TF-IDF weighting\n            keyword_matches = sum(1 for keyword in config['keywords'] if keyword in text_lower)\n            if keyword_matches > 0:\n                score += (keyword_matches / len(config['keywords'])) * 2.0\n            \n            # Pattern matching\n            for pattern in config['patterns']:\n                matches = len(re.findall(pattern, text_lower, re.IGNORECASE))\n                score += matches * 1.5\n            \n            # Context scoring\n            context_ma",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "31c2f57e58a7",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T08:05:08.735368"
+      },
+      {
+        "id": "b1a0d40181b7",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "7637adaff5230020",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\nfrom typing import Dict, List, Tuple, Optional\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'examine', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|examine|research)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'evidence'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'code', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|program|code|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b', r'\\bmethod\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'algorithm'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'assess', 'evaluate', 'examine'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|assess|evaluate|examine)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards'],\n                'weight': 0.9\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard)\\b', r'\\bfor\\s+(anomalies|errors|issues)\\b'],\n                'context': ['anomalies', 'errors', 'performance', 'metrics', 'status', 'health'],\n                'weight': 1.1\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine)\\b', r'\\bevery\\s+\\d+\\b'],\n                'context': ['task', 'workflow', 'pipeline', 'job', 'process'],\n                'weight': 1.3\n            }\n        }\n        self.history = []\n        self.confidence_threshold = 0.6\n        \n    def preprocess_text(self, text: str) -> str:\n        \"\"\"Clean and normalize input text\"\"\"\n        text = text.lower().strip()\n        text = re.sub(r'[^\\w\\s]', ' ', text)\n        text = re.sub(r'\\s+', ' ', text)\n        return text\n    \n    def calculate_intent_score(self, text: str, intent_data: Dict) -> float:\n        \"\"\"Calculate weighted score for a specific intent\"\"\"\n        score = 0.0\n        text_lower = text.lower()\n        \n        # Keyword matching with TF-IDF-like scoring\n        keyword_score = 0\n        for keyword in intent_data['keywords']:\n            count = text_lower.count(keyword.lower())\n            if count > 0:\n       ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "da9394353e6a",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T08:05:33.044384"
+      },
+      {
+        "id": "5a2723dbdf99",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "7734274145e16f7e",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|research)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'literature', 'articles']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program)\\b', r'\\b(function|class|method|script)\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'bug', 'feature']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'performance']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'scan'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|scan)\\b'],\n                'context': ['anomalies', 'changes', 'errors', 'performance', 'system', 'metrics', 'status']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch)\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'routine', 'recurring']\n            }\n        }\n        \n    def extract_features(self, text):\n        text_lower = text.lower()\n        features = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            # Keyword matching with position weighting\n            keyword_score = 0\n            for i, word in enumerate(text_lower.split()):\n                if word in config['keywords']:\n                    # Earlier words get higher weight\n                    position_weight = 1.0 / (i + 1) if i < 5 else 0.5\n                    keyword_score += position_weight\n            \n            # Pattern matching\n            pattern_score = 0\n            for pattern in config['patterns']:\n                matches = re.findall(pattern, text_lower)\n                pattern_score += len(matches) * 1.5\n            \n            # Context scoring\n            context_score = 0\n            for context_word in config['context']:\n                if context_word in text_lower:\n                    context_score += 0.8\n           ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "5875ff8fd203",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T08:10:36.362906"
+      },
+      {
+        "id": "6e7190c52f59",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "e18f291947b94b7c",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine', 'query', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|learn|examine|query|research)\\b', r'\\bwhat\\s+is\\b', r'\\bhow\\s+to\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'details', 'documentation', 'articles'],\n                'weight': 1.2\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug', 'compile'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug|compile)\\b', r'\\bfunction\\b', r'\\bclass\\b', r'\\bdef\\s+\\w+\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'module', 'algorithm', 'library'],\n                'weight': 1.1\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'assess', 'evaluate', 'examine', 'test'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|assess|evaluate|examine|test)\\b', r'\\bquality\\s+check\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'performance', 'standards'],\n                'weight': 1.0\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'scan'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard|scan)\\b', r'\\bfor\\s+(anomalies|changes|issues)\\b'],\n                'context': ['anomalies', 'changes', 'issues', 'errors', 'performance', 'system', 'metrics', 'health'],\n                'weight': 1.3\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'periodic', 'workflow'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine|periodic|workflow)\\b', r'\\bevery\\s+\\d+\\b'],\n                'context': ['task', 'job', 'process', 'pipeline', 'deployment', 'backup', 'maintenance'],\n                'weight': 1.1\n            }\n        }\n        self.confidence_threshold = 0.3\n        self.context_boost = 0.2\n        \n    def preprocess_text(self, text):\n        \"\"\"Clean and normalize input text\"\"\"\n        text = text.lower().strip()\n        text = re.sub(r'[^\\w\\s]', ' ', text)\n        text = re.sub(r'\\s+', ' ', text)\n        return text\n    \n    def calculate_intent_score(self, text, intent_data):\n        \"\"\"Calculate weighted score for an intent\"\"\"\n        score = 0.0\n        text_words = set(text.split())\n        \n       ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "2394d188e03e",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T08:24:13.587642"
+      },
+      {
+        "id": "555d0756e3d1",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "cc72f53b841200f9",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'examine', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|examine|research)\\b'],\n                'context': ['papers', 'data', 'information', 'results', 'literature', 'sources'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'module', 'algorithm'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards'],\n                'weight': 0.9\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise)\\b', r'\\bfor\\s+(anomalies|errors|issues)\\b'],\n                'context': ['anomalies', 'errors', 'performance', 'system', 'metrics', 'status'],\n                'weight': 1.1\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine)\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'recurring'],\n                'weight': 1.3\n            }\n        }\n        self.confidence_threshold = 0.3\n        self.learning_history = defaultdict(list)\n    \n    def classify_intent(self, text):\n        text_lower = text.lower()\n        scores = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            score = 0.0\n            \n            # Keyword matching with TF-IDF-like scoring\n            keyword_matches = sum(1 for keyword in config['keywords'] if keyword in text_lower)\n            if keyword_matches > 0:\n                score += (keyword_matches / len(config['keywords'])) * 2.0\n            \n            # Pattern matching with regex\n            pattern_matches = 0\n            for pattern in config['patterns']:\n                matches = len(re.findall(pattern, text_lower, re.IGNORECASE))\n                pattern_matches += matches\n        ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "31c2f57e58a7",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T08:24:33.175728"
+      },
+      {
+        "id": "d84261bdca9d",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "4d69526f12e18c53",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\nimport json\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'examine', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|examine|research)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'evidence'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'code', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|program|code|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b', r'\\bmethod\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'algorithm'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'assess', 'evaluate', 'examine'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|assess|evaluate|examine)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards'],\n                'weight': 1.1\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard)\\b', r'\\bfor\\s+(anomalies|errors|issues)\\b'],\n                'context': ['anomalies', 'errors', 'performance', 'metrics', 'status', 'health'],\n                'weight': 1.0\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine)\\b', r'\\bevery\\s+\\d+\\b'],\n                'context': ['task', 'workflow', 'pipeline', 'job', 'process'],\n                'weight': 1.3\n            }\n        }\n        self.confidence_threshold = 0.3\n        self.learning_history = defaultdict(list)\n        \n    def classify(self, text):\n        \"\"\"Classify intent with confidence scoring and context awareness\"\"\"\n        text_lower = text.lower()\n        scores = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            score = 0.0\n            \n            # Keyword matching with TF-IDF-like scoring\n            keyword_matches = sum(1 for keyword in config['keywords'] if keyword in text_lower)\n            if keyword_matches > 0:\n                score += (keyword_matches / len(config['keywords'])) * 0.4\n            \n            # Pattern matching with regex\n            pattern_matches = 0\n            for pattern in config[",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "da9394353e6a",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T08:28:24.393016"
+      },
+      {
+        "id": "244948eea851",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "b6472ee398bc6124",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'research', 'query'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|learn|research|query)\\b', r'\\bwhat\\s+is\\b', r'\\bhow\\s+to\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'details', 'documentation', 'sources'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'code', 'debug', 'compile'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|program|code|debug|compile)\\b', r'\\bfunction\\b', r'\\bclass\\b', r'\\b\\w+\\.(py|js|java|cpp)\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'software', 'algorithm', 'library'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess|evaluate)\\b', r'\\bcode\\s+review\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards', 'pull request', 'merge'],\n                'weight': 0.9\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'notify'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard|notify)\\b', r'\\bfor\\s+(anomalies|changes|issues|errors)\\b'],\n                'context': ['anomalies', 'changes', 'issues', 'performance', 'system', 'metrics', 'health', 'status'],\n                'weight': 1.1\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'pipeline'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine|pipeline)\\b', r'\\bevery\\s+\\w+\\b', r'\\bat\\s+\\d+:\\d+\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'routine', 'deployment', 'ci/cd'],\n                'weight': 1.0\n            }\n        }\n        self.confidence_threshold = 0.3\n        \n    def preprocess_text(self, text):\n        \"\"\"Clean and normalize input text\"\"\"\n        text = text.lower().strip()\n        text = re.sub(r'[^\\w\\s\\-\\.\\:/]', ' ', text)\n        text = re.sub(r'\\s+', ' ', text)\n        return text\n    \n    def calculate_intent_score(self, text, intent_data):\n        \"\"\"Calculate weighted score for a specific intent\"\"\"\n        score = 0.0\n        text_lower = text.lower()\n        \n        # Ke",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "63c1ac008f98",
+        "source_paper": "2602.15829v1",
+        "created_at": "2026-02-18T08:34:16.978336"
+      },
+      {
+        "id": "2fb2bc1ac491",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "e27af19afeeb7152",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|research)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'literature', 'articles'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program)\\b', r'\\b(function|class|method|script)\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'bug', 'feature'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'performance'],\n                'weight': 0.9\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'scan'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|scan)\\b'],\n                'context': ['anomalies', 'changes', 'errors', 'performance', 'system', 'metrics', 'status'],\n                'weight': 1.1\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch)\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'routine', 'recurring'],\n                'weight': 1.3\n            }\n        }\n        self.confidence_threshold = 0.3\n        self.context_boost = 0.2\n        \n    def classify(self, text):\n        \"\"\"Classify intent from input text with confidence scoring\"\"\"\n        text_lower = text.lower()\n        intent_scores = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            score = 0.0\n            \n            # Keyword matching with TF-IDF-like scoring\n            keyword_matches = sum(1 for keyword in config['keywords'] if keyword in text_lower)\n            if keyword_matches > 0:\n                score += (keyword_matches / len(config['keywords'])) * config['weight']\n            \n            # Pattern matching with regex\n            pattern_matches = 0\n            for pattern in config['patterns']:\n                matches = len(re.findall(pattern, text_lower, re.IGNORECASE))\n ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "5a2723dbdf99",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T08:34:36.773584"
+      },
+      {
+        "id": "8054d0ffd75f",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "cd52af7064276e97",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine', 'query', 'retrieve'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|research|query|retrieve)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'articles', 'sources', 'database', 'web', 'literature']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug', 'compile', 'deploy'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug|compile|deploy)\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'module', 'bug', 'feature', 'api', 'library']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate', 'test'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess|evaluate|test)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards', 'requirements', 'documentation']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'scan', 'measure'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard|scan|measure)\\b'],\n                'context': ['anomalies', 'changes', 'performance', 'errors', 'metrics', 'status', 'health', 'system', 'network']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'workflow', 'orchestrate'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine|workflow|orchestrate)\\b'],\n                'context': ['task', 'job', 'process', 'pipeline', 'deployment', 'backup', 'maintenance', 'integration']\n            }\n        }\n        self.confidence_weights = {\n            'keyword_match': 0.4,\n            'pattern_match': 0.3,\n            'context_match': 0.2,\n            'semantic_boost': 0.1\n        }\n        self.learning_history = defaultdict(list)\n    \n    def preprocess_text(self, text):\n        \"\"\"Clean and normalize input text\"\"\"\n        text = text.lower().strip()\n        text = re.sub(r'[^\\w\\s]', ' ', text)\n        text = re.sub(r'\\s+', ' ', text)\n        return text\n    \n    def calculate_intent_score(self, text, intent_data):\n        \"\"\"Calculate confidence score for a specific intent\"\"\"\n        scores = {}\n        words = text.split()\n        \n        # Keyword matching with TF weighting\n        keyword_matche",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "2506ef03f176",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T08:39:19.188397"
+      },
+      {
+        "id": "d61ee716831e",
+        "strategy_name": "Intent Classifier_gen1_gen2_gen3",
+        "module": "intent",
+        "code_hash": "210ae59e07bed885",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\nfrom typing import Dict, List, Tuple, Optional, Set\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'lookup', 'investigate', 'analyze', 'study', 'explore', 'discover', 'examine', 'research', 'query', 'retrieve'],\n                'patterns': [r'\\b(search|find|look\\s*up|investigate|analyze|study|explore|discover|examine|research|query|retrieve)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'evidence', 'documentation', 'sources'],\n                'weight': 1.0,\n                'negatives': ['implement', 'build', 'create']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'code', 'debug', 'compile', 'deploy'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|program|code|debug|compile|deploy)\\b', r'\\b(function|class|method|api)\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'algorithm', 'library', 'framework'],\n                'weight': 1.3,\n                'negatives': ['review', 'analyze', 'search']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'assess', 'evaluate', 'examine', 'test'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|assess|evaluate|examine|test)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards', 'performance', 'results'],\n                'weight': 0.9,\n                'negatives': ['create', 'build', 'implement']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'scan'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard|scan)\\b', r'\\bfor\\s+(anomalies|errors|issues|changes)\\b'],\n                'context': ['anomalies', 'errors', 'performance', 'metrics', 'status', 'health', 'system', 'network'],\n                'weight': 1.1,\n                'negatives': ['create', 'build']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'pipeline', 'workflow'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|pipeline|workflow)\\b', r'\\bevery\\s+\\d+'],\n                'context': ['task', 'job', 'process', 'routine', 'interval', 'periodic'],\n                'weight': 1.2,\n                'negatives': ['manual', 'interactive']\n            }\n        }\n        self.confidence_threshold = 0.3\n        self.word_cache = {}\n        \n    def preprocess_text(self, text: str) -> str:\n        \"\"\"Clean and normalize input text\"\"\"\n        text = text.lower().strip",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 3,
+        "parent_id": "b1a0d40181b7",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T08:39:52.438068"
+      },
+      {
+        "id": "14a142519355",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "5fa3f00bacd3a2fe",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\nimport json\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'examine', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|examine|research)\\b'],\n                'context': ['papers', 'data', 'information', 'results', 'literature', 'sources'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'module', 'algorithm'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards'],\n                'weight': 0.9\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise)\\b', r'\\bfor\\s+(anomalies|errors|issues)\\b'],\n                'context': ['anomalies', 'errors', 'performance', 'system', 'metrics', 'status'],\n                'weight': 1.1\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine)\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'recurring'],\n                'weight': 1.3\n            }\n        }\n        self.learning_data = defaultdict(list)\n        self.confidence_threshold = 0.6\n    \n    def classify(self, text):\n        text_lower = text.lower()\n        scores = defaultdict(float)\n        \n        for intent, config in self.intent_patterns.items():\n            score = 0.0\n            \n            # Keyword matching with TF-IDF-like scoring\n            keyword_matches = sum(1 for keyword in config['keywords'] if keyword in text_lower)\n            if keyword_matches > 0:\n                score += (keyword_matches / len(config['keywords'])) * 2.0\n            \n            # Pattern matching\n            pattern_matches = 0\n            for pattern in config['patterns']:\n                if re.search(pattern, text_lower, re.IGNORECASE):\n                    pattern_matches += 1\n            if pattern_matches ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "31c2f57e58a7",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T08:43:33.260070"
+      },
+      {
+        "id": "f30634245a41",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "2e42fdfcf6e9e1a0",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|learn|research)\\b', r'\\bwhat\\s+is\\b', r'\\bhow\\s+to\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'details', 'documentation', 'articles'],\n                'weight': 1.2\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'code', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|program|code|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b', r'\\bapi\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'software', 'bug', 'feature'],\n                'weight': 1.3\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess|evaluate)\\b', r'\\bcode\\s+review\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards', 'pull request', 'merge'],\n                'weight': 1.1\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'notify'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard|notify)\\b', r'\\bfor\\s+(anomalies|changes|issues)\\b'],\n                'context': ['anomalies', 'changes', 'issues', 'performance', 'system', 'metrics', 'health', 'status'],\n                'weight': 1.0\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'deploy'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine|deploy)\\b', r'\\bevery\\s+\\w+\\b', r'\\bci/cd\\b'],\n                'context': ['task', 'job', 'process', 'workflow', 'pipeline', 'routine', 'deployment', 'build'],\n                'weight': 1.1\n            }\n        }\n        self.confidence_threshold = 0.3\n        self.context_boost = 0.2\n        \n    def preprocess_text(self, text):\n        \"\"\"Clean and normalize input text\"\"\"\n        text = text.lower().strip()\n        text = re.sub(r'[^\\w\\s]', ' ', text)\n        text = re.sub(r'\\s+', ' ', text)\n        return text\n    \n    def calculate_intent_score(self, text, intent_data):\n        \"\"\"Calculate weighted score for a specific intent\"\"\"\n        score = 0.0\n        text_words = set(text.split())\n        \n        # Keyword matching with TF weighting\n        key",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "63c1ac008f98",
+        "source_paper": "2602.15829v1",
+        "created_at": "2026-02-18T08:56:22.256878"
+      },
+      {
+        "id": "a0f76a2eeaa3",
+        "strategy_name": "Intent Classifier_gen1",
+        "module": "intent",
+        "code_hash": "15576096dbfe20cd",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'examine'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|research)\\b'],\n                'contexts': ['papers', 'information', 'data', 'knowledge', 'literature', 'sources']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'code', 'program', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|code|program)\\b', r'\\b(function|class|method|script)\\b'],\n                'contexts': ['function', 'class', 'method', 'script', 'application', 'system', 'module']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess)\\b'],\n                'contexts': ['logs', 'code', 'security', 'quality', 'compliance', 'documentation']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise)\\b', r'\\b(anomal|error|issue|problem)\\w*\\b'],\n                'contexts': ['system', 'performance', 'errors', 'anomalies', 'metrics', 'health']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'periodic'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch)\\b', r'\\b(every|daily|weekly|hourly)\\b'],\n                'contexts': ['task', 'job', 'process', 'workflow', 'pipeline', 'routine']\n            }\n        }\n        \n        # Compile regex patterns for efficiency\n        for intent_data in self.intent_patterns.values():\n            intent_data['compiled_patterns'] = [re.compile(p, re.IGNORECASE) for p in intent_data['patterns']]\n    \n    def extract_features(self, text):\n        text_lower = text.lower()\n        words = re.findall(r'\\b\\w+\\b', text_lower)\n        word_count = Counter(words)\n        \n        features = {\n            'text': text_lower,\n            'words': words,\n            'word_count': word_count,\n            'length': len(text),\n            'word_length': len(words)\n        }\n        return features\n    \n    def calculate_intent_score(self, features, intent, intent_data):\n        score = 0.0\n        text = features['text']\n        words = features['words']\n        word_count = features['word_count']\n        \n        # Keyword matching with frequency weighting\n        keyword_score = 0\n        for keyword in int",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "e828978242a0",
+        "source_paper": "2602.15829v1",
+        "created_at": "2026-02-18T09:00:04.934559"
+      },
+      {
+        "id": "882611cd749d",
+        "strategy_name": "Intent Classifier_gen1_gen2_gen3",
+        "module": "intent",
+        "code_hash": "54e0192c4a7a5a07",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\nimport json\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|learn|research)\\b', r'\\bwhat\\s+is\\b', r'\\bhow\\s+to\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'details', 'documentation', 'articles'],\n                'weight': 1.2\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'code', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|program|code|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b', r'\\bapi\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'software', 'bug', 'feature'],\n                'weight': 1.3\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|examine|assess|evaluate)\\b', r'\\bcode\\s+review\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards', 'pull request', 'merge'],\n                'weight': 1.1\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard', 'notify'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard|notify)\\b', r'\\bfor\\s+(anomalies|changes|issues)\\b'],\n                'context': ['anomalies', 'changes', 'issues', 'performance', 'system', 'metrics', 'health', 'status'],\n                'weight': 1.0\n            }\n        }\n        self.learning_history = defaultdict(list)\n        self.confidence_threshold = 0.6\n        \n    def classify_intent(self, text):\n        \"\"\"Main classification method with confidence scoring\"\"\"\n        text_lower = text.lower()\n        scores = {}\n        \n        for intent, config in self.intent_patterns.items():\n            score = self._calculate_intent_score(text_lower, config)\n            scores[intent] = score\n            \n        # Find best match\n        best_intent = max(scores, key=scores.get)\n        confidence = scores[best_intent]\n        \n        # Apply confidence threshold\n        if confidence < self.confidence_threshold:\n            return {'intent': 'unknown', 'confidence': confidence, 'scores': scores}\n            \n        return {'intent': best_intent, 'confidence': confidence, 'scores': scores}\n    \n    def _calculate_intent_score(self, text, config):\n        \"\"\"Calculate weighted score for an intent\"\"\"\n        keyword_score = ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 3,
+        "parent_id": "f30634245a41",
+        "source_paper": "2602.15829v1",
+        "created_at": "2026-02-18T09:00:57.901653"
+      },
+      {
+        "id": "723a173294b7",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "816fc86f3ee17c18",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\nimport json\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'examine', 'research'],\n                'patterns': [r'\\b(search|find|look\\s+up|investigate|analyze|study|explore|discover|examine|research)\\b'],\n                'context': ['papers', 'information', 'data', 'knowledge', 'facts', 'evidence'],\n                'weight': 1.0\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'code', 'debug'],\n                'patterns': [r'\\b(write|implement|fix|refactor|build|create|develop|program|code|debug)\\b', r'\\bfunction\\b', r'\\bclass\\b', r'\\bmethod\\b'],\n                'context': ['function', 'class', 'method', 'script', 'application', 'program', 'algorithm'],\n                'weight': 1.2\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'assess', 'evaluate', 'examine'],\n                'patterns': [r'\\b(review|check|audit|inspect|validate|verify|assess|evaluate|examine)\\b'],\n                'context': ['logs', 'code', 'security', 'quality', 'compliance', 'standards'],\n                'weight': 0.9\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'supervise', 'guard'],\n                'patterns': [r'\\b(watch|track|alert|detect|observe|monitor|supervise|guard)\\b', r'\\bfor\\s+(anomalies|errors|issues)\\b'],\n                'context': ['anomalies', 'errors', 'performance', 'metrics', 'status', 'health'],\n                'weight': 1.1\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine'],\n                'patterns': [r'\\b(schedule|trigger|automate|repeat|cron|batch|routine)\\b', r'\\bevery\\s+\\d+\\b'],\n                'context': ['task', 'workflow', 'pipeline', 'job', 'process'],\n                'weight': 1.3\n            }\n        }\n        self.history = []\n        self.confidence_threshold = 0.6\n        \n    def preprocess_text(self, text):\n        \"\"\"Clean and normalize input text\"\"\"\n        text = text.lower().strip()\n        text = re.sub(r'[^\\w\\s]', ' ', text)\n        text = re.sub(r'\\s+', ' ', text)\n        return text\n    \n    def calculate_intent_score(self, text, intent_data):\n        \"\"\"Calculate weighted score for a specific intent\"\"\"\n        score = 0.0\n        text_lower = text.lower()\n        \n        # Keyword matching with TF-IDF-like scoring\n        keyword_matches = sum(1 for keyword in intent_data['keywords'] if keyword in text_lower)\n        keyword_score = keyword_matches / len(intent_data['keywords']) if intent_data['keywords'] else 0\n        \n        # Pattern",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "da9394353e6a",
+        "source_paper": "2602.15001v1",
+        "created_at": "2026-02-18T09:05:00.888312"
+      },
+      {
+        "id": "21570fef7a11",
+        "strategy_name": "Intent Classifier_gen1_gen2",
+        "module": "intent",
+        "code_hash": "7e38f3adf544c0cb",
+        "code_snippet": "import re\nimport math\nfrom collections import defaultdict, Counter\n\nclass IntentClassifier:\n    def __init__(self):\n        self.intent_patterns = {\n            'research': {\n                'keywords': ['search', 'find', 'look up', 'investigate', 'analyze', 'study', 'explore', 'discover', 'learn', 'query', 'information'],\n                'patterns': [r'\\b(what|how|why|when|where)\\b', r'\\bpapers?\\b', r'\\bresearch\\b', r'\\bstudy\\b', r'\\bdata\\b', r'\\binformation\\b'],\n                'weight': 1.0,\n                'context_boost': ['academic', 'scientific', 'literature', 'database']\n            },\n            'code': {\n                'keywords': ['write', 'implement', 'fix', 'refactor', 'build', 'create', 'develop', 'program', 'debug', 'compile', 'deploy'],\n                'patterns': [r'\\bfunction\\b', r'\\bclass\\b', r'\\bcode\\b', r'\\bscript\\b', r'\\bbug\\b', r'\\berror\\b', r'\\b\\w+\\.(py|js|java|cpp)\\b'],\n                'weight': 1.2,\n                'context_boost': ['repository', 'github', 'programming', 'software']\n            },\n            'review': {\n                'keywords': ['review', 'check', 'audit', 'inspect', 'validate', 'verify', 'examine', 'assess', 'evaluate', 'quality'],\n                'patterns': [r'\\breview\\b', r'\\baudit\\b', r'\\bcheck\\b', r'\\bvalidate\\b', r'\\bquality\\b', r'\\btest\\b'],\n                'weight': 1.1,\n                'context_boost': ['approval', 'compliance', 'standards', 'criteria']\n            },\n            'monitor': {\n                'keywords': ['watch', 'track', 'alert', 'detect', 'observe', 'monitor', 'scan', 'surveillance', 'notify', 'status'],\n                'patterns': [r'\\bwatch\\b', r'\\bmonitor\\b', r'\\balert\\b', r'\\banomal\\w+\\b', r'\\bdetect\\b', r'\\bstatus\\b', r'\\bhealth\\b'],\n                'weight': 1.0,\n                'context_boost': ['system', 'performance', 'metrics', 'dashboard']\n            },\n            'automate': {\n                'keywords': ['schedule', 'trigger', 'automate', 'repeat', 'cron', 'batch', 'routine', 'periodic', 'workflow', 'pipeline'],\n                'patterns': [r'\\bschedule\\b', r'\\bautomat\\w+\\b', r'\\bcron\\b', r'\\bbatch\\b', r'\\broutine\\b', r'\\bworkflow\\b', r'\\bpipeline\\b'],\n                'weight': 1.3,\n                'context_boost': ['recurring', 'scheduled', 'continuous', 'integration']\n            }\n        }\n        self.confidence_threshold = 0.3\n        \n    def _calculate_keyword_score(self, text_lower, intent_data):\n        keywords = intent_data['keywords']\n        score = 0\n        matched_keywords = 0\n        \n        for keyword in keywords:\n            if keyword in text_lower:\n                matched_keywords += 1\n                if re.search(rf'\\b{re.escape(keyword)}\\b', text_lower):\n                    score += 1.5\n                else:\n                    score += 0.8\n                    \n        # Bonus for multiple keyword matches\n        if matched_keywords > 1:\n            score *= (1 + 0.2 * (matched_keywords - 1))\n            \n        return score\n   ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "bb365141f5f4",
+        "source_paper": "2602.15799v1",
+        "created_at": "2026-02-18T09:05:53.703875"
+      }
+    ]
+  }
+}
