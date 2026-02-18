@@ -2013,7 +2013,9 @@ async def evolution_loop(bus: EventBus, audit: AuditTrail, loom,
 # MAIN LOOP — agents + evolution in parallel
 # ══════════════════════════════════════════════════════════════════
 
-async def _load_community_contributions(loom, bus: EventBus) -> int:
+async def _load_community_contributions(
+    loom, bus: EventBus, sandbox: Sandbox | None = None,
+) -> int:
     """Load community contribution files and apply unlearned strategies.
 
     Reciprocity model:
@@ -2024,6 +2026,7 @@ async def _load_community_contributions(loom, bus: EventBus) -> int:
 
     Also loads evolved code files from community/evolved/*/ into local
     .agos/evolved/ so they can be used without re-discovering the same papers.
+    All community code is sandbox-validated before loading.
     """
     from agos.config import settings as _settings
     from datetime import datetime, timedelta
@@ -2072,9 +2075,13 @@ async def _load_community_contributions(loom, bus: EventBus) -> int:
 
     # ── Load evolved code files from community/evolved/*/ ──
     code_loaded = 0
+    code_rejected = 0
     if evolved_dir.exists():
         local_evolved = pathlib.Path(".agos/evolved")
         local_evolved.mkdir(parents=True, exist_ok=True)
+
+        # Create sandbox for community code validation
+        _sandbox = sandbox or Sandbox(timeout=10)
 
         # Collect existing code hashes to avoid duplicates
         existing_hashes: set[str] = set()
@@ -2107,7 +2114,40 @@ async def _load_community_contributions(loom, bus: EventBus) -> int:
                     if code_hash_line and code_hash_line in existing_hashes:
                         continue  # Already have this pattern
 
-                    # Copy to local evolved dir
+                    # ── Sandbox gate: validate before loading ──
+                    # 1. Static analysis — blocks dangerous imports/calls
+                    validation = _sandbox.validate(code)
+                    if not validation.safe:
+                        _logger.warning(
+                            "Community code %s failed static analysis: %s",
+                            py_file, validation.issues,
+                        )
+                        await bus.emit("evolution.community_code_rejected", {
+                            "file": py_file.name,
+                            "instance": instance_dir.name,
+                            "reason": "static_analysis",
+                            "issues": validation.issues,
+                        }, source="kernel")
+                        code_rejected += 1
+                        continue
+
+                    # 2. Subprocess execution — runs in isolated process
+                    exec_result = await _sandbox.execute(code)
+                    if not exec_result.passed:
+                        _logger.warning(
+                            "Community code %s failed sandbox execution: %s",
+                            py_file, exec_result.error[:200],
+                        )
+                        await bus.emit("evolution.community_code_rejected", {
+                            "file": py_file.name,
+                            "instance": instance_dir.name,
+                            "reason": "sandbox_execution",
+                            "error": exec_result.error[:200],
+                        }, source="kernel")
+                        code_rejected += 1
+                        continue
+
+                    # Only copy after passing both validation gates
                     target = local_evolved / py_file.name
                     if not target.exists():
                         target.write_text(code, encoding="utf-8")
@@ -2126,6 +2166,7 @@ async def _load_community_contributions(loom, bus: EventBus) -> int:
     if code_loaded > 0:
         await bus.emit("evolution.community_code_loaded", {
             "files": code_loaded,
+            "rejected": code_rejected,
         }, source="kernel")
 
     return loaded + code_loaded
@@ -2218,7 +2259,7 @@ async def run_demo(runtime, bus: EventBus, audit: AuditTrail,
 
     # ── Load community contributions ──
     if loom is not None:
-        n = await _load_community_contributions(loom, bus)
+        n = await _load_community_contributions(loom, bus, sandbox=None)
         if n > 0:
             await bus.emit("evolution.community_loaded", {"strategies": n}, source="kernel")
 

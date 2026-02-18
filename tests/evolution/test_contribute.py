@@ -1,12 +1,13 @@
 """Tests for federated learning — evolved code sharing via GitHub PRs.
 
 Covers: export_contribution (with evolved code), share_learnings (multi-file
-Git Tree API), community code loading, dedup.
+Git Tree API), community code loading, dedup, sandbox validation gate.
 """
 
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
+from agos.evolution.sandbox import Sandbox
 from agos.evolution.state import EvolutionState, DesignArchive, DesignEntry
 
 
@@ -369,3 +370,180 @@ class TestPRBody:
         )
 
         assert "and 5 more" in body
+
+
+# ── Sandbox Validation Gate Tests ─────────────────────────────
+
+
+class TestSandboxGate:
+    """Tests that community code is sandbox-validated before loading."""
+
+    def test_static_analysis_blocks_unsafe_imports(self):
+        """Sandbox.validate() should reject code with os/subprocess imports."""
+        sandbox = Sandbox(timeout=10)
+
+        unsafe_code = 'import os\nos.system("echo pwned")\n'
+        result = sandbox.validate(unsafe_code)
+        assert not result.safe
+        assert len(result.issues) > 0
+
+    def test_static_analysis_blocks_exec(self):
+        """Sandbox.validate() should reject code with exec() calls."""
+        sandbox = Sandbox(timeout=10)
+
+        unsafe_code = 'exec("print(1)")\n'
+        result = sandbox.validate(unsafe_code)
+        assert not result.safe
+
+    def test_static_analysis_allows_safe_code(self):
+        """Sandbox.validate() should pass clean code with allowed imports."""
+        sandbox = Sandbox(timeout=10)
+
+        safe_code = (
+            'import math\n'
+            'import json\n'
+            'def compute(): return math.sqrt(2)\n'
+        )
+        result = sandbox.validate(safe_code)
+        assert result.safe
+        assert len(result.issues) == 0
+
+    @pytest.mark.asyncio
+    async def test_sandbox_execution_catches_runtime_errors(self):
+        """Sandbox.execute() should fail on code that raises at runtime."""
+        sandbox = Sandbox(timeout=10)
+
+        bad_code = 'raise RuntimeError("boom")\n'
+        result = await sandbox.execute(bad_code)
+        assert not result.passed
+
+    @pytest.mark.asyncio
+    async def test_sandbox_execution_passes_clean_code(self):
+        """Sandbox.execute() should pass code that runs without errors."""
+        sandbox = Sandbox(timeout=10)
+
+        good_code = 'x = 1 + 1\nprint(x)\n'
+        result = await sandbox.execute(good_code)
+        assert result.passed
+
+    @pytest.mark.asyncio
+    async def test_community_gate_rejects_unsafe_file(self, tmp_path):
+        """_load_community_contributions should reject files with unsafe imports."""
+        from agos.demo import _load_community_contributions
+
+        # Setup community/evolved/badnode/ with unsafe code
+        evolved_dir = tmp_path / "community" / "evolved" / "badnode"
+        evolved_dir.mkdir(parents=True)
+        (evolved_dir / "evil.py").write_text(
+            'import subprocess\nsubprocess.run(["echo", "pwned"])\n',
+            encoding="utf-8",
+        )
+
+        # Setup local evolved dir
+        local_evolved = tmp_path / ".agos" / "evolved"
+        local_evolved.mkdir(parents=True)
+
+        mock_loom = MagicMock()
+        mock_loom.semantic = AsyncMock()
+        mock_loom.semantic.store = AsyncMock(return_value="tid")
+        mock_bus = AsyncMock()
+        mock_bus.emit = AsyncMock()
+
+        sandbox = Sandbox(timeout=10)
+
+        with patch("agos.demo.pathlib.Path") as mock_path_fn:
+            # Redirect paths to tmp_path
+            def path_factory(p):
+                if p == "community/contributions":
+                    return tmp_path / "community" / "contributions"
+                if p == "community/evolved":
+                    return tmp_path / "community" / "evolved"
+                if p == ".agos/evolved":
+                    return local_evolved
+                return tmp_path / p
+
+            mock_path_fn.side_effect = path_factory
+
+            n = await _load_community_contributions(
+                mock_loom, mock_bus, sandbox=sandbox,
+            )
+
+        assert n == 0  # Nothing should have loaded
+        # evil.py should NOT be in local evolved
+        assert not (local_evolved / "evil.py").exists()
+
+    @pytest.mark.asyncio
+    async def test_community_gate_accepts_safe_file(self, tmp_path):
+        """_load_community_contributions should accept safe evolved code."""
+        from agos.demo import _load_community_contributions
+
+        # Setup community/evolved/goodnode/ with safe code
+        evolved_dir = tmp_path / "community" / "evolved" / "goodnode"
+        evolved_dir.mkdir(parents=True)
+        (evolved_dir / "ranker.py").write_text(
+            'PATTERN_HASH = "safe123"\nimport math\ndef rank(): return math.sqrt(2)\n',
+            encoding="utf-8",
+        )
+
+        local_evolved = tmp_path / ".agos" / "evolved"
+        local_evolved.mkdir(parents=True)
+
+        mock_loom = MagicMock()
+        mock_loom.semantic = AsyncMock()
+        mock_loom.semantic.store = AsyncMock(return_value="tid")
+        mock_bus = AsyncMock()
+        mock_bus.emit = AsyncMock()
+
+        sandbox = Sandbox(timeout=10)
+
+        with patch("agos.demo.pathlib.Path") as mock_path_fn:
+            def path_factory(p):
+                if p == "community/contributions":
+                    return tmp_path / "community" / "contributions"
+                if p == "community/evolved":
+                    return tmp_path / "community" / "evolved"
+                if p == ".agos/evolved":
+                    return local_evolved
+                return tmp_path / p
+
+            mock_path_fn.side_effect = path_factory
+
+            n = await _load_community_contributions(
+                mock_loom, mock_bus, sandbox=sandbox,
+            )
+
+        assert n == 1
+        assert (local_evolved / "ranker.py").exists()
+
+
+class TestLoadEvolvedStrategiesSafety:
+    """Defense-in-depth: load_evolved_strategies() rejects unsafe modules."""
+
+    def test_rejects_module_with_blocked_import(self, tmp_path):
+        """Strategy file with import os should not be loaded."""
+        from agos.evolution.codegen import load_evolved_strategies
+
+        (tmp_path / "evil_strategy.py").write_text(
+            'import os\nclass EvilStrategy:\n    name = "evil"\n    target_module = "kernel"\n',
+            encoding="utf-8",
+        )
+
+        strategies = load_evolved_strategies(evolved_dir=tmp_path)
+        assert len(strategies) == 0
+
+    def test_accepts_safe_module(self, tmp_path):
+        """Strategy file with safe code should load normally."""
+        from agos.evolution.codegen import load_evolved_strategies
+
+        (tmp_path / "good_strategy.py").write_text(
+            'import math\n'
+            'class GoodStrategy:\n'
+            '    name = "good"\n'
+            '    target_module = "knowledge"\n'
+            '    def __init__(self, components=None): pass\n',
+            encoding="utf-8",
+        )
+
+        strategies = load_evolved_strategies(evolved_dir=tmp_path)
+        assert len(strategies) == 1
+        assert strategies[0][1].name == "good"

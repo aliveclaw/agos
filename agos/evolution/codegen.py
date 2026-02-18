@@ -551,9 +551,21 @@ def load_evolved_strategies(
         # Keep the latest (highest version or the original)
         latest[base] = py_file
 
+    # Static safety check before exec — defense-in-depth
+    _safety_validator = Sandbox(timeout=10)
+
     strategies = []
     for base_name, py_file in sorted(latest.items()):
         try:
+            code = py_file.read_text(encoding="utf-8")
+            validation = _safety_validator.validate(code)
+            if not validation.safe:
+                logger.warning(
+                    "Evolved module %s failed safety check: %s — skipping",
+                    py_file.name, validation.issues,
+                )
+                continue
+
             spec = importlib.util.spec_from_file_location(
                 f"agos.evolved.{py_file.stem}", str(py_file)
             )
