@@ -1,0 +1,1303 @@
+{
+  "instance_id": "4d42b8932926",
+  "agos_version": "0.1.0",
+  "contributed_at": "2026-02-18T06:39:43.122197",
+  "cycles_completed": 63,
+  "strategies_applied": [
+    {
+      "name": "Symmetry in language statistics shapes the geometry of model repr...",
+      "module": "knowledge.semantic",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15029v1",
+          "title": "Symmetry in language statistics shapes the geometry of model representations"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:27:54.139254",
+      "applied_count": 1
+    },
+    {
+      "name": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through ...",
+      "module": "intent.personas",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15028v1",
+          "title": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through Privacy and Personalization"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:27:54.139373",
+      "applied_count": 1
+    },
+    {
+      "name": "Rethinking Diffusion Models with Symmetries through Canonicalizat...",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15022v1",
+          "title": "Rethinking Diffusion Models with Symmetries through Canonicalization with Applications to Molecular Graph Generation"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:27:54.139425",
+      "applied_count": 1
+    },
+    {
+      "name": "Cold-Start Personalization via Training-Free Priors from Structur...",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15012v1",
+          "title": "Cold-Start Personalization via Training-Free Priors from Structured World Models"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:28:43.547706",
+      "applied_count": 1
+    },
+    {
+      "name": "Text Style Transfer with Parameter-efficient LLM Finetuning and R...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15013v1",
+          "title": "Text Style Transfer with Parameter-efficient LLM Finetuning and Round-trip Translation"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:28:43.547722",
+      "applied_count": 1
+    },
+    {
+      "name": "DM0: An Embodied-Native Vision-Language-Action Model towards Phys...",
+      "module": "orchestration.planner",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.14974v1",
+          "title": "DM0: An Embodied-Native Vision-Language-Action Model towards Physical AI"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:29:34.336133",
+      "applied_count": 1
+    },
+    {
+      "name": "Computation and Size of Interpolants for Hybrid Modal Logics",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15821v1",
+          "title": "Computation and Size of Interpolants for Hybrid Modal Logics"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:13:20.782520",
+      "applied_count": 1
+    },
+    {
+      "name": "Natural Privacy Filters Are Not Always Free: A Characterization o...",
+      "module": "policy",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15815v1",
+          "title": "Natural Privacy Filters Are Not Always Free: A Characterization of Free Natural Filters"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:13:20.782651",
+      "applied_count": 1
+    },
+    {
+      "name": "Decision Quality Evaluation Framework at Pinterest",
+      "module": "orchestration.planner",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15809v1",
+          "title": "Decision Quality Evaluation Framework at Pinterest"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:13:20.782768",
+      "applied_count": 1
+    },
+    {
+      "name": "Stabilizing Test-Time Adaptation of High-Dimensional Simulation S...",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15820v1",
+          "title": "Stabilizing Test-Time Adaptation of High-Dimensional Simulation Surrogates via D-Optimal Statistics"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:14:36.696721",
+      "applied_count": 1
+    },
+    {
+      "name": "FAST-EQA: Efficient Embodied Question Answering with Global and L...",
+      "module": "policy",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15813v1",
+          "title": "FAST-EQA: Efficient Embodied Question Answering with Global and Local Region Relevancy"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:15:48.013258",
+      "applied_count": 1
+    },
+    {
+      "name": "This human study did not involve human subjects: Validating LLM s...",
+      "module": "policy",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15785v1",
+          "title": "This human study did not involve human subjects: Validating LLM simulations as behavioral evidence"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:15:48.013531",
+      "applied_count": 1
+    },
+    {
+      "name": "Avey-B",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15814v1",
+          "title": "Avey-B"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:58:57.317554",
+      "applied_count": 1
+    },
+    {
+      "name": "QwaveMPS: An efficient open-source Python package for simulating ...",
+      "module": "evolution",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15826v1",
+          "title": "QwaveMPS: An efficient open-source Python package for simulating non-Markovian waveguide-QED using matrix product states"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T05:07:16.981921",
+      "applied_count": 1
+    },
+    {
+      "name": "NYUSIM: A Roadmap to AI-Enabled Statistical Channel Modeling and ...",
+      "module": "orchestration.planner",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15737v1",
+          "title": "NYUSIM: A Roadmap to AI-Enabled Statistical Channel Modeling and Simulation"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T05:07:16.981958",
+      "applied_count": 1
+    },
+    {
+      "name": "A sequence of elastic patterns in a sheared bent sheet",
+      "module": "tools",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15732v1",
+          "title": "A sequence of elastic patterns in a sheared bent sheet"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T05:07:16.981974",
+      "applied_count": 1
+    }
+  ],
+  "discovered_patterns": [
+    {
+      "name": "Token Budget Enforcer",
+      "module": "policy",
+      "code_snippet": "class TokenBudget:\n    def __init__(self, limit, burst_factor=1.5):\n        self.limit = limit\n        self.burst_limit = int(limit * burst_factor)\n        self.used = 0\n        self.violations = 0\n    def request(self, tokens):\n        if self.used + tokens > self.burst_limit:\n            self.violations += 1\n            return False\n        self.used += tokens\n        return True\n    def decay(self, factor=0.8):\n        self.used = int(self.used * factor)\n    @property\n    def utilization(self",
+      "sandbox_output": "Budget: used=1150, violations=1, util=1.15\nPASS: Token budget enforcer validated\n",
+      "source_paper": "2602.15004v1"
+    },
+    {
+      "name": "Policy Rule Engine",
+      "module": "policy",
+      "code_snippet": "import re\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n    def matches(self, agent, action):\n        p = self.pattern.replace('*', '.*')\n        return bool(re.match(p, agent)) and (\n            self.action == '*' or self.action == action\n        )\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n    def add_rule(self, pattern, action, effect):\n        self.rules.ap",
+      "sandbox_output": "Policy checks: 4/4 passed\nPASS: Policy rule engine validated\n",
+      "source_paper": "2602.15815v1"
+    }
+  ],
+  "meta_evolution": {
+    "genomes": {
+      "knowledge.semantic": {
+        "component": "knowledge.semantic",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "temperature",
+            "current": null,
+            "default": 0.0,
+            "min_val": 0.0,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Softmax retrieval diversity"
+          },
+          {
+            "name": "track_access",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Access-based confidence tracking"
+          },
+          {
+            "name": "relevance_threshold",
+            "current": null,
+            "default": 0.01,
+            "min_val": 0.001,
+            "max_val": 0.1,
+            "param_type": "float",
+            "description": "Minimum cosine similarity for results"
+          },
+          {
+            "name": "confidence_decay_factor",
+            "current": null,
+            "default": 0.95,
+            "min_val": 0.8,
+            "max_val": 0.99,
+            "param_type": "float",
+            "description": "Confidence decay for unused knowledge"
+          },
+          {
+            "name": "confidence_decay_days",
+            "current": null,
+            "default": 30,
+            "min_val": 7,
+            "max_val": 90,
+            "param_type": "int",
+            "description": "Days inactive before decay kicks in"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T06:39:02.971498",
+        "mutations_applied": 0
+      },
+      "knowledge.graph": {
+        "component": "knowledge.graph",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "default_traversal_depth",
+            "current": 2,
+            "default": 1,
+            "min_val": 1,
+            "max_val": 4,
+            "param_type": "int",
+            "description": "Default neighbor traversal hops"
+          },
+          {
+            "name": "edge_weight_decay",
+            "current": 0.9863,
+            "default": 0.99,
+            "min_val": 0.9,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Weight decay per consolidation cycle"
+          }
+        ],
+        "fitness_score": 0.9355,
+        "last_evaluated": "2026-02-18T06:39:02.971524",
+        "mutations_applied": 2
+      },
+      "knowledge.consolidator": {
+        "component": "knowledge.consolidator",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "older_than_hours",
+            "current": 24,
+            "default": 24,
+            "min_val": 6,
+            "max_val": 168,
+            "param_type": "int",
+            "description": "Consolidate events older than N hours"
+          },
+          {
+            "name": "min_cluster_size",
+            "current": 4,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Minimum events to form a summary"
+          },
+          {
+            "name": "max_concurrent_writes",
+            "current": 12,
+            "default": 5,
+            "min_val": 1,
+            "max_val": 20,
+            "param_type": "int",
+            "description": "Semaphore limit for batch ops"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T06:39:02.971539",
+        "mutations_applied": 21
+      },
+      "knowledge.loom": {
+        "component": "knowledge.loom",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "use_layered_recall",
+            "current": true,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Priority-ordered layer retrieval"
+          },
+          {
+            "name": "recall_limit",
+            "current": 35,
+            "default": 10,
+            "min_val": 3,
+            "max_val": 50,
+            "param_type": "int",
+            "description": "Default recall result limit"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T06:39:02.971553",
+        "mutations_applied": 7
+      },
+      "intent.engine": {
+        "component": "intent.engine",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "default_strategy",
+            "current": null,
+            "default": "solo",
+            "min_val": null,
+            "max_val": null,
+            "param_type": "str",
+            "description": "Fallback coordination strategy"
+          },
+          {
+            "name": "max_intent_tokens",
+            "current": 261,
+            "default": 500,
+            "min_val": 200,
+            "max_val": 1500,
+            "param_type": "int",
+            "description": "Token limit for intent classification"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T06:39:02.971567",
+        "mutations_applied": 1
+      },
+      "intent.personas": {
+        "component": "intent.personas",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "researcher_budget",
+            "current": 300000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Researcher agent token budget"
+          },
+          {
+            "name": "coder_budget",
+            "current": 194163,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Coder agent token budget"
+          },
+          {
+            "name": "orchestrator_budget",
+            "current": 250000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Orchestrator agent token budget"
+          },
+          {
+            "name": "researcher_max_turns",
+            "current": 20,
+            "default": 30,
+            "min_val": 5,
+            "max_val": 80,
+            "param_type": "int",
+            "description": "Researcher max turns"
+          },
+          {
+            "name": "coder_max_turns",
+            "current": 30,
+            "default": 40,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Coder max turns"
+          },
+          {
+            "name": "orchestrator_max_turns",
+            "current": 33,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Orchestrator max turns"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T06:39:02.971580",
+        "mutations_applied": 28
+      },
+      "orchestration.planner": {
+        "component": "orchestration.planner",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "parallel_threshold",
+            "current": null,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Min subtasks to trigger parallel execution"
+          },
+          {
+            "name": "pipeline_max_agents",
+            "current": 4,
+            "default": 5,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Max agents in a pipeline"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T06:39:02.971594",
+        "mutations_applied": 1
+      },
+      "orchestration.runtime": {
+        "component": "orchestration.runtime",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "max_concurrent_agents",
+            "current": 47,
+            "default": 50,
+            "min_val": 5,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Max agents running simultaneously"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T06:39:02.971607",
+        "mutations_applied": 1
+      },
+      "policy.engine": {
+        "component": "policy.engine",
+        "layer": "Identity & Governance",
+        "params": [
+          {
+            "name": "default_max_tokens",
+            "current": null,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 1000000,
+            "param_type": "int",
+            "description": "Default agent token budget"
+          },
+          {
+            "name": "default_max_turns",
+            "current": null,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Default agent turn limit"
+          },
+          {
+            "name": "default_rate_limit",
+            "current": null,
+            "default": 60,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Tool calls per minute"
+          },
+          {
+            "name": "default_read_only",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Default read-only mode"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T06:39:02.971626",
+        "mutations_applied": 0
+      },
+      "events.bus": {
+        "component": "events.bus",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "history_limit",
+            "current": null,
+            "default": 500,
+            "min_val": 100,
+            "max_val": 5000,
+            "param_type": "int",
+            "description": "Max events in memory"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T06:39:02.971648",
+        "mutations_applied": 0
+      },
+      "events.tracing": {
+        "component": "events.tracing",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "max_traces",
+            "current": 260,
+            "default": 200,
+            "min_val": 50,
+            "max_val": 1000,
+            "param_type": "int",
+            "description": "Max traces retained"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T06:39:02.971661",
+        "mutations_applied": 1
+      }
+    },
+    "recent_mutations": [
+      {
+        "id": "40751b9d54d3",
+        "component": "intent.personas",
+        "param_name": "orchestrator_max_turns",
+        "old_value": 50,
+        "new_value": 33,
+        "reason": "Fitness 0.50 < 0.6, adjusting orchestrator_max_turns",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T21:29:35.229425"
+      },
+      {
+        "id": "ecb4f329fd1f",
+        "component": "knowledge.graph",
+        "param_name": "edge_weight_decay",
+        "old_value": 0.99,
+        "new_value": 0.9863,
+        "reason": "Fitness 0.50 < 0.6, nudging edge_weight_decay",
+        "fitness_before": 0.499,
+        "fitness_after": 1.0,
+        "applied": true,
+        "timestamp": "2026-02-18T02:00:11.683652"
+      },
+      {
+        "id": "083f08fb6352",
+        "component": "orchestration.planner",
+        "param_name": "pipeline_max_agents",
+        "old_value": 5,
+        "new_value": 4,
+        "reason": "Fitness 0.25 < 0.6, adjusting pipeline_max_agents",
+        "fitness_before": 0.25,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T02:19:28.574923"
+      },
+      {
+        "id": "8488e4ab8347",
+        "component": "intent.engine",
+        "param_name": "max_intent_tokens",
+        "old_value": 500,
+        "new_value": 261,
+        "reason": "Fitness 0.25 < 0.6, adjusting max_intent_tokens",
+        "fitness_before": 0.25,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T02:20:22.652810"
+      },
+      {
+        "id": "61d0c15f5887",
+        "component": "knowledge.graph",
+        "param_name": "default_traversal_depth",
+        "old_value": 1,
+        "new_value": 2,
+        "reason": "Fitness 0.51 < 0.6, adjusting default_traversal_depth",
+        "fitness_before": 0.512066265060241,
+        "fitness_after": 1.0,
+        "applied": true,
+        "timestamp": "2026-02-18T02:35:52.297989"
+      },
+      {
+        "id": "d27ea8c54952",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 171503,
+        "new_value": 75000,
+        "reason": "LLM: Reduce from 171503 to constrain resource usage and lower policy violation rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:22:14.793098"
+      },
+      {
+        "id": "3a2c3006b12c",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 43,
+        "new_value": 25,
+        "reason": "LLM: Reduce from 43 to prevent excessive interaction cycles that may trigger policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:22:14.793130"
+      },
+      {
+        "id": "ad0cab8c6424",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 29,
+        "new_value": 48,
+        "reason": "LLM: Increase from 29 to reduce consolidation frequency and lower system load contributing to violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:22:14.793147"
+      },
+      {
+        "id": "e5336647da23",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 24,
+        "reason": "LLM: Reduce consolidation delay from 48 to 24 hours to process knowledge faster and potentially reduce policy violations from stale data",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:25:19.783491"
+      },
+      {
+        "id": "2843bc178513",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 8,
+        "new_value": 15,
+        "reason": "LLM: Increase recall limit from 8 to 15 to provide more context for decision-making, which should help reduce the 100% policy violation rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:25:19.783618"
+      },
+      {
+        "id": "779daa2cd623",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce researcher max turns from 25 to 15 to constrain exploration and prevent policy violations from overly aggressive research behavior",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:25:19.783654"
+      },
+      {
+        "id": "5a740625258d",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 39,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:26:00.866833"
+      },
+      {
+        "id": "9d974bdb3215",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 126211,
+        "new_value": 75000,
+        "reason": "LLM: Reduce from 126211 to match researcher budget and limit resource-intensive operations that may be causing policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:34:19.279000"
+      },
+      {
+        "id": "b52a99f9c2f3",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 121967,
+        "new_value": 75000,
+        "reason": "LLM: Reduce from 121967 to align with other personas and enforce more disciplined resource allocation",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:34:19.279041"
+      },
+      {
+        "id": "1a93e68a27cd",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 39,
+        "new_value": 24,
+        "reason": "LLM: Reduce from 39 to increase consolidation frequency, which may help organize knowledge better and reduce policy violations from scattered data access",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:34:19.279061"
+      },
+      {
+        "id": "d3c0aa626e0c",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 47,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:34:55.217212"
+      },
+      {
+        "id": "18c5a47b0701",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 47,
+        "new_value": 24,
+        "reason": "LLM: Reduce from 47 to 24 hours to consolidate knowledge more frequently, improving decision quality when policy violation rate is at 1.00",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:37:28.959160"
+      },
+      {
+        "id": "89f0b7999cbf",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: Increase from 15 to 25 turns to allow more thorough research and better-informed decisions, addressing the high policy violation rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:37:28.959263"
+      },
+      {
+        "id": "e2aef7218b0f",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: Increase from 15 to 25 to provide richer context for decision-making when activity levels are maxed out at 1.00",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:37:28.959328"
+      },
+      {
+        "id": "7acdf5f43bdf",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 32,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:38:03.497499"
+      },
+      {
+        "id": "3ab984f1d013",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 32,
+        "new_value": 16,
+        "reason": "LLM: Reduce from 32 to 16 hours to consolidate knowledge more frequently, helping manage the high policy violation rate by keeping knowledge more current and accessible",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:49:22.286949"
+      },
+      {
+        "id": "6d67dc102a35",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 6,
+        "new_value": 12,
+        "reason": "LLM: Double from 6 to 12 to handle the high activity level (1.00) and improve throughput for knowledge consolidation under heavy load",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:49:22.286983"
+      },
+      {
+        "id": "598864787dc5",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 40,
+        "reason": "LLM: Increase from 25 to 40 turns to give researcher persona more capacity to handle complex queries, addressing the high violation rate which may indicate insufficient processing depth",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:49:22.287001"
+      },
+      {
+        "id": "3476edde23aa",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 75000,
+        "new_value": 150000,
+        "reason": "LLM: High activity levels (1.00) and perfect knowledge retrieval suggest the researcher is being budget-constrained rather than finding optimal solutions, doubling budget should reduce policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:52:30.706862"
+      },
+      {
+        "id": "c77397413711",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 55,
+        "new_value": 80,
+        "reason": "LLM: 100% policy violation rate with high activity suggests coder needs more turns to implement compliant solutions rather than rushing to suboptimal quick fixes",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:52:30.706883"
+      },
+      {
+        "id": "b7f9c5da7b20",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 16,
+        "new_value": 8,
+        "reason": "LLM: With perfect retrieval rates and high graph density, more frequent consolidation will help maintain knowledge quality and potentially reduce policy violations by keeping information more current",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:52:30.706896"
+      },
+      {
+        "id": "ccfd5e32d898",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 8,
+        "new_value": 24,
+        "reason": "LLM: Increase consolidation threshold from 8 to 24 hours to reduce aggressive knowledge processing that may be contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:55:49.855825"
+      },
+      {
+        "id": "08a6810648ab",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 40,
+        "new_value": 25,
+        "reason": "LLM: Reduce researcher turns from 40 to 25 to limit excessive exploration that could be causing policy violations while maintaining effectiveness",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:55:49.855858"
+      },
+      {
+        "id": "fde7e4dda71a",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Lower recall limit from 25 to 15 to reduce information overload and potential policy conflicts while maintaining good retrieval performance",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:55:49.855877"
+      },
+      {
+        "id": "0e7d83219b8a",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 6,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:56:24.603713"
+      },
+      {
+        "id": "bfcb2a2dca75",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 12,
+        "reason": "LLM: Double consolidation threshold to reduce aggressive knowledge merging that may be contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:58:53.947047"
+      },
+      {
+        "id": "452d691c67c9",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce researcher turn limit to prevent excessive exploration that could lead to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:58:53.947077"
+      },
+      {
+        "id": "6dad345841bc",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 80,
+        "new_value": 50,
+        "reason": "LLM: Significantly reduce coder turns to limit aggressive code generation and execution that may violate policies",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:58:53.947104"
+      },
+      {
+        "id": "c05e36d69858",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 6,
+        "reason": "LLM: With perfect retrieval hit rate and high graph density, reducing consolidation delay will help maintain fresher knowledge state and potentially reduce policy violations by keeping more current context available",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:02:18.878033"
+      },
+      {
+        "id": "a83ae16d8738",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 75000,
+        "new_value": 150000,
+        "reason": "LLM: 100% policy violation rate indicates poor coordination between personas. Doubling orchestrator budget should improve oversight and reduce violations while maintaining researcher budget parity",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:02:18.878065"
+      },
+      {
+        "id": "0721739049c2",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: High activity levels with policy violations suggest researchers may be rushing. Increasing max turns allows for more thorough, compliant research processes",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:02:18.878085"
+      },
+      {
+        "id": "247382ea779b",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 24,
+        "reason": "LLM: With perfect retrieval hit rates and high graph density, knowledge is being accessed frequently. Increasing consolidation threshold from 6 to 24 hours will reduce premature consolidation of actively used knowledge, potentially improving system performance.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:14:00.273155"
+      },
+      {
+        "id": "d3b1eb6b4390",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 150000,
+        "new_value": 250000,
+        "reason": "LLM: The 100% policy violation rate suggests the orchestrator needs more resources to properly coordinate and enforce policies across the system. Increasing budget from 150k to 250k should improve policy compliance.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:14:00.273225"
+      },
+      {
+        "id": "86bc34ef15b6",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: High activity levels and perfect topic diversity indicate complex multi-faceted operations. Increasing recall limit from 15 to 25 will provide richer context for decision-making while staying within reasonable bounds.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:14:00.273248"
+      },
+      {
+        "id": "736569c29202",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 35,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:14:42.782119"
+      },
+      {
+        "id": "adf4d0056d06",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 35,
+        "new_value": 12,
+        "reason": "LLM: With perfect retrieval hit rate and high graph density, knowledge is being accessed frequently. Reducing consolidation threshold from 35 to 12 hours will process hot knowledge faster and potentially reduce policy violations by keeping active data more accessible.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:25:24.336595"
+      },
+      {
+        "id": "cc34f6795de7",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: 100% policy violation rate suggests personas are exceeding limits or taking too long. Reducing researcher turns from 25 to 15 will force more efficient research patterns and reduce resource contention that may be causing violations.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:25:24.336630"
+      },
+      {
+        "id": "1c122ed61a3a",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 25,
+        "new_value": 35,
+        "reason": "LLM: With perfect retrieval rates and high activity, increasing recall limit from 25 to 35 will provide richer context for decision-making, potentially helping reduce policy violations by giving agents better information to work with.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:25:24.336649"
+      },
+      {
+        "id": "2828d7fef2e5",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 150000,
+        "new_value": 300000,
+        "reason": "LLM: Double budget from 150k to 300k to reduce pressure that may be causing policy violations - agents likely cutting corners due to resource constraints",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:35:52.993963"
+      },
+      {
+        "id": "e50611a10894",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 75000,
+        "new_value": 200000,
+        "reason": "LLM: Increase from 75k to 200k to allow proper code review and testing cycles instead of rushing to meet budget constraints",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:35:52.993994"
+      },
+      {
+        "id": "a99eaad84133",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 35,
+        "reason": "LLM: Increase from 15 to 35 turns to allow thorough research without policy shortcuts - current limit may force hasty decisions",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:35:52.994012"
+      },
+      {
+        "id": "003ecbb587c9",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 200000,
+        "new_value": 194163,
+        "reason": "Fitness 0.50 < 0.6, adjusting coder_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:36:32.864281"
+      },
+      {
+        "id": "befece398518",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 24,
+        "reason": "LLM: Double the consolidation threshold to reduce write frequency and alleviate the 100% policy violation rate caused by excessive knowledge processing activity",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:39:08.945219"
+      },
+      {
+        "id": "b8b2d8638729",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 35,
+        "new_value": 20,
+        "reason": "LLM: Reduce researcher turn limit to prevent excessive exploration that may be contributing to policy violations while maintaining research capability",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:39:08.945252"
+      },
+      {
+        "id": "ebe04d5f23a2",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 50,
+        "new_value": 30,
+        "reason": "LLM: Decrease coder turn limit to reduce intensive coding sessions that could be causing resource contention and policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:39:08.945270"
+      }
+    ],
+    "timestamp": "2026-02-18T06:39:09.916231"
+  },
+  "meta_cycles_completed": 62,
+  "design_archive": {
+    "max_size": 50,
+    "temperature": 0.3,
+    "entries": [
+      {
+        "id": "b49abe134c43",
+        "strategy_name": "Token Budget Enforcer",
+        "module": "policy",
+        "code_hash": "abc0dfd9b67254ea",
+        "code_snippet": "class TokenBudget:\n    def __init__(self, limit, burst_factor=1.5):\n        self.limit = limit\n        self.burst_limit = int(limit * burst_factor)\n        self.used = 0\n        self.violations = 0\n    def request(self, tokens):\n        if self.used + tokens > self.burst_limit:\n            self.violations += 1\n            return False\n        self.used += tokens\n        return True\n    def decay(self, factor=0.8):\n        self.used = int(self.used * factor)\n    @property\n    def utilization(self):\n        return round(self.used / self.limit, 3) if self.limit else 0\n\nb = TokenBudget(limit=1000, burst_factor=1.5)\nassert b.request(500)\nassert b.request(400)\nassert b.utilization == 0.9\nassert not b.request(700)\nassert b.violations == 1\nb.decay(0.5)\nassert b.request(700)\nprint(f'Budget: used={b.used}, violations={b.violations}, util={b.utilization}')\nprint('PASS: Token budget enforcer validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15004v1",
+        "created_at": "2026-02-17T21:29:34.338595"
+      },
+      {
+        "id": "f0480d8f9906",
+        "strategy_name": "Policy Rule Engine",
+        "module": "policy",
+        "code_hash": "12a3a1a18f00ea79",
+        "code_snippet": "import re\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n    def matches(self, agent, action):\n        p = self.pattern.replace('*', '.*')\n        return bool(re.match(p, agent)) and (\n            self.action == '*' or self.action == action\n        )\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n    def add_rule(self, pattern, action, effect):\n        self.rules.append(PolicyRule(pattern, action, effect))\n    def check(self, agent, action):\n        for rule in self.rules:\n            if rule.matches(agent, action):\n                return rule.effect\n        return 'deny'\n\npe = PolicyEngine()\npe.add_rule('admin*', '*', 'allow')\npe.add_rule('agent_*', 'read', 'allow')\npe.add_rule('agent_*', 'write', 'deny')\npe.add_rule('*', '*', 'deny')\nassert pe.check('admin_root', 'delete') == 'allow'\nassert pe.check('agent_scanner', 'read') == 'allow'\nassert pe.check('agent_scanner', 'write') == 'deny'\nassert pe.check('unknown', 'read') == 'deny'\nprint('Policy checks: 4/4 passed')\nprint('PASS: Policy rule engine validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15815v1",
+        "created_at": "2026-02-18T02:13:20.790547"
+      },
+      {
+        "id": "b4e80c865dfe",
+        "strategy_name": "Token Budget Enforcer",
+        "module": "policy",
+        "code_hash": "abc0dfd9b67254ea",
+        "code_snippet": "class TokenBudget:\n    def __init__(self, limit, burst_factor=1.5):\n        self.limit = limit\n        self.burst_limit = int(limit * burst_factor)\n        self.used = 0\n        self.violations = 0\n    def request(self, tokens):\n        if self.used + tokens > self.burst_limit:\n            self.violations += 1\n            return False\n        self.used += tokens\n        return True\n    def decay(self, factor=0.8):\n        self.used = int(self.used * factor)\n    @property\n    def utilization(self):\n        return round(self.used / self.limit, 3) if self.limit else 0\n\nb = TokenBudget(limit=1000, burst_factor=1.5)\nassert b.request(500)\nassert b.request(400)\nassert b.utilization == 0.9\nassert not b.request(700)\nassert b.violations == 1\nb.decay(0.5)\nassert b.request(700)\nprint(f'Budget: used={b.used}, violations={b.violations}, util={b.utilization}')\nprint('PASS: Token budget enforcer validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15830v1",
+        "created_at": "2026-02-18T02:14:36.699189"
+      },
+      {
+        "id": "3fc1402ad9eb",
+        "strategy_name": "Policy Rule Engine",
+        "module": "policy",
+        "code_hash": "12a3a1a18f00ea79",
+        "code_snippet": "import re\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n    def matches(self, agent, action):\n        p = self.pattern.replace('*', '.*')\n        return bool(re.match(p, agent)) and (\n            self.action == '*' or self.action == action\n        )\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n    def add_rule(self, pattern, action, effect):\n        self.rules.append(PolicyRule(pattern, action, effect))\n    def check(self, agent, action):\n        for rule in self.rules:\n            if rule.matches(agent, action):\n                return rule.effect\n        return 'deny'\n\npe = PolicyEngine()\npe.add_rule('admin*', '*', 'allow')\npe.add_rule('agent_*', 'read', 'allow')\npe.add_rule('agent_*', 'write', 'deny')\npe.add_rule('*', '*', 'deny')\nassert pe.check('admin_root', 'delete') == 'allow'\nassert pe.check('agent_scanner', 'read') == 'allow'\nassert pe.check('agent_scanner', 'write') == 'deny'\nassert pe.check('unknown', 'read') == 'deny'\nprint('Policy checks: 4/4 passed')\nprint('PASS: Policy rule engine validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15813v1",
+        "created_at": "2026-02-18T02:15:48.016326"
+      },
+      {
+        "id": "60b0d387cade",
+        "strategy_name": "Policy Rule Engine",
+        "module": "policy",
+        "code_hash": "12a3a1a18f00ea79",
+        "code_snippet": "import re\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n    def matches(self, agent, action):\n        p = self.pattern.replace('*', '.*')\n        return bool(re.match(p, agent)) and (\n            self.action == '*' or self.action == action\n        )\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n    def add_rule(self, pattern, action, effect):\n        self.rules.append(PolicyRule(pattern, action, effect))\n    def check(self, agent, action):\n        for rule in self.rules:\n            if rule.matches(agent, action):\n                return rule.effect\n        return 'deny'\n\npe = PolicyEngine()\npe.add_rule('admin*', '*', 'allow')\npe.add_rule('agent_*', 'read', 'allow')\npe.add_rule('agent_*', 'write', 'deny')\npe.add_rule('*', '*', 'deny')\nassert pe.check('admin_root', 'delete') == 'allow'\nassert pe.check('agent_scanner', 'read') == 'allow'\nassert pe.check('agent_scanner', 'write') == 'deny'\nassert pe.check('unknown', 'read') == 'deny'\nprint('Policy checks: 4/4 passed')\nprint('PASS: Policy rule engine validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15785v1",
+        "created_at": "2026-02-18T02:15:48.016807"
+      }
+    ]
+  }
+}
