@@ -1,0 +1,1257 @@
+{
+  "instance_id": "4d42b8932926",
+  "agos_version": "0.1.0",
+  "contributed_at": "2026-02-18T07:52:32.764379",
+  "cycles_completed": 135,
+  "strategies_applied": [
+    {
+      "name": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through ...",
+      "module": "intent.personas",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15028v1",
+          "title": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through Privacy and Personalization"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:27:54.139373",
+      "applied_count": 1
+    },
+    {
+      "name": "Cold-Start Personalization via Training-Free Priors from Structur...",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15012v1",
+          "title": "Cold-Start Personalization via Training-Free Priors from Structured World Models"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:28:43.547706",
+      "applied_count": 1
+    },
+    {
+      "name": "Text Style Transfer with Parameter-efficient LLM Finetuning and R...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15013v1",
+          "title": "Text Style Transfer with Parameter-efficient LLM Finetuning and Round-trip Translation"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:28:43.547722",
+      "applied_count": 1
+    },
+    {
+      "name": "Distributed Quantum Gaussian Processes for Multi-Agent Systems",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15006v1",
+          "title": "Distributed Quantum Gaussian Processes for Multi-Agent Systems"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:29:34.335826",
+      "applied_count": 1
+    },
+    {
+      "name": "Operationalising the Superficial Alignment Hypothesis via Task Co...",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15829v1",
+          "title": "Operationalising the Superficial Alignment Hypothesis via Task Complexity"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:14:36.696676",
+      "applied_count": 1
+    },
+    {
+      "name": "This human study did not involve human subjects: Validating LLM s...",
+      "module": "policy",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15785v1",
+          "title": "This human study did not involve human subjects: Validating LLM simulations as behavioral evidence"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:15:48.013531",
+      "applied_count": 1
+    }
+  ],
+  "discovered_patterns": [
+    {
+      "name": "Token Budget Enforcer",
+      "module": "policy",
+      "code_snippet": "class TokenBudget:\n    def __init__(self, limit, burst_factor=1.5):\n        self.limit = limit\n        self.burst_limit = int(limit * burst_factor)\n        self.used = 0\n        self.violations = 0\n    def request(self, tokens):\n        if self.used + tokens > self.burst_limit:\n            self.violations += 1\n            return False\n        self.used += tokens\n        return True\n    def decay(self, factor=0.8):\n        self.used = int(self.used * factor)\n    @property\n    def utilization(self",
+      "sandbox_output": "Budget: used=1150, violations=1, util=1.15\nPASS: Token budget enforcer validated\n",
+      "source_paper": "2602.15004v1"
+    },
+    {
+      "name": "Policy Rule Engine",
+      "module": "policy",
+      "code_snippet": "import re\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n    def matches(self, agent, action):\n        p = self.pattern.replace('*', '.*')\n        return bool(re.match(p, agent)) and (\n            self.action == '*' or self.action == action\n        )\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n    def add_rule(self, pattern, action, effect):\n        self.rules.ap",
+      "sandbox_output": "Policy checks: 4/4 passed\nPASS: Policy rule engine validated\n",
+      "source_paper": "2602.15815v1"
+    }
+  ],
+  "meta_evolution": {
+    "genomes": {
+      "knowledge.semantic": {
+        "component": "knowledge.semantic",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "temperature",
+            "current": null,
+            "default": 0.0,
+            "min_val": 0.0,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Softmax retrieval diversity"
+          },
+          {
+            "name": "track_access",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Access-based confidence tracking"
+          },
+          {
+            "name": "relevance_threshold",
+            "current": null,
+            "default": 0.01,
+            "min_val": 0.001,
+            "max_val": 0.1,
+            "param_type": "float",
+            "description": "Minimum cosine similarity for results"
+          },
+          {
+            "name": "confidence_decay_factor",
+            "current": null,
+            "default": 0.95,
+            "min_val": 0.8,
+            "max_val": 0.99,
+            "param_type": "float",
+            "description": "Confidence decay for unused knowledge"
+          },
+          {
+            "name": "confidence_decay_days",
+            "current": null,
+            "default": 30,
+            "min_val": 7,
+            "max_val": 90,
+            "param_type": "int",
+            "description": "Days inactive before decay kicks in"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T07:50:18.650506",
+        "mutations_applied": 0
+      },
+      "knowledge.graph": {
+        "component": "knowledge.graph",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "default_traversal_depth",
+            "current": 2,
+            "default": 1,
+            "min_val": 1,
+            "max_val": 4,
+            "param_type": "int",
+            "description": "Default neighbor traversal hops"
+          },
+          {
+            "name": "edge_weight_decay",
+            "current": 0.9863,
+            "default": 0.99,
+            "min_val": 0.9,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Weight decay per consolidation cycle"
+          }
+        ],
+        "fitness_score": 0.943,
+        "last_evaluated": "2026-02-18T07:50:18.650535",
+        "mutations_applied": 2
+      },
+      "knowledge.consolidator": {
+        "component": "knowledge.consolidator",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "older_than_hours",
+            "current": 12,
+            "default": 24,
+            "min_val": 6,
+            "max_val": 168,
+            "param_type": "int",
+            "description": "Consolidate events older than N hours"
+          },
+          {
+            "name": "min_cluster_size",
+            "current": 4,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Minimum events to form a summary"
+          },
+          {
+            "name": "max_concurrent_writes",
+            "current": 12,
+            "default": 5,
+            "min_val": 1,
+            "max_val": 20,
+            "param_type": "int",
+            "description": "Semaphore limit for batch ops"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:50:18.650554",
+        "mutations_applied": 36
+      },
+      "knowledge.loom": {
+        "component": "knowledge.loom",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "use_layered_recall",
+            "current": true,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Priority-ordered layer retrieval"
+          },
+          {
+            "name": "recall_limit",
+            "current": 25,
+            "default": 10,
+            "min_val": 3,
+            "max_val": 50,
+            "param_type": "int",
+            "description": "Default recall result limit"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:50:18.650572",
+        "mutations_applied": 12
+      },
+      "intent.engine": {
+        "component": "intent.engine",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "default_strategy",
+            "current": null,
+            "default": "solo",
+            "min_val": null,
+            "max_val": null,
+            "param_type": "str",
+            "description": "Fallback coordination strategy"
+          },
+          {
+            "name": "max_intent_tokens",
+            "current": 261,
+            "default": 500,
+            "min_val": 200,
+            "max_val": 1500,
+            "param_type": "int",
+            "description": "Token limit for intent classification"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T07:50:18.650590",
+        "mutations_applied": 1
+      },
+      "intent.personas": {
+        "component": "intent.personas",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "researcher_budget",
+            "current": 122210,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Researcher agent token budget"
+          },
+          {
+            "name": "coder_budget",
+            "current": 150000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Coder agent token budget"
+          },
+          {
+            "name": "orchestrator_budget",
+            "current": 243856,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Orchestrator agent token budget"
+          },
+          {
+            "name": "researcher_max_turns",
+            "current": 35,
+            "default": 30,
+            "min_val": 5,
+            "max_val": 80,
+            "param_type": "int",
+            "description": "Researcher max turns"
+          },
+          {
+            "name": "coder_max_turns",
+            "current": 12,
+            "default": 40,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Coder max turns"
+          },
+          {
+            "name": "orchestrator_max_turns",
+            "current": 33,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Orchestrator max turns"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:50:18.650607",
+        "mutations_applied": 50
+      },
+      "orchestration.planner": {
+        "component": "orchestration.planner",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "parallel_threshold",
+            "current": null,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Min subtasks to trigger parallel execution"
+          },
+          {
+            "name": "pipeline_max_agents",
+            "current": 4,
+            "default": 5,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Max agents in a pipeline"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T07:50:18.650624",
+        "mutations_applied": 1
+      },
+      "orchestration.runtime": {
+        "component": "orchestration.runtime",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "max_concurrent_agents",
+            "current": 47,
+            "default": 50,
+            "min_val": 5,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Max agents running simultaneously"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:50:18.650641",
+        "mutations_applied": 1
+      },
+      "policy.engine": {
+        "component": "policy.engine",
+        "layer": "Identity & Governance",
+        "params": [
+          {
+            "name": "default_max_tokens",
+            "current": null,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 1000000,
+            "param_type": "int",
+            "description": "Default agent token budget"
+          },
+          {
+            "name": "default_max_turns",
+            "current": null,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Default agent turn limit"
+          },
+          {
+            "name": "default_rate_limit",
+            "current": null,
+            "default": 60,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Tool calls per minute"
+          },
+          {
+            "name": "default_read_only",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Default read-only mode"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T07:50:18.650664",
+        "mutations_applied": 0
+      },
+      "events.bus": {
+        "component": "events.bus",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "history_limit",
+            "current": null,
+            "default": 500,
+            "min_val": 100,
+            "max_val": 5000,
+            "param_type": "int",
+            "description": "Max events in memory"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T07:50:18.650692",
+        "mutations_applied": 0
+      },
+      "events.tracing": {
+        "component": "events.tracing",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "max_traces",
+            "current": 260,
+            "default": 200,
+            "min_val": 50,
+            "max_val": 1000,
+            "param_type": "int",
+            "description": "Max traces retained"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:50:18.650709",
+        "mutations_applied": 1
+      }
+    },
+    "recent_mutations": [
+      {
+        "id": "1c122ed61a3a",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 25,
+        "new_value": 35,
+        "reason": "LLM: With perfect retrieval rates and high activity, increasing recall limit from 25 to 35 will provide richer context for decision-making, potentially helping reduce policy violations by giving agents better information to work with.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:25:24.336649"
+      },
+      {
+        "id": "2828d7fef2e5",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 150000,
+        "new_value": 300000,
+        "reason": "LLM: Double budget from 150k to 300k to reduce pressure that may be causing policy violations - agents likely cutting corners due to resource constraints",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:35:52.993963"
+      },
+      {
+        "id": "e50611a10894",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 75000,
+        "new_value": 200000,
+        "reason": "LLM: Increase from 75k to 200k to allow proper code review and testing cycles instead of rushing to meet budget constraints",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:35:52.993994"
+      },
+      {
+        "id": "a99eaad84133",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 35,
+        "reason": "LLM: Increase from 15 to 35 turns to allow thorough research without policy shortcuts - current limit may force hasty decisions",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:35:52.994012"
+      },
+      {
+        "id": "003ecbb587c9",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 200000,
+        "new_value": 194163,
+        "reason": "Fitness 0.50 < 0.6, adjusting coder_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:36:32.864281"
+      },
+      {
+        "id": "befece398518",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 24,
+        "reason": "LLM: Double the consolidation threshold to reduce write frequency and alleviate the 100% policy violation rate caused by excessive knowledge processing activity",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:39:08.945219"
+      },
+      {
+        "id": "b8b2d8638729",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 35,
+        "new_value": 20,
+        "reason": "LLM: Reduce researcher turn limit to prevent excessive exploration that may be contributing to policy violations while maintaining research capability",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:39:08.945252"
+      },
+      {
+        "id": "ebe04d5f23a2",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 50,
+        "new_value": 30,
+        "reason": "LLM: Decrease coder turn limit to reduce intensive coding sessions that could be causing resource contention and policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:39:08.945270"
+      },
+      {
+        "id": "65631dd3d2a6",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 17,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:39:54.389574"
+      },
+      {
+        "id": "290861b71ee3",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 17,
+        "new_value": 48,
+        "reason": "LLM: Increase consolidation threshold to reduce frequency and potentially lower policy violations while maintaining knowledge quality given the perfect retrieval hit rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:42:32.636373"
+      },
+      {
+        "id": "ea87fed10453",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 35,
+        "new_value": 25,
+        "reason": "LLM: Reduce recall limit to decrease memory pressure and processing overhead, which may help reduce policy violations while still maintaining effective recall",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:42:32.636412"
+      },
+      {
+        "id": "dc1ffa3a9552",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 20,
+        "new_value": 12,
+        "reason": "LLM: Reduce researcher turn limit to constrain resource usage and potentially reduce policy violations from overly aggressive research behavior",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:42:32.636440"
+      },
+      {
+        "id": "d7e6b203e87d",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 12,
+        "new_value": 8,
+        "reason": "LLM: Reducing researcher turns from 12 to 8 should help contain policy violations while maintaining research effectiveness, given the 100% violation rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:49:45.200874"
+      },
+      {
+        "id": "079e3184686b",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 30,
+        "new_value": 20,
+        "reason": "LLM: Reducing coder turns from 30 to 20 to limit extended coding sessions that may be contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:49:45.200911"
+      },
+      {
+        "id": "d17e923b10a4",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 72,
+        "reason": "LLM: Increasing consolidation threshold from 48 to 72 hours to reduce write pressure and potential conflicts, given high activity levels",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:49:45.200929"
+      },
+      {
+        "id": "a96e48bead38",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 72,
+        "new_value": 24,
+        "reason": "LLM: Reduce from 72 to 24 hours to consolidate knowledge more frequently, which should help reduce policy violations by keeping the knowledge base more current and organized",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:52:59.083652"
+      },
+      {
+        "id": "c0accd0ba394",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce from 25 to 15 to be more selective in recall, potentially reducing information overload that may be contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:52:59.083711"
+      },
+      {
+        "id": "7b213b4530f5",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 8,
+        "new_value": 12,
+        "reason": "LLM: Increase from 8 to 12 turns to give the researcher more opportunity to properly validate actions before execution, helping to reduce the 100% policy violation rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:52:59.083776"
+      },
+      {
+        "id": "e3cdaffcbecf",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 10,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:53:33.807831"
+      },
+      {
+        "id": "84423b1bf10a",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 10,
+        "new_value": 6,
+        "reason": "LLM: With perfect retrieval hit rates and high graph density, knowledge is being consolidated too slowly at 10 hours. Reducing to 6 hours will help manage the high activity levels and reduce policy violations by keeping knowledge more current.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:01:05.192523"
+      },
+      {
+        "id": "0dd649d76080",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 12,
+        "new_value": 8,
+        "reason": "LLM: 100% policy violation rate suggests personas are operating too aggressively. Reducing researcher max turns from 12 to 8 will constrain exploration and reduce policy conflicts while maintaining effectiveness.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:01:05.192559"
+      },
+      {
+        "id": "7ee25ced6c76",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 20,
+        "new_value": 15,
+        "reason": "LLM: Similarly constraining coder turns from 20 to 15 will help reduce the policy violation rate by limiting execution cycles, while the high topic diversity suggests the system can maintain productivity with fewer turns.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:01:05.192578"
+      },
+      {
+        "id": "8d2518c6482b",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 300000,
+        "new_value": 450000,
+        "reason": "LLM: Increase researcher budget significantly to enable more comprehensive analysis and reduce policy violations through better informed decisions",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:08:35.121955"
+      },
+      {
+        "id": "153d5002809b",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 194163,
+        "new_value": 400000,
+        "reason": "LLM: Boost coder budget substantially to allow for more thorough implementation and testing, potentially reducing policy violations from rushed or incomplete code",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:08:35.122002"
+      },
+      {
+        "id": "efaa89f5b9d3",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 24,
+        "reason": "LLM: Reduce consolidation threshold to capture knowledge more frequently, providing fresher context that may help reduce policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:08:35.122028"
+      },
+      {
+        "id": "ef33c7a23fa4",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 42,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:09:32.440145"
+      },
+      {
+        "id": "21188d38f545",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 42,
+        "new_value": 84,
+        "reason": "LLM: Increase consolidation threshold to reduce frequent knowledge restructuring that may be causing policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:12:36.907420"
+      },
+      {
+        "id": "615cbe03e6a4",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: Increase recall capacity to better support decision-making and reduce policy violations from insufficient context",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:12:36.907459"
+      },
+      {
+        "id": "741dffca868b",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 8,
+        "new_value": 12,
+        "reason": "LLM: Increase researcher exploration capacity to gather better information before actions that might violate policies",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:12:36.907523"
+      },
+      {
+        "id": "7b33ab8333cc",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 84,
+        "new_value": 120,
+        "reason": "LLM: Increase consolidation threshold to reduce aggressive knowledge processing that may be contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:15:48.720125"
+      },
+      {
+        "id": "24a0bf7a2061",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 12,
+        "new_value": 8,
+        "reason": "LLM: Reduce researcher turn limit to constrain exploration behavior and lower policy violation risk",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:15:48.720148"
+      },
+      {
+        "id": "151354d44337",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 15,
+        "new_value": 12,
+        "reason": "LLM: Reduce coder turn limit to prevent excessive code generation cycles that may violate policies",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:15:48.720161"
+      },
+      {
+        "id": "3fd5fd809772",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 8,
+        "new_value": 25,
+        "reason": "LLM: Researchers have high budgets (450k) but very low turn limits (8), likely causing policy violations as they can't complete complex research tasks within budget constraints",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:18:55.456811"
+      },
+      {
+        "id": "783b13c82bb8",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 250000,
+        "new_value": 350000,
+        "reason": "LLM: With 100% policy violation rate and high activity levels, the orchestrator needs more budget to properly coordinate and enforce policies across the system",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:18:55.456845"
+      },
+      {
+        "id": "eed3d4a2ff95",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 120,
+        "new_value": 72,
+        "reason": "LLM: With perfect retrieval rates and high graph density, more frequent consolidation (72h vs 120h) could help maintain knowledge quality and potentially reduce policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:18:55.456862"
+      },
+      {
+        "id": "f8ee8086bc22",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 450000,
+        "new_value": 200000,
+        "reason": "LLM: High policy violation rate suggests personas are overconsuming resources - reducing researcher budget to constrain expensive operations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:27:19.858218"
+      },
+      {
+        "id": "73d24e9c5472",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 400000,
+        "new_value": 150000,
+        "reason": "LLM: Coder operations likely contributing to policy violations - significant budget reduction to enforce stricter resource discipline",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:27:19.858247"
+      },
+      {
+        "id": "343e74734904",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reducing max turns to prevent runaway research processes that may be causing policy violations while maintaining reasonable exploration capacity",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:27:19.858276"
+      },
+      {
+        "id": "834aba396eb7",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 200000,
+        "new_value": 122210,
+        "reason": "Fitness 0.50 < 0.6, adjusting researcher_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:28:39.699047"
+      },
+      {
+        "id": "27de9e5d7357",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 35,
+        "reason": "LLM: Current 15 turns is too restrictive given the high policy violation rate (1.00) - researchers need more iterations to properly validate their work and avoid policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:31:16.470695"
+      },
+      {
+        "id": "7bbdf296154c",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 350000,
+        "new_value": 200000,
+        "reason": "LLM: Reduce orchestrator budget to better balance with researcher (122210) and coder (150000) budgets - current 350000 creates resource imbalance that may contribute to coordination issues",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:31:16.470717"
+      },
+      {
+        "id": "b3234862fc9e",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 72,
+        "new_value": 48,
+        "reason": "LLM: Reduce consolidation threshold from 72 to 48 hours to process knowledge more frequently, which should help reduce policy violations by keeping compliance knowledge more current",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:31:16.470731"
+      },
+      {
+        "id": "aa5175471677",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 200000,
+        "new_value": 243856,
+        "reason": "Fitness 0.50 < 0.6, adjusting orchestrator_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:32:32.679400"
+      },
+      {
+        "id": "8741df92a398",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 24,
+        "reason": "LLM: Reduce consolidation threshold from 48 to 24 hours to process knowledge faster, which may help reduce policy violations by ensuring more current information is available for decision-making",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:42:05.563425"
+      },
+      {
+        "id": "a79588ac2af5",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 35,
+        "new_value": 50,
+        "reason": "LLM: Increase researcher turns from 35 to 50 to allow more thorough investigation and validation, potentially reducing policy violations through better research",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:42:05.563639"
+      },
+      {
+        "id": "9fdd25cfabd1",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 25,
+        "new_value": 40,
+        "reason": "LLM: Increase recall limit from 25 to 40 to provide more context for decision-making, leveraging the perfect retrieval hit rate to help reduce policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:42:05.563727"
+      },
+      {
+        "id": "3615004e1421",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 28,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:42:57.070803"
+      },
+      {
+        "id": "a237a7d6b7c6",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 28,
+        "new_value": 12,
+        "reason": "LLM: Reduce from 28 to 12 hours to consolidate knowledge more frequently, which should help reduce policy violations by keeping knowledge more current and organized",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:48:19.496299"
+      },
+      {
+        "id": "eb77bd185098",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 40,
+        "new_value": 25,
+        "reason": "LLM: Reduce from 40 to 25 to limit recall scope and potentially reduce the aggressive behavior causing policy violations while maintaining good retrieval performance",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:48:19.496386"
+      },
+      {
+        "id": "34f22984b92d",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 50,
+        "new_value": 35,
+        "reason": "LLM: Reduce researcher turns from 50 to 35 to constrain exploration and reduce policy violations while keeping within effective research bounds",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:48:19.496678"
+      }
+    ],
+    "timestamp": "2026-02-18T07:50:20.164611"
+  },
+  "meta_cycles_completed": 104,
+  "design_archive": {
+    "max_size": 50,
+    "temperature": 0.3,
+    "entries": [
+      {
+        "id": "b49abe134c43",
+        "strategy_name": "Token Budget Enforcer",
+        "module": "policy",
+        "code_hash": "abc0dfd9b67254ea",
+        "code_snippet": "class TokenBudget:\n    def __init__(self, limit, burst_factor=1.5):\n        self.limit = limit\n        self.burst_limit = int(limit * burst_factor)\n        self.used = 0\n        self.violations = 0\n    def request(self, tokens):\n        if self.used + tokens > self.burst_limit:\n            self.violations += 1\n            return False\n        self.used += tokens\n        return True\n    def decay(self, factor=0.8):\n        self.used = int(self.used * factor)\n    @property\n    def utilization(self):\n        return round(self.used / self.limit, 3) if self.limit else 0\n\nb = TokenBudget(limit=1000, burst_factor=1.5)\nassert b.request(500)\nassert b.request(400)\nassert b.utilization == 0.9\nassert not b.request(700)\nassert b.violations == 1\nb.decay(0.5)\nassert b.request(700)\nprint(f'Budget: used={b.used}, violations={b.violations}, util={b.utilization}')\nprint('PASS: Token budget enforcer validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15004v1",
+        "created_at": "2026-02-17T21:29:34.338595"
+      },
+      {
+        "id": "f0480d8f9906",
+        "strategy_name": "Policy Rule Engine",
+        "module": "policy",
+        "code_hash": "12a3a1a18f00ea79",
+        "code_snippet": "import re\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n    def matches(self, agent, action):\n        p = self.pattern.replace('*', '.*')\n        return bool(re.match(p, agent)) and (\n            self.action == '*' or self.action == action\n        )\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n    def add_rule(self, pattern, action, effect):\n        self.rules.append(PolicyRule(pattern, action, effect))\n    def check(self, agent, action):\n        for rule in self.rules:\n            if rule.matches(agent, action):\n                return rule.effect\n        return 'deny'\n\npe = PolicyEngine()\npe.add_rule('admin*', '*', 'allow')\npe.add_rule('agent_*', 'read', 'allow')\npe.add_rule('agent_*', 'write', 'deny')\npe.add_rule('*', '*', 'deny')\nassert pe.check('admin_root', 'delete') == 'allow'\nassert pe.check('agent_scanner', 'read') == 'allow'\nassert pe.check('agent_scanner', 'write') == 'deny'\nassert pe.check('unknown', 'read') == 'deny'\nprint('Policy checks: 4/4 passed')\nprint('PASS: Policy rule engine validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15815v1",
+        "created_at": "2026-02-18T02:13:20.790547"
+      },
+      {
+        "id": "b4e80c865dfe",
+        "strategy_name": "Token Budget Enforcer",
+        "module": "policy",
+        "code_hash": "abc0dfd9b67254ea",
+        "code_snippet": "class TokenBudget:\n    def __init__(self, limit, burst_factor=1.5):\n        self.limit = limit\n        self.burst_limit = int(limit * burst_factor)\n        self.used = 0\n        self.violations = 0\n    def request(self, tokens):\n        if self.used + tokens > self.burst_limit:\n            self.violations += 1\n            return False\n        self.used += tokens\n        return True\n    def decay(self, factor=0.8):\n        self.used = int(self.used * factor)\n    @property\n    def utilization(self):\n        return round(self.used / self.limit, 3) if self.limit else 0\n\nb = TokenBudget(limit=1000, burst_factor=1.5)\nassert b.request(500)\nassert b.request(400)\nassert b.utilization == 0.9\nassert not b.request(700)\nassert b.violations == 1\nb.decay(0.5)\nassert b.request(700)\nprint(f'Budget: used={b.used}, violations={b.violations}, util={b.utilization}')\nprint('PASS: Token budget enforcer validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15830v1",
+        "created_at": "2026-02-18T02:14:36.699189"
+      },
+      {
+        "id": "3fc1402ad9eb",
+        "strategy_name": "Policy Rule Engine",
+        "module": "policy",
+        "code_hash": "12a3a1a18f00ea79",
+        "code_snippet": "import re\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n    def matches(self, agent, action):\n        p = self.pattern.replace('*', '.*')\n        return bool(re.match(p, agent)) and (\n            self.action == '*' or self.action == action\n        )\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n    def add_rule(self, pattern, action, effect):\n        self.rules.append(PolicyRule(pattern, action, effect))\n    def check(self, agent, action):\n        for rule in self.rules:\n            if rule.matches(agent, action):\n                return rule.effect\n        return 'deny'\n\npe = PolicyEngine()\npe.add_rule('admin*', '*', 'allow')\npe.add_rule('agent_*', 'read', 'allow')\npe.add_rule('agent_*', 'write', 'deny')\npe.add_rule('*', '*', 'deny')\nassert pe.check('admin_root', 'delete') == 'allow'\nassert pe.check('agent_scanner', 'read') == 'allow'\nassert pe.check('agent_scanner', 'write') == 'deny'\nassert pe.check('unknown', 'read') == 'deny'\nprint('Policy checks: 4/4 passed')\nprint('PASS: Policy rule engine validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15813v1",
+        "created_at": "2026-02-18T02:15:48.016326"
+      },
+      {
+        "id": "60b0d387cade",
+        "strategy_name": "Policy Rule Engine",
+        "module": "policy",
+        "code_hash": "12a3a1a18f00ea79",
+        "code_snippet": "import re\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n    def matches(self, agent, action):\n        p = self.pattern.replace('*', '.*')\n        return bool(re.match(p, agent)) and (\n            self.action == '*' or self.action == action\n        )\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n    def add_rule(self, pattern, action, effect):\n        self.rules.append(PolicyRule(pattern, action, effect))\n    def check(self, agent, action):\n        for rule in self.rules:\n            if rule.matches(agent, action):\n                return rule.effect\n        return 'deny'\n\npe = PolicyEngine()\npe.add_rule('admin*', '*', 'allow')\npe.add_rule('agent_*', 'read', 'allow')\npe.add_rule('agent_*', 'write', 'deny')\npe.add_rule('*', '*', 'deny')\nassert pe.check('admin_root', 'delete') == 'allow'\nassert pe.check('agent_scanner', 'read') == 'allow'\nassert pe.check('agent_scanner', 'write') == 'deny'\nassert pe.check('unknown', 'read') == 'deny'\nprint('Policy checks: 4/4 passed')\nprint('PASS: Policy rule engine validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15785v1",
+        "created_at": "2026-02-18T02:15:48.016807"
+      },
+      {
+        "id": "04bacb44c667",
+        "strategy_name": "Policy Rule Engine_gen1",
+        "module": "policy",
+        "code_hash": "f8542feaa4788700",
+        "code_snippet": "import re\nimport json\nfrom collections import defaultdict\nfrom typing import Dict, List, Optional, Any\n\nclass PolicyRule:\n    def __init__(self, pattern: str, action: str, effect: str, priority: int = 0, conditions: Dict = None):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n        self.priority = priority\n        self.conditions = conditions or {}\n        self._compiled_pattern = re.compile(pattern.replace('*', '.*'))\n    \n    def matches(self, agent: str, action: str, context: Dict = None) -> bool:\n        context = context or {}\n        \n        # Check pattern and action match\n        if not self._compiled_pattern.match(agent):\n            return False\n        if self.action != '*' and self.action != action:\n            return False\n            \n        # Check additional conditions\n        for key, expected in self.conditions.items():\n            if key not in context or context[key] != expected:\n                return False\n                \n        return True\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules: List[PolicyRule] = []\n        self.cache: Dict[str, str] = {}\n        self.stats = defaultdict(int)\n    \n    def add_rule(self, pattern: str, action: str, effect: str, priority: int = 0, conditions: Dict = None):\n        rule = PolicyRule(pattern, action, effect, priority, conditions)\n        self.rules.append(rule)\n        self._sort_rules()\n        self.cache.clear()\n    \n    def _sort_rules(self):\n        \"\"\"Sort rules by priority (higher first), then by specificity\"\"\"\n        self.rules.sort(key=lambda r: (-r.priority, -len(r.pattern.replace('*', ''))))\n    \n    def check(self, agent: str, action: str, context: Dict = None) -> str:\n        cache_key = f\"{agent}:{action}:{json.dumps(context or {}, sort_keys=True)}\"\n        \n        if cache_key in self.cache:\n            self.stats['cache_hits'] += 1\n            return self.cache[cache_key]\n        \n        self.stats['evaluations'] += 1\n        \n        for rule in self.rules:\n            if rule.matches(agent, action, context):\n                result = rule.effect\n                self.cache[cache_key] = result\n                self.stats[f'effect_{result}'] += 1\n                return result\n        \n        # Default deny\n        self.cache[cache_key] = 'deny'\n        self.stats['effect_deny'] += 1\n        return 'deny'\n    \n    def bulk_check(self, requests: List[tuple]) -> List[str]:\n        \"\"\"Efficiently process multiple policy checks\"\"\"\n        return [self.check(*req) for req in requests]\n    \n    def get_applicable_rules(self, agent: str, action: str, context: Dict = None) -> List[PolicyRule]:\n        \"\"\"Return all rules that would match the given request\"\"\"\n        return [rule for rule in self.rules if rule.matches(agent, action, context)]\n    \n    def export_policy(self) -> Dict:\n        \"\"\"Export policy configuration\"\"\"\n        return {\n            'rules': [\n                {\n                    'pattern': rule",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "3fc1402ad9eb",
+        "source_paper": "2602.15813v1",
+        "created_at": "2026-02-18T07:24:15.941481"
+      },
+      {
+        "id": "cf00bbea3162",
+        "strategy_name": "Token Budget Enforcer_gen1",
+        "module": "policy",
+        "code_hash": "e0f248c523b5c092",
+        "code_snippet": "import time\nimport math\nfrom collections import deque\n\nclass AdaptiveTokenBudget:\n    def __init__(self, limit, burst_factor=1.5, window_size=10):\n        self.base_limit = limit\n        self.limit = limit\n        self.burst_limit = int(limit * burst_factor)\n        self.used = 0\n        self.violations = 0\n        self.window_size = window_size\n        self.request_history = deque(maxlen=window_size)\n        self.last_decay = time.time()\n        self.auto_decay_interval = 1.0\n        self.adaptation_factor = 0.1\n        \n    def request(self, tokens):\n        self._auto_decay()\n        \n        # Record request pattern\n        self.request_history.append({\n            'tokens': tokens,\n            'timestamp': time.time(),\n            'granted': False\n        })\n        \n        # Check against burst limit\n        if self.used + tokens > self.burst_limit:\n            self.violations += 1\n            self._adapt_on_violation()\n            return False\n            \n        self.used += tokens\n        self.request_history[-1]['granted'] = True\n        self._adapt_on_success()\n        return True\n    \n    def _auto_decay(self):\n        now = time.time()\n        if now - self.last_decay >= self.auto_decay_interval:\n            elapsed_intervals = (now - self.last_decay) / self.auto_decay_interval\n            decay_factor = 0.8 ** elapsed_intervals\n            self.decay(decay_factor)\n            self.last_decay = now\n    \n    def decay(self, factor=0.8):\n        self.used = max(0, int(self.used * factor))\n    \n    def _adapt_on_violation(self):\n        # Tighten limits when violations occur\n        violation_rate = self.violations / max(1, len(self.request_history))\n        if violation_rate > 0.2:  # More than 20% violations\n            self.limit = max(self.base_limit * 0.5, \n                           self.limit * (1 - self.adaptation_factor))\n            self.burst_limit = int(self.limit * 1.5)\n    \n    def _adapt_on_success(self):\n        # Gradually increase limits when requests succeed\n        if len(self.request_history) >= self.window_size:\n            recent_violations = sum(1 for req in self.request_history \n                                  if not req['granted'])\n            if recent_violations == 0:  # No recent violations\n                self.limit = min(self.base_limit * 2, \n                               self.limit * (1 + self.adaptation_factor * 0.1))\n                self.burst_limit = int(self.limit * 1.5)\n    \n    @property\n    def utilization(self):\n        return round(self.used / self.limit, 3) if self.limit else 0\n    \n    @property\n    def efficiency(self):\n        if not self.request_history:\n            return 1.0\n        granted = sum(1 for req in self.request_history if req['granted'])\n        return round(granted / len(self.request_history), 3)\n    \n    def get_stats(self):\n        return {\n            'used': self.used,\n            'limit': self.limit,\n            'violations': self.violations,\n            'utilization'",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "b4e80c865dfe",
+        "source_paper": "2602.15830v1",
+        "created_at": "2026-02-18T07:24:37.979750"
+      },
+      {
+        "id": "68c5c1ec82a3",
+        "strategy_name": "Policy Rule Engine_gen1",
+        "module": "policy",
+        "code_hash": "396ba78bc1ec3540",
+        "code_snippet": "import re\nimport json\nfrom collections import defaultdict\nfrom enum import Enum\n\nclass Effect(Enum):\n    ALLOW = \"allow\"\n    DENY = \"deny\"\n    AUDIT = \"audit\"\n\nclass Priority(Enum):\n    LOW = 1\n    MEDIUM = 2\n    HIGH = 3\n    CRITICAL = 4\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect, priority=Priority.MEDIUM, conditions=None, metadata=None):\n        self.pattern = re.compile(pattern.replace('*', '.*').replace('?', '.'))\n        self.action_pattern = re.compile(action.replace('*', '.*').replace('?', '.')) if action != '*' else None\n        self.effect = Effect(effect) if isinstance(effect, str) else effect\n        self.priority = priority if isinstance(priority, Priority) else Priority(priority)\n        self.conditions = conditions or {}\n        self.metadata = metadata or {}\n        self.hit_count = 0\n    \n    def matches(self, agent, action, context=None):\n        context = context or {}\n        \n        # Check agent pattern\n        if not self.pattern.match(agent):\n            return False\n        \n        # Check action pattern\n        if self.action_pattern and not self.action_pattern.match(action):\n            return False\n        \n        # Check conditions\n        for key, expected in self.conditions.items():\n            if key not in context or context[key] != expected:\n                return False\n        \n        self.hit_count += 1\n        return True\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n        self.rule_index = defaultdict(list)  # Index by agent pattern for faster lookup\n        self.audit_log = []\n        self.cache = {}\n        self.cache_hits = 0\n        self.cache_misses = 0\n    \n    def add_rule(self, pattern, action, effect, priority=Priority.MEDIUM, conditions=None, metadata=None):\n        rule = PolicyRule(pattern, action, effect, priority, conditions, metadata)\n        self.rules.append(rule)\n        # Sort rules by priority (highest first)\n        self.rules.sort(key=lambda r: r.priority.value, reverse=True)\n        self._clear_cache()\n        return rule\n    \n    def remove_rule(self, rule):\n        if rule in self.rules:\n            self.rules.remove(rule)\n            self._clear_cache()\n    \n    def check(self, agent, action, context=None):\n        cache_key = (agent, action, json.dumps(context or {}, sort_keys=True))\n        \n        # Check cache first\n        if cache_key in self.cache:\n            self.cache_hits += 1\n            result = self.cache[cache_key]\n            if result['effect'] == Effect.AUDIT:\n                self._log_audit(agent, action, result, context)\n            return result['effect'].value\n        \n        self.cache_misses += 1\n        \n        # Find matching rule with highest priority\n        matching_rule = None\n        for rule in self.rules:\n            if rule.matches(agent, action, context):\n                matching_rule = rule\n                break\n        \n        # Default to deny if no rule matches\n        effect = matching_rule",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "3fc1402ad9eb",
+        "source_paper": "2602.15813v1",
+        "created_at": "2026-02-18T07:28:17.264847"
+      },
+      {
+        "id": "ec3f2a8ac443",
+        "strategy_name": "Token Budget Enforcer_gen1",
+        "module": "policy",
+        "code_hash": "cda9cf662445be98",
+        "code_snippet": "def solution(s):\n    n = len(s)\n    if n == 0:\n        return 0\n    \n    # dp[i] represents the number of ways to decode s[0:i]\n    dp = [0] * (n + 1)\n    dp[0] = 1  # Empty string has one way to decode\n    \n    # Check if the first character can be decoded\n    dp[1] = 1 if s[0] != '0' else 0\n    \n    for i in range(2, n + 1):\n        # Single digit decode (if current digit is not '0')\n        if s[i-1] != '0':\n            dp[i] += dp[i-1]\n        \n        # Two digit decode (if the two-digit number is between 10 and 26)\n        two_digit = int(s[i-2:i])\n        if 10 <= two_digit <= 26:\n            dp[i] += dp[i-2]\n    \n    return dp[n]",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "b49abe134c43",
+        "source_paper": "2602.15004v1",
+        "created_at": "2026-02-18T07:28:38.891287"
+      },
+      {
+        "id": "8e7d4f50643e",
+        "strategy_name": "Policy Rule Engine_gen1",
+        "module": "policy",
+        "code_hash": "bd308721d0323592",
+        "code_snippet": "import re\nimport json\nfrom collections import defaultdict\nfrom enum import Enum\n\nclass Effect(Enum):\n    ALLOW = \"allow\"\n    DENY = \"deny\"\n    AUDIT = \"audit\"\n\nclass Priority(Enum):\n    LOW = 1\n    MEDIUM = 2\n    HIGH = 3\n    CRITICAL = 4\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect, priority=Priority.MEDIUM, conditions=None, metadata=None):\n        self.pattern = re.compile(pattern.replace('*', '.*').replace('?', '.'))\n        self.action_pattern = re.compile(action.replace('*', '.*').replace('?', '.')) if action != '*' else None\n        self.effect = Effect(effect) if isinstance(effect, str) else effect\n        self.priority = priority if isinstance(priority, Priority) else Priority(priority)\n        self.conditions = conditions or {}\n        self.metadata = metadata or {}\n        self.hit_count = 0\n    \n    def matches(self, agent, action, context=None):\n        context = context or {}\n        \n        # Check agent pattern\n        if not self.pattern.match(agent):\n            return False\n        \n        # Check action pattern\n        if self.action_pattern and not self.action_pattern.match(action):\n            return False\n        \n        # Check additional conditions\n        for key, expected in self.conditions.items():\n            if key not in context or context[key] != expected:\n                return False\n        \n        self.hit_count += 1\n        return True\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n        self.rule_index = defaultdict(list)  # Performance optimization\n        self.audit_log = []\n        self.cache = {}\n        self.cache_size = 1000\n    \n    def add_rule(self, pattern, action, effect, priority=Priority.MEDIUM, conditions=None, metadata=None):\n        rule = PolicyRule(pattern, action, effect, priority, conditions, metadata)\n        self.rules.append(rule)\n        # Sort by priority (highest first)\n        self.rules.sort(key=lambda r: r.priority.value, reverse=True)\n        self.clear_cache()\n        return rule\n    \n    def remove_rule(self, rule):\n        if rule in self.rules:\n            self.rules.remove(rule)\n            self.clear_cache()\n    \n    def check(self, agent, action, context=None):\n        cache_key = (agent, action, json.dumps(context or {}, sort_keys=True))\n        \n        if cache_key in self.cache:\n            return self.cache[cache_key]\n        \n        result = self._evaluate_rules(agent, action, context)\n        \n        # Cache management\n        if len(self.cache) >= self.cache_size:\n            # Remove oldest entries (simple FIFO)\n            oldest_keys = list(self.cache.keys())[:self.cache_size // 2]\n            for key in oldest_keys:\n                del self.cache[key]\n        \n        self.cache[cache_key] = result\n        return result\n    \n    def _evaluate_rules(self, agent, action, context):\n        matched_rule = None\n        \n        for rule in self.rules:\n            if rule.matches(agent, action, context):\n              ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "f0480d8f9906",
+        "source_paper": "2602.15815v1",
+        "created_at": "2026-02-18T07:32:13.170252"
+      },
+      {
+        "id": "23e9a652661b",
+        "strategy_name": "Token Budget Enforcer_gen1_gen2",
+        "module": "policy",
+        "code_hash": "e903498306e3de9e",
+        "code_snippet": "import re\nfrom collections import defaultdict\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = defaultdict(list)\n        self.cache = {}\n        self.priority_levels = {'critical': 0, 'high': 1, 'medium': 2, 'low': 3}\n    \n    def add_rule(self, pattern, action, priority='medium', conditions=None):\n        \"\"\"Add a policy rule with pattern matching and conditions\"\"\"\n        rule = {\n            'pattern': re.compile(pattern) if isinstance(pattern, str) else pattern,\n            'action': action,\n            'priority': self.priority_levels.get(priority, 2),\n            'conditions': conditions or {}\n        }\n        self.rules[priority].append(rule)\n        self.cache.clear()  # Invalidate cache when rules change\n    \n    def evaluate(self, context):\n        \"\"\"Evaluate context against all rules and return applicable actions\"\"\"\n        cache_key = str(sorted(context.items()))\n        if cache_key in self.cache:\n            return self.cache[cache_key]\n        \n        applicable_actions = []\n        \n        # Process rules by priority order\n        for priority in sorted(self.priority_levels.keys(), key=lambda x: self.priority_levels[x]):\n            for rule in self.rules[priority]:\n                if self._matches_rule(rule, context):\n                    applicable_actions.append({\n                        'action': rule['action'],\n                        'priority': priority,\n                        'matched_pattern': rule['pattern'].pattern if hasattr(rule['pattern'], 'pattern') else str(rule['pattern'])\n                    })\n        \n        self.cache[cache_key] = applicable_actions\n        return applicable_actions\n    \n    def _matches_rule(self, rule, context):\n        \"\"\"Check if a rule matches the given context\"\"\"\n        # Check pattern match\n        target = context.get('target', '')\n        if hasattr(rule['pattern'], 'match'):\n            if not rule['pattern'].match(str(target)):\n                return False\n        \n        # Check additional conditions\n        for condition_key, expected_value in rule['conditions'].items():\n            if context.get(condition_key) != expected_value:\n                return False\n        \n        return True\n    \n    def get_best_action(self, context):\n        \"\"\"Get the highest priority action for given context\"\"\"\n        actions = self.evaluate(context)\n        return actions[0] if actions else None\n\ndef solution(context_data):\n    \"\"\"Main policy evaluation function for agentic OS component\"\"\"\n    engine = PolicyEngine()\n    \n    # Default system policies\n    engine.add_rule(r'^system\\..*', 'allow', 'critical', {'user_type': 'admin'})\n    engine.add_rule(r'^user\\..*', 'review', 'medium')\n    engine.add_rule(r'.*\\.delete$', 'deny', 'high', {'confirmation': False})\n    engine.add_rule(r'.*\\.read$', 'allow', 'low')\n    \n    return engine.evaluate(context_data)",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "ec3f2a8ac443",
+        "source_paper": "2602.15004v1",
+        "created_at": "2026-02-18T07:32:25.892108"
+      },
+      {
+        "id": "025855d5c87a",
+        "strategy_name": "Token Budget Enforcer_gen1_gen2",
+        "module": "policy",
+        "code_hash": "a836463fab233f25",
+        "code_snippet": "import time\nimport math\nfrom collections import deque\nimport random\n\nclass AdaptiveTokenBudget:\n    def __init__(self, limit, burst_factor=2.0, window_size=20):\n        self.base_limit = limit\n        self.limit = limit\n        self.burst_limit = int(limit * burst_factor)\n        self.used = 0\n        self.violations = 0\n        self.window_size = window_size\n        self.request_history = deque(maxlen=window_size)\n        self.last_decay = time.time()\n        self.auto_decay_interval = 0.5\n        self.adaptation_factor = 0.15\n        self.success_streak = 0\n        self.violation_streak = 0\n        self.peak_usage = 0\n        self.efficiency_score = 1.0\n        \n    def request(self, tokens):\n        self._auto_decay()\n        \n        # Record request pattern with priority scoring\n        priority = self._calculate_priority(tokens)\n        request_data = {\n            'tokens': tokens,\n            'timestamp': time.time(),\n            'granted': False,\n            'priority': priority\n        }\n        \n        # Dynamic limit adjustment based on current load\n        effective_limit = self._get_effective_limit()\n        \n        # Priority-based admission control\n        if self.used + tokens > effective_limit:\n            if priority > 0.7 and self.used + tokens <= self.burst_limit:\n                # Allow high priority requests up to burst limit\n                pass\n            else:\n                self.violations += 1\n                self.violation_streak += 1\n                self.success_streak = 0\n                self._adapt_on_violation()\n                self.request_history.append(request_data)\n                return False\n        \n        self.used += tokens\n        self.peak_usage = max(self.peak_usage, self.used)\n        self.success_streak += 1\n        self.violation_streak = 0\n        request_data['granted'] = True\n        self.request_history.append(request_data)\n        self._adapt_on_success()\n        self._update_efficiency()\n        return True\n    \n    def _calculate_priority(self, tokens):\n        # Higher priority for smaller requests and based on recent patterns\n        size_factor = max(0.1, 1.0 - (tokens / self.limit))\n        \n        # Consider recent success rate\n        recent_requests = list(self.request_history)[-5:]\n        if recent_requests:\n            success_rate = sum(1 for r in recent_requests if r['granted']) / len(recent_requests)\n        else:\n            success_rate = 1.0\n            \n        # Boost priority during low usage periods\n        usage_factor = 1.0 - (self.used / max(1, self.limit))\n        \n        return min(1.0, size_factor * 0.4 + success_rate * 0.3 + usage_factor * 0.3)\n    \n    def _get_effective_limit(self):\n        # Dynamic limit based on recent usage patterns and time of day\n        base = self.limit\n        \n        # Increase limit during low usage periods\n        if self.used < self.limit * 0.3:\n            base = int(base * 1.2)\n        \n        # Consider request velocity\n  ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "cf00bbea3162",
+        "source_paper": "2602.15830v1",
+        "created_at": "2026-02-18T07:39:24.787087"
+      },
+      {
+        "id": "3663a669de84",
+        "strategy_name": "Policy Rule Engine_gen1",
+        "module": "policy",
+        "code_hash": "7f82a09b58335d1f",
+        "code_snippet": "import re\nimport json\nfrom collections import defaultdict\nfrom typing import Dict, List, Optional, Any\n\nclass PolicyRule:\n    def __init__(self, pattern: str, action: str, effect: str, priority: int = 0, conditions: Dict = None):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n        self.priority = priority\n        self.conditions = conditions or {}\n        self._compiled_pattern = re.compile(pattern.replace('*', '.*'))\n    \n    def matches(self, agent: str, action: str, context: Dict = None) -> bool:\n        context = context or {}\n        \n        # Check basic pattern and action matching\n        if not self._compiled_pattern.match(agent):\n            return False\n        if self.action != '*' and self.action != action:\n            return False\n            \n        # Check additional conditions\n        for key, expected in self.conditions.items():\n            if key not in context:\n                return False\n            if isinstance(expected, str) and expected.startswith('regex:'):\n                if not re.match(expected[6:], str(context[key])):\n                    return False\n            elif context[key] != expected:\n                return False\n                \n        return True\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules: List[PolicyRule] = []\n        self.cache: Dict[str, str] = {}\n        self.stats = defaultdict(int)\n        \n    def add_rule(self, pattern: str, action: str, effect: str, priority: int = 0, conditions: Dict = None):\n        rule = PolicyRule(pattern, action, effect, priority, conditions)\n        self.rules.append(rule)\n        self._sort_rules()\n        self.cache.clear()\n        \n    def _sort_rules(self):\n        # Sort by priority (higher first), then by specificity\n        self.rules.sort(key=lambda r: (-r.priority, -len(r.pattern.replace('*', ''))))\n        \n    def check(self, agent: str, action: str, context: Dict = None) -> str:\n        cache_key = f\"{agent}:{action}:{json.dumps(context or {}, sort_keys=True)}\"\n        \n        if cache_key in self.cache:\n            self.stats['cache_hits'] += 1\n            return self.cache[cache_key]\n            \n        self.stats['cache_misses'] += 1\n        \n        for rule in self.rules:\n            if rule.matches(agent, action, context):\n                result = rule.effect\n                self.cache[cache_key] = result\n                self.stats[f'effect_{result}'] += 1\n                return result\n                \n        # Default deny\n        self.cache[cache_key] = 'deny'\n        self.stats['effect_deny'] += 1\n        return 'deny'\n        \n    def batch_check(self, requests: List[tuple]) -> List[str]:\n        return [self.check(*req) for req in requests]\n        \n    def get_matching_rules(self, agent: str, action: str, context: Dict = None) -> List[PolicyRule]:\n        return [rule for rule in self.rules if rule.matches(agent, action, context)]\n        \n    def export_policy(self) -> Dict:\n    ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "f0480d8f9906",
+        "source_paper": "2602.15815v1",
+        "created_at": "2026-02-18T07:51:17.827292"
+      }
+    ]
+  }
+}
