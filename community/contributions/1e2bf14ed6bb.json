@@ -1,0 +1,1283 @@
+{
+  "instance_id": "1e2bf14ed6bb",
+  "agos_version": "0.1.0",
+  "contributed_at": "2026-02-18T08:14:28.978161",
+  "cycles_completed": 165,
+  "strategies_applied": [
+    {
+      "name": "Hunt Globally: Deep Research AI Agents for Drug Asset Scouting in...",
+      "module": "coordination",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15019v1",
+          "title": "Hunt Globally: Deep Research AI Agents for Drug Asset Scouting in Investing, Business Development, and Search & Evaluation"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:26:58.851386",
+      "applied_count": 1
+    },
+    {
+      "name": "Distributed Quantum Gaussian Processes for Multi-Agent Systems",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15006v1",
+          "title": "Distributed Quantum Gaussian Processes for Multi-Agent Systems"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:26:58.851595",
+      "applied_count": 1
+    },
+    {
+      "name": "Cold-Start Personalization via Training-Free Priors from Structur...",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15012v1",
+          "title": "Cold-Start Personalization via Training-Free Priors from Structured World Models"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:27:49.902012",
+      "applied_count": 1
+    },
+    {
+      "name": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through ...",
+      "module": "intent.personas",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15028v1",
+          "title": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through Privacy and Personalization"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:29:33.377896",
+      "applied_count": 1
+    },
+    {
+      "name": "Boundary Point Jailbreaking of Black-Box LLMs",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15001v1",
+          "title": "Boundary Point Jailbreaking of Black-Box LLMs"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:29:33.377943",
+      "applied_count": 1
+    },
+    {
+      "name": "Service Orchestration in the Computing Continuum: Structural Chal...",
+      "module": "knowledge.manager",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15794v1",
+          "title": "Service Orchestration in the Computing Continuum: Structural Challenges and Vision"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:17:35.741448",
+      "applied_count": 1
+    }
+  ],
+  "discovered_patterns": [
+    {
+      "name": "Message Channel Router",
+      "module": "coordination",
+      "code_snippet": "from collections import defaultdict\n\nclass Channel:\n    def __init__(self, name):\n        self.name = name\n        self.subscribers = defaultdict(list)\n        self.history = []\n    def subscribe(self, agent, topics):\n        for t in topics:\n            self.subscribers[t].append(agent)\n    def send(self, topic, msg, sender):\n        self.history.append({'topic': topic, 'msg': msg, 'sender': sender})\n        receivers = self.subscribers.get(topic, [])\n        return [r for r in receivers if r !",
+      "sandbox_output": "findings -> ['reviewer'], broadcast -> ['researcher', 'reviewer']\nPASS: Message channel router validated\n",
+      "source_paper": "2602.15019v1"
+    },
+    {
+      "name": "Strategy Selector",
+      "module": "orchestration.planner",
+      "code_snippet": "class StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        success_rate = self.successes / total\n        efficiency = 1.0 / (1 + self.total_tokens / max(total, 1) / 10000)\n        return round(0.7 * success_rate + 0.3 * efficiency, 3)\n\ndef select_strategy(records, task_size)",
+      "sandbox_output": "Small task: solo (score=0.76)\nLarge task: parallel (score=0.675)\nPASS: Strategy selector validated\n",
+      "source_paper": "2602.14993v1"
+    }
+  ],
+  "meta_evolution": {
+    "genomes": {
+      "knowledge.semantic": {
+        "component": "knowledge.semantic",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "temperature",
+            "current": null,
+            "default": 0.0,
+            "min_val": 0.0,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Softmax retrieval diversity"
+          },
+          {
+            "name": "track_access",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Access-based confidence tracking"
+          },
+          {
+            "name": "relevance_threshold",
+            "current": null,
+            "default": 0.01,
+            "min_val": 0.001,
+            "max_val": 0.1,
+            "param_type": "float",
+            "description": "Minimum cosine similarity for results"
+          },
+          {
+            "name": "confidence_decay_factor",
+            "current": null,
+            "default": 0.95,
+            "min_val": 0.8,
+            "max_val": 0.99,
+            "param_type": "float",
+            "description": "Confidence decay for unused knowledge"
+          },
+          {
+            "name": "confidence_decay_days",
+            "current": null,
+            "default": 30,
+            "min_val": 7,
+            "max_val": 90,
+            "param_type": "int",
+            "description": "Days inactive before decay kicks in"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T08:12:23.804867",
+        "mutations_applied": 0
+      },
+      "knowledge.graph": {
+        "component": "knowledge.graph",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "default_traversal_depth",
+            "current": 2,
+            "default": 1,
+            "min_val": 1,
+            "max_val": 4,
+            "param_type": "int",
+            "description": "Default neighbor traversal hops"
+          },
+          {
+            "name": "edge_weight_decay",
+            "current": 1.0,
+            "default": 0.99,
+            "min_val": 0.9,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Weight decay per consolidation cycle"
+          }
+        ],
+        "fitness_score": 0.9219999999999999,
+        "last_evaluated": "2026-02-18T08:12:23.804901",
+        "mutations_applied": 2
+      },
+      "knowledge.consolidator": {
+        "component": "knowledge.consolidator",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "older_than_hours",
+            "current": 12,
+            "default": 24,
+            "min_val": 6,
+            "max_val": 168,
+            "param_type": "int",
+            "description": "Consolidate events older than N hours"
+          },
+          {
+            "name": "min_cluster_size",
+            "current": 4,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Minimum events to form a summary"
+          },
+          {
+            "name": "max_concurrent_writes",
+            "current": 8,
+            "default": 5,
+            "min_val": 1,
+            "max_val": 20,
+            "param_type": "int",
+            "description": "Semaphore limit for batch ops"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T08:12:23.804923",
+        "mutations_applied": 47
+      },
+      "knowledge.loom": {
+        "component": "knowledge.loom",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "use_layered_recall",
+            "current": true,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Priority-ordered layer retrieval"
+          },
+          {
+            "name": "recall_limit",
+            "current": 25,
+            "default": 10,
+            "min_val": 3,
+            "max_val": 50,
+            "param_type": "int",
+            "description": "Default recall result limit"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T08:12:23.804943",
+        "mutations_applied": 14
+      },
+      "intent.engine": {
+        "component": "intent.engine",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "default_strategy",
+            "current": null,
+            "default": "solo",
+            "min_val": null,
+            "max_val": null,
+            "param_type": "str",
+            "description": "Fallback coordination strategy"
+          },
+          {
+            "name": "max_intent_tokens",
+            "current": 370,
+            "default": 500,
+            "min_val": 200,
+            "max_val": 1500,
+            "param_type": "int",
+            "description": "Token limit for intent classification"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T08:12:23.804963",
+        "mutations_applied": 1
+      },
+      "intent.personas": {
+        "component": "intent.personas",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "researcher_budget",
+            "current": 100000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Researcher agent token budget"
+          },
+          {
+            "name": "coder_budget",
+            "current": 100000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Coder agent token budget"
+          },
+          {
+            "name": "orchestrator_budget",
+            "current": 450000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Orchestrator agent token budget"
+          },
+          {
+            "name": "researcher_max_turns",
+            "current": 40,
+            "default": 30,
+            "min_val": 5,
+            "max_val": 80,
+            "param_type": "int",
+            "description": "Researcher max turns"
+          },
+          {
+            "name": "coder_max_turns",
+            "current": 30,
+            "default": 40,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Coder max turns"
+          },
+          {
+            "name": "orchestrator_max_turns",
+            "current": 65,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Orchestrator max turns"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T08:12:23.804982",
+        "mutations_applied": 56
+      },
+      "orchestration.planner": {
+        "component": "orchestration.planner",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "parallel_threshold",
+            "current": 4,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Min subtasks to trigger parallel execution"
+          },
+          {
+            "name": "pipeline_max_agents",
+            "current": 6,
+            "default": 5,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Max agents in a pipeline"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T08:12:23.805002",
+        "mutations_applied": 2
+      },
+      "orchestration.runtime": {
+        "component": "orchestration.runtime",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "max_concurrent_agents",
+            "current": 49,
+            "default": 50,
+            "min_val": 5,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Max agents running simultaneously"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T08:12:23.805021",
+        "mutations_applied": 1
+      },
+      "policy.engine": {
+        "component": "policy.engine",
+        "layer": "Identity & Governance",
+        "params": [
+          {
+            "name": "default_max_tokens",
+            "current": null,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 1000000,
+            "param_type": "int",
+            "description": "Default agent token budget"
+          },
+          {
+            "name": "default_max_turns",
+            "current": null,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Default agent turn limit"
+          },
+          {
+            "name": "default_rate_limit",
+            "current": null,
+            "default": 60,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Tool calls per minute"
+          },
+          {
+            "name": "default_read_only",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Default read-only mode"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T08:12:23.805047",
+        "mutations_applied": 0
+      },
+      "events.bus": {
+        "component": "events.bus",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "history_limit",
+            "current": null,
+            "default": 500,
+            "min_val": 100,
+            "max_val": 5000,
+            "param_type": "int",
+            "description": "Max events in memory"
+          }
+        ],
+        "fitness_score": 0.999,
+        "last_evaluated": "2026-02-18T08:12:23.805078",
+        "mutations_applied": 0
+      },
+      "events.tracing": {
+        "component": "events.tracing",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "max_traces",
+            "current": 248,
+            "default": 200,
+            "min_val": 50,
+            "max_val": 1000,
+            "param_type": "int",
+            "description": "Max traces retained"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T08:12:23.805097",
+        "mutations_applied": 1
+      }
+    },
+    "recent_mutations": [
+      {
+        "id": "20a746ba87b9",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: 100% policy violation rate suggests personas may be hitting turn limits before completing tasks properly. Increasing researcher turns from 15 to 25 allows more thorough investigation and policy-compliant completion of research tasks.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:41:28.007673"
+      },
+      {
+        "id": "c7fc3f6628f4",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 8,
+        "new_value": 15,
+        "reason": "LLM: With perfect topic diversity and history utilization, the system is handling complex multi-faceted queries. Increasing recall limit from 8 to 15 provides richer context for decision-making, potentially reducing policy violations through better-informed responses.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:41:28.007685"
+      },
+      {
+        "id": "1fa72970711e",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 6,
+        "reason": "LLM: With perfect retrieval hit rate and high graph density, knowledge is being accessed frequently. Reducing consolidation threshold to minimum will ensure fresh knowledge stays readily available and may help reduce policy violations by keeping recent context accessible.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:48:49.519123"
+      },
+      {
+        "id": "c9f06897f100",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: 100% policy violation rate suggests personas may be exceeding boundaries. Reducing researcher max turns from 25 to 15 will constrain behavior while still allowing meaningful research, potentially reducing violations.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:48:49.519169"
+      },
+      {
+        "id": "8d0195f65c3d",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: With high activity levels and perfect topic diversity, increasing recall limit from 15 to 25 will provide richer context for decision-making, which may help personas make better policy-compliant choices.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:48:49.519193"
+      },
+      {
+        "id": "709eb684e4af",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 12,
+        "reason": "LLM: With perfect retrieval hit rates and high graph density, knowledge is being accessed frequently. Doubling consolidation time from 6 to 12 hours will reduce unnecessary processing overhead while maintaining quality.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:51:54.913912"
+      },
+      {
+        "id": "1d7d91e68688",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: The 100% policy violation rate suggests personas may be hitting turn limits before completing tasks properly. Increasing researcher turns from 15 to 25 allows more thorough exploration and better adherence to policies.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:51:54.913941"
+      },
+      {
+        "id": "5adda6b7e7e1",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 25,
+        "new_value": 35,
+        "reason": "LLM: High activity levels and perfect topic diversity indicate complex multi-faceted tasks. Increasing recall limit from 25 to 35 provides richer context for decision-making, potentially reducing policy violations.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:51:54.913955"
+      },
+      {
+        "id": "3a86020eb6f8",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 284397,
+        "new_value": 150000,
+        "reason": "LLM: High policy violation rate suggests excessive resource consumption - reducing researcher budget by ~47% to constrain resource usage while maintaining functionality",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:55:02.379018"
+      },
+      {
+        "id": "ca17564202cc",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 171619,
+        "new_value": 100000,
+        "reason": "LLM: Further constraining coder budget to lowest reasonable level to reduce overall system resource pressure contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:55:02.379040"
+      },
+      {
+        "id": "f0b0efee2b4c",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 48,
+        "reason": "LLM: With perfect retrieval rates and high graph density, knowledge system is performing well - reducing consolidation frequency from 12 to 48 hours to lower system overhead",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:55:02.379053"
+      },
+      {
+        "id": "84e80a93658c",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 72,
+        "reason": "LLM: Increase consolidation threshold to reduce frequency and potentially lower policy violations while maintaining knowledge quality given the perfect retrieval rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:00:10.574916"
+      },
+      {
+        "id": "09d2c49a527f",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce researcher turn limit to constrain activity and help address the 100% policy violation rate while still allowing meaningful research work",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:00:10.574943"
+      },
+      {
+        "id": "a327db7497ac",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 20,
+        "new_value": 15,
+        "reason": "LLM: Reduce coder turn limit to match researcher constraint and further help mitigate policy violations through reduced overall system activity",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:00:10.574956"
+      },
+      {
+        "id": "371487bf772f",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 300000,
+        "new_value": 450000,
+        "reason": "LLM: 100% policy violation rate suggests orchestrator needs more budget to properly coordinate and enforce policies across the system",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:07:30.466809"
+      },
+      {
+        "id": "266751a38cec",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: With perfect retrieval hit rate, researcher should have more turns to leverage the excellent knowledge access and reduce policy violations through better planning",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:07:30.467008"
+      },
+      {
+        "id": "4574a3e04f81",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 72,
+        "new_value": 48,
+        "reason": "LLM: With high graph density (0.74) and perfect retrieval, consolidating knowledge more frequently will improve system responsiveness and potentially reduce policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:07:30.467088"
+      },
+      {
+        "id": "de4414072c05",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 24,
+        "reason": "LLM: Reduce consolidation threshold to process knowledge more frequently, potentially reducing policy violations by keeping knowledge more current and organized",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:11:49.012155"
+      },
+      {
+        "id": "bbe496681ceb",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Limit researcher turns to reduce excessive exploration that may be contributing to policy violations while maintaining effectiveness",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:11:49.012197"
+      },
+      {
+        "id": "d5a9c048f04f",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 4,
+        "new_value": 2,
+        "reason": "LLM: Reduce concurrent writes to prevent knowledge conflicts and race conditions that could lead to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:11:49.012219"
+      },
+      {
+        "id": "94474e3ddfdb",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 31,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:12:23.959685"
+      },
+      {
+        "id": "e73961162966",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 31,
+        "new_value": 72,
+        "reason": "LLM: Increase consolidation threshold to reduce write frequency and policy violations - current 31 hours may be too aggressive given 100% violation rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:15:00.873549"
+      },
+      {
+        "id": "015b03a80bbc",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: Increase researcher turn limit to allow more thorough exploration before escalation, potentially reducing rushed decisions that trigger policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:15:00.873589"
+      },
+      {
+        "id": "73aaaff99f2e",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 2,
+        "new_value": 1,
+        "reason": "LLM: Reduce concurrent writes to minimize resource contention and policy conflicts - perfect retrieval suggests we can afford slower consolidation",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:15:00.873612"
+      },
+      {
+        "id": "f98e0694239f",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 1,
+        "new_value": 8,
+        "reason": "LLM: With 100% activity level and perfect retrieval rates, the single concurrent write is likely creating a bottleneck. Increasing to 8 should improve throughput while maintaining data integrity.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:18:24.517715"
+      },
+      {
+        "id": "f93d49444d4e",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 35,
+        "new_value": 45,
+        "reason": "LLM: Perfect semantic retrieval and high graph density suggest the system can handle more recall without degradation. Increasing from 35 to 45 should provide richer context for decision-making.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:18:24.517742"
+      },
+      {
+        "id": "b2f967b6e685",
+        "component": "intent.personas",
+        "param_name": "orchestrator_max_turns",
+        "old_value": 35,
+        "new_value": 65,
+        "reason": "LLM: The 100% policy violation rate suggests the orchestrator needs more turns to properly coordinate and resolve complex scenarios. Increasing from current constraint should reduce violations.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:18:24.517760"
+      },
+      {
+        "id": "f2744a08dd3f",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 150000,
+        "new_value": 100000,
+        "reason": "LLM: Reduce researcher budget from 150000 to 100000 to decrease policy violations while maintaining reasonable research capability",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:26:16.493654"
+      },
+      {
+        "id": "f02b420a0057",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 450000,
+        "new_value": 300000,
+        "reason": "LLM: Reduce orchestrator budget from 450000 to 300000 to significantly cut resource usage and policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:26:16.493678"
+      },
+      {
+        "id": "583410b6b4f6",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 72,
+        "new_value": 48,
+        "reason": "LLM: Increase consolidation frequency from 72 to 48 hours to better support the high-activity system indicated by perfect utilization metrics",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:26:16.493692"
+      },
+      {
+        "id": "f6b62bac1b2f",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce from 25 to 15 to limit researcher session length and reduce policy violations while maintaining reasonable research capability",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:29:57.420018"
+      },
+      {
+        "id": "c3eca589cd17",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 300000,
+        "new_value": 200000,
+        "reason": "LLM: Reduce orchestrator budget from 300000 to 200000 to prevent resource overconsumption that may be causing policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:29:57.420075"
+      },
+      {
+        "id": "e8a8434e6f92",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 8,
+        "new_value": 4,
+        "reason": "LLM: Reduce concurrent writes from 8 to 4 to lower system load and potential resource contention contributing to policy issues",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:29:57.420092"
+      },
+      {
+        "id": "d8fdab2731d8",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 200000,
+        "new_value": 128205,
+        "reason": "Fitness 0.50 < 0.6, adjusting orchestrator_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:30:36.402865"
+      },
+      {
+        "id": "fb90e6a0e1d3",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 96,
+        "reason": "LLM: Increase consolidation threshold from 48 to 96 hours to reduce system load given the high policy violation rate and activity levels",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:40:43.272853"
+      },
+      {
+        "id": "403bd7876ef5",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 128205,
+        "new_value": 250000,
+        "reason": "LLM: Nearly double orchestrator budget to handle the high activity level and policy violations more effectively",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:40:43.272916"
+      },
+      {
+        "id": "7e90a1aae0a0",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 45,
+        "new_value": 25,
+        "reason": "LLM: Reduce recall limit from 45 to 25 to decrease memory pressure and processing overhead contributing to system stress",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:40:43.272952"
+      },
+      {
+        "id": "108b24afede6",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 250000,
+        "new_value": 400000,
+        "reason": "LLM: 100% policy violation rate suggests orchestrator is running out of budget before properly coordinating and enforcing policies across agents",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:46:29.231506"
+      },
+      {
+        "id": "dd3190571f5e",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 96,
+        "new_value": 48,
+        "reason": "LLM: With perfect retrieval rates and high graph density, consolidating knowledge more frequently will improve system responsiveness and reduce policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:46:29.231562"
+      },
+      {
+        "id": "f0495fe06585",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: Increasing researcher turn limit will allow more thorough analysis before hitting constraints, potentially reducing policy violations from rushed decisions",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:46:29.231593"
+      },
+      {
+        "id": "a0272cafee72",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 24,
+        "reason": "LLM: Reduce from 48 to 24 hours to consolidate knowledge more frequently, helping manage the high activity load and policy violations by keeping the knowledge base more current and organized",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:52:34.837995"
+      },
+      {
+        "id": "9af32d279e81",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 4,
+        "new_value": 8,
+        "reason": "LLM: Double concurrent writes from 4 to 8 to handle the high activity level (1.00) and reduce bottlenecks that may be contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:52:34.838200"
+      },
+      {
+        "id": "856ac5514c91",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce researcher turns from 25 to 15 to limit resource consumption and help address the policy violation rate of 1.00 by constraining agent behavior",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:52:34.838355"
+      },
+      {
+        "id": "70181525f948",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 6,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:53:11.156162"
+      },
+      {
+        "id": "0cbc60fd9d59",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: 100% policy violation rate suggests personas may be hitting turn limits too quickly. Increasing researcher turns from 15 to 25 allows more thorough investigation before escalation",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:04:12.307595"
+      },
+      {
+        "id": "93cffebae204",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 15,
+        "new_value": 30,
+        "reason": "LLM: Similarly increasing coder turns from 15 to 30 to prevent premature termination that could lead to incomplete solutions and policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:04:12.307787"
+      },
+      {
+        "id": "ac8740b55940",
+        "component": "orchestration.planner",
+        "param_name": "pipeline_max_agents",
+        "old_value": 5,
+        "new_value": 6,
+        "reason": "Fitness 0.25 < 0.6, adjusting pipeline_max_agents",
+        "fitness_before": 0.25,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:05:07.399965"
+      },
+      {
+        "id": "0e91724725d9",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 400000,
+        "new_value": 450000,
+        "reason": "LLM: Policy violation rate at 1.00 suggests orchestrator is hitting budget limits and making suboptimal decisions under resource constraints",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:09:37.024839"
+      },
+      {
+        "id": "e91a5502792c",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 40,
+        "reason": "LLM: High activity level (1.00) indicates researchers need more turns to complete thorough analysis before hitting limits",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:09:37.024965"
+      },
+      {
+        "id": "e594f1296d0d",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 12,
+        "reason": "LLM: Perfect retrieval hit rate (1.00) with high graph density (0.74) suggests we can afford slightly less aggressive consolidation to reduce system load",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T08:09:37.025032"
+      }
+    ],
+    "timestamp": "2026-02-18T08:12:25.252719"
+  },
+  "meta_cycles_completed": 124,
+  "design_archive": {
+    "max_size": 50,
+    "temperature": 0.3,
+    "entries": [
+      {
+        "id": "8318140dffae",
+        "strategy_name": "Message Channel Router",
+        "module": "coordination",
+        "code_hash": "c454a49fab15e10e",
+        "code_snippet": "from collections import defaultdict\n\nclass Channel:\n    def __init__(self, name):\n        self.name = name\n        self.subscribers = defaultdict(list)\n        self.history = []\n    def subscribe(self, agent, topics):\n        for t in topics:\n            self.subscribers[t].append(agent)\n    def send(self, topic, msg, sender):\n        self.history.append({'topic': topic, 'msg': msg, 'sender': sender})\n        receivers = self.subscribers.get(topic, [])\n        return [r for r in receivers if r != sender]\n    def broadcast(self, msg, sender):\n        all_agents = set()\n        for agents in self.subscribers.values():\n            all_agents.update(agents)\n        all_agents.discard(sender)\n        self.history.append({'topic': '*', 'msg': msg, 'sender': sender})\n        return sorted(all_agents)\n\nch = Channel('team-alpha')\nch.subscribe('researcher', ['findings', 'requests'])\nch.subscribe('coder', ['requests', 'reviews'])\nch.subscribe('reviewer', ['reviews', 'findings'])\nr1 = ch.send('findings', 'found paper', 'researcher')\nassert 'reviewer' in r1 and 'researcher' not in r1\nr2 = ch.broadcast('done', 'coder')\nassert 'researcher' in r2 and 'reviewer' in r2\nprint(f'findings -> {r1}, broadcast -> {r2}')\nprint('PASS: Message channel router validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15019v1",
+        "created_at": "2026-02-17T21:26:58.853804"
+      },
+      {
+        "id": "37958b65a336",
+        "strategy_name": "Strategy Selector",
+        "module": "orchestration.planner",
+        "code_hash": "93717c7c13b6b679",
+        "code_snippet": "class StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        success_rate = self.successes / total\n        efficiency = 1.0 / (1 + self.total_tokens / max(total, 1) / 10000)\n        return round(0.7 * success_rate + 0.3 * efficiency, 3)\n\ndef select_strategy(records, task_size):\n    if task_size == 'small':\n        candidates = [r for r in records if r.name in ('solo', 'pipeline')]\n    else:\n        candidates = [r for r in records if r.name in ('parallel', 'debate')]\n    if not candidates: candidates = records\n    return max(candidates, key=lambda r: r.score)\n\nsolo = StrategyRecord('solo')\nsolo.successes, solo.failures, solo.total_tokens = 8, 2, 50000\nparallel = StrategyRecord('parallel')\nparallel.successes, parallel.failures, parallel.total_tokens = 15, 5, 200000\ndebate = StrategyRecord('debate')\ndebate.successes, debate.failures, debate.total_tokens = 4, 1, 80000\nrecords = [solo, parallel, debate]\nsmall = select_strategy(records, 'small')\nlarge = select_strategy(records, 'large')\nassert small.name == 'solo'\nassert large.name in ('parallel', 'debate')\nprint(f'Small task: {small.name} (score={small.score})')\nprint(f'Large task: {large.name} (score={large.score})')\nprint('PASS: Strategy selector validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.14993v1",
+        "created_at": "2026-02-17T21:30:22.159005"
+      },
+      {
+        "id": "17d4ca2306e0",
+        "strategy_name": "Strategy Selector",
+        "module": "orchestration.planner",
+        "code_hash": "93717c7c13b6b679",
+        "code_snippet": "class StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        success_rate = self.successes / total\n        efficiency = 1.0 / (1 + self.total_tokens / max(total, 1) / 10000)\n        return round(0.7 * success_rate + 0.3 * efficiency, 3)\n\ndef select_strategy(records, task_size):\n    if task_size == 'small':\n        candidates = [r for r in records if r.name in ('solo', 'pipeline')]\n    else:\n        candidates = [r for r in records if r.name in ('parallel', 'debate')]\n    if not candidates: candidates = records\n    return max(candidates, key=lambda r: r.score)\n\nsolo = StrategyRecord('solo')\nsolo.successes, solo.failures, solo.total_tokens = 8, 2, 50000\nparallel = StrategyRecord('parallel')\nparallel.successes, parallel.failures, parallel.total_tokens = 15, 5, 200000\ndebate = StrategyRecord('debate')\ndebate.successes, debate.failures, debate.total_tokens = 4, 1, 80000\nrecords = [solo, parallel, debate]\nsmall = select_strategy(records, 'small')\nlarge = select_strategy(records, 'large')\nassert small.name == 'solo'\nassert large.name in ('parallel', 'debate')\nprint(f'Small task: {small.name} (score={small.score})')\nprint(f'Large task: {large.name} (score={large.score})')\nprint('PASS: Strategy selector validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15809v1",
+        "created_at": "2026-02-18T02:13:05.972032"
+      },
+      {
+        "id": "7103ef2c101f",
+        "strategy_name": "Strategy Selector_gen1",
+        "module": "orchestration.planner",
+        "code_hash": "4eea7cef3a0e8442",
+        "code_snippet": "import math\nfrom collections import defaultdict\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_outcomes = []\n        self.context_performance = defaultdict(lambda: {'success': 0, 'total': 0})\n    \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        \n        # Base success rate with confidence interval adjustment\n        success_rate = self.successes / total\n        confidence = min(1.0, total / 10)  # More confident with more data\n        adjusted_success_rate = success_rate * confidence + 0.5 * (1 - confidence)\n        \n        # Efficiency with logarithmic scaling\n        avg_tokens = self.total_tokens / max(total, 1)\n        efficiency = 1.0 / (1 + math.log(1 + avg_tokens / 1000))\n        \n        # Recent performance trend\n        recent_trend = 1.0\n        if len(self.recent_outcomes) >= 3:\n            recent_success_rate = sum(self.recent_outcomes[-5:]) / len(self.recent_outcomes[-5:])\n            trend_factor = recent_success_rate / max(success_rate, 0.1)\n            recent_trend = min(1.2, max(0.8, trend_factor))\n        \n        return round(0.6 * adjusted_success_rate + 0.25 * efficiency + 0.15 * recent_trend, 3)\n    \n    def update(self, success, tokens_used, context=None):\n        if success:\n            self.successes += 1\n        else:\n            self.failures += 1\n        self.total_tokens += tokens_used\n        self.recent_outcomes.append(1 if success else 0)\n        if len(self.recent_outcomes) > 10:\n            self.recent_outcomes.pop(0)\n        \n        if context:\n            self.context_performance[context]['total'] += 1\n            if success:\n                self.context_performance[context]['success'] += 1\n\ndef select_strategy(records, task_size, context=None, complexity=1.0):\n    # Define strategy compatibility\n    strategy_rules = {\n        'small': {'preferred': ['solo', 'pipeline'], 'avoid': []},\n        'large': {'preferred': ['parallel', 'debate', 'hierarchical'], 'avoid': ['solo']},\n        'medium': {'preferred': ['pipeline', 'parallel'], 'avoid': []}\n    }\n    \n    rules = strategy_rules.get(task_size, {'preferred': [], 'avoid': []})\n    \n    # Score each strategy\n    scored_strategies = []\n    for record in records:\n        base_score = record.score\n        \n        # Task size compatibility bonus/penalty\n        if record.name in rules['preferred']:\n            base_score *= 1.2\n        elif record.name in rules['avoid']:\n            base_score *= 0.7\n        \n        # Context-specific performance\n        if context and context in record.context_performance:\n            ctx_perf = record.context_performance[context]\n            if ctx_perf['total'] > 0:\n                ctx_success_rate = ctx_perf['success'] / ctx_perf['total']\n                base_score = 0.7 * base_score + 0.3 * ctx_success_rate\n        \n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "37958b65a336",
+        "source_paper": "2602.14993v1",
+        "created_at": "2026-02-18T07:23:50.524818"
+      },
+      {
+        "id": "1371a65d937d",
+        "strategy_name": "Strategy Selector_gen1",
+        "module": "orchestration.planner",
+        "code_hash": "fd581b7f67a03f6c",
+        "code_snippet": "import math\nfrom collections import defaultdict\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_outcomes = []\n        self.context_performance = defaultdict(lambda: {'success': 0, 'total': 0})\n    \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        \n        # Base success rate with confidence adjustment\n        success_rate = self.successes / total\n        confidence = min(1.0, total / 10)  # More confident with more data\n        \n        # Token efficiency (normalized)\n        avg_tokens = self.total_tokens / max(total, 1)\n        efficiency = 1.0 / (1 + avg_tokens / 5000)\n        \n        # Recent performance trend\n        recent_trend = self._calculate_trend()\n        \n        # Weighted score with trend consideration\n        base_score = 0.6 * success_rate + 0.3 * efficiency + 0.1 * recent_trend\n        return round(confidence * base_score + (1 - confidence) * 0.5, 3)\n    \n    def _calculate_trend(self):\n        if len(self.recent_outcomes) < 3:\n            return 0.5\n        recent = self.recent_outcomes[-5:]  # Last 5 outcomes\n        return sum(recent) / len(recent)\n    \n    def update_performance(self, success, tokens, context=None):\n        self.total_tokens += tokens\n        if success:\n            self.successes += 1\n            self.recent_outcomes.append(1.0)\n        else:\n            self.failures += 1\n            self.recent_outcomes.append(0.0)\n        \n        # Keep only recent outcomes\n        if len(self.recent_outcomes) > 10:\n            self.recent_outcomes = self.recent_outcomes[-10:]\n        \n        # Track context-specific performance\n        if context:\n            self.context_performance[context]['total'] += 1\n            if success:\n                self.context_performance[context]['success'] += 1\n    \n    def context_score(self, context):\n        if context not in self.context_performance:\n            return self.score\n        \n        ctx_data = self.context_performance[context]\n        if ctx_data['total'] == 0:\n            return self.score\n        \n        ctx_success_rate = ctx_data['success'] / ctx_data['total']\n        # Blend context-specific with general performance\n        weight = min(0.7, ctx_data['total'] / 5)\n        return weight * ctx_success_rate + (1 - weight) * (self.successes / max(self.successes + self.failures, 1))\n\nclass AdaptivePlanner:\n    def __init__(self):\n        self.strategies = {}\n        self.task_contexts = defaultdict(list)\n        \n    def register_strategy(self, name):\n        if name not in self.strategies:\n            self.strategies[name] = StrategyRecord(name)\n        return self.strategies[name]\n    \n    def select_strategy(self, task_size, context=None, complexity=1.0):\n        # Define strategy pools based on task characteristics\n        if task_size == 'small' and compl",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "17d4ca2306e0",
+        "source_paper": "2602.15809v1",
+        "created_at": "2026-02-18T07:24:11.671538"
+      },
+      {
+        "id": "84eb6f8a1bae",
+        "strategy_name": "Message Channel Router_gen1",
+        "module": "coordination",
+        "code_hash": "060e5561e17281db",
+        "code_snippet": "from collections import defaultdict\nimport json\nimport time\n\nclass Channel:\n    def __init__(self, name):\n        self.name = name\n        self.subscribers = defaultdict(list)\n        self.history = []\n        self.message_filters = {}\n        self.priority_queues = defaultdict(list)\n        \n    def subscribe(self, agent, topics, priority=0, message_filter=None):\n        for t in topics:\n            self.subscribers[t].append({'agent': agent, 'priority': priority})\n            if message_filter:\n                self.message_filters[f\"{agent}:{t}\"] = message_filter\n        # Sort by priority (higher first)\n        for t in topics:\n            self.subscribers[t].sort(key=lambda x: x['priority'], reverse=True)\n    \n    def send(self, topic, msg, sender, priority=0):\n        timestamp = time.time()\n        msg_obj = {\n            'topic': topic, \n            'msg': msg, \n            'sender': sender, \n            'priority': priority,\n            'timestamp': timestamp\n        }\n        self.history.append(msg_obj)\n        \n        receivers = []\n        for sub in self.subscribers.get(topic, []):\n            agent = sub['agent']\n            if agent != sender:\n                # Apply message filter if exists\n                filter_key = f\"{agent}:{topic}\"\n                if filter_key in self.message_filters:\n                    if self.message_filters[filter_key](msg_obj):\n                        receivers.append(agent)\n                else:\n                    receivers.append(agent)\n        \n        # Queue high priority messages\n        if priority > 0:\n            for receiver in receivers:\n                self.priority_queues[receiver].append(msg_obj)\n                \n        return receivers\n    \n    def broadcast(self, msg, sender, exclude_topics=None):\n        timestamp = time.time()\n        msg_obj = {\n            'topic': '*', \n            'msg': msg, \n            'sender': sender,\n            'timestamp': timestamp\n        }\n        self.history.append(msg_obj)\n        \n        all_agents = set()\n        for topic, agents in self.subscribers.items():\n            if exclude_topics and topic in exclude_topics:\n                continue\n            for sub in agents:\n                all_agents.add(sub['agent'])\n        all_agents.discard(sender)\n        return sorted(all_agents)\n    \n    def get_priority_messages(self, agent):\n        messages = self.priority_queues.get(agent, [])\n        self.priority_queues[agent] = []  # Clear after retrieval\n        return sorted(messages, key=lambda x: x['priority'], reverse=True)\n    \n    def get_history(self, topic=None, agent=None, limit=None):\n        filtered = self.history\n        if topic:\n            filtered = [m for m in filtered if m['topic'] == topic]\n        if agent:\n            filtered = [m for m in filtered if m['sender'] == agent]\n        if limit:\n            filtered = filtered[-limit:]\n        return filtered\n\n# Test the enhanced channel\nch = Channel('team-alpha')\n\n# Subscribe wit",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "8318140dffae",
+        "source_paper": "2602.15019v1",
+        "created_at": "2026-02-18T07:27:40.831679"
+      },
+      {
+        "id": "4a7def25fc24",
+        "strategy_name": "Strategy Selector_gen1",
+        "module": "orchestration.planner",
+        "code_hash": "240b8f7aec034ac2",
+        "code_snippet": "import math\nfrom collections import defaultdict\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_outcomes = []  # Track recent performance\n        self.context_performance = defaultdict(lambda: {'success': 0, 'total': 0})\n        \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        \n        # Base success rate with confidence interval adjustment\n        success_rate = self.successes / total\n        confidence = min(1.0, total / 10)  # More confidence with more data\n        adjusted_success_rate = success_rate * confidence + 0.5 * (1 - confidence)\n        \n        # Efficiency with logarithmic scaling\n        avg_tokens = self.total_tokens / max(total, 1)\n        efficiency = 1.0 / (1 + math.log(1 + avg_tokens / 1000))\n        \n        # Recent performance trend\n        recent_weight = 1.0\n        if len(self.recent_outcomes) >= 3:\n            recent_success_rate = sum(self.recent_outcomes[-5:]) / len(self.recent_outcomes[-5:])\n            trend = recent_success_rate - success_rate\n            recent_weight = 1.0 + 0.2 * trend  # Boost if improving, penalize if declining\n        \n        base_score = 0.6 * adjusted_success_rate + 0.4 * efficiency\n        return round(base_score * recent_weight, 3)\n    \n    def record_outcome(self, success, tokens_used, context=None):\n        if success:\n            self.successes += 1\n        else:\n            self.failures += 1\n        self.total_tokens += tokens_used\n        self.recent_outcomes.append(1 if success else 0)\n        if len(self.recent_outcomes) > 10:\n            self.recent_outcomes.pop(0)\n        \n        if context:\n            self.context_performance[context]['total'] += 1\n            if success:\n                self.context_performance[context]['success'] += 1\n\ndef select_strategy(records, task_size, context=None, complexity=1.0):\n    # Dynamic strategy mapping based on task characteristics\n    if task_size == 'small' and complexity < 0.5:\n        preferred = ['solo', 'pipeline']\n        fallback_weight = 0.8\n    elif task_size == 'small':\n        preferred = ['solo', 'pipeline', 'parallel']\n        fallback_weight = 0.9\n    elif complexity > 0.8:\n        preferred = ['debate', 'parallel']\n        fallback_weight = 0.7\n    else:\n        preferred = ['parallel', 'debate', 'pipeline']\n        fallback_weight = 0.85\n    \n    # Score strategies with preference weighting\n    scored_strategies = []\n    for record in records:\n        base_score = record.score\n        \n        # Apply preference bonus\n        if record.name in preferred:\n            preference_bonus = 0.1\n        else:\n            preference_bonus = -0.05\n        \n        # Context-specific performance\n        context_bonus = 0\n        if context and context in record.context_performance:\n            ctx_perf = record.context_perform",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "37958b65a336",
+        "source_paper": "2602.14993v1",
+        "created_at": "2026-02-18T07:28:02.979181"
+      },
+      {
+        "id": "9eae5a47f753",
+        "strategy_name": "Strategy Selector_gen1",
+        "module": "orchestration.planner",
+        "code_hash": "25db7bab483b310b",
+        "code_snippet": "import math\nfrom collections import defaultdict\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_outcomes = []\n        self.context_performance = defaultdict(lambda: {'success': 0, 'total': 0})\n    \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        \n        # Base success rate with confidence interval adjustment\n        success_rate = self.successes / total\n        confidence = min(1.0, total / 10)  # More confident with more data\n        adjusted_success_rate = success_rate * confidence + 0.5 * (1 - confidence)\n        \n        # Efficiency with diminishing returns\n        avg_tokens = self.total_tokens / max(total, 1)\n        efficiency = 1.0 / (1 + math.log(1 + avg_tokens / 5000))\n        \n        # Recent performance trend\n        recent_trend = 1.0\n        if len(self.recent_outcomes) >= 3:\n            recent_success_rate = sum(self.recent_outcomes[-5:]) / len(self.recent_outcomes[-5:])\n            trend_factor = recent_success_rate / max(success_rate, 0.1)\n            recent_trend = min(1.2, max(0.8, trend_factor))\n        \n        return round(0.6 * adjusted_success_rate + 0.25 * efficiency + 0.15 * recent_trend, 3)\n    \n    def update_outcome(self, success, tokens, context=None):\n        if success:\n            self.successes += 1\n        else:\n            self.failures += 1\n        self.total_tokens += tokens\n        self.recent_outcomes.append(1 if success else 0)\n        if len(self.recent_outcomes) > 10:\n            self.recent_outcomes.pop(0)\n        \n        if context:\n            self.context_performance[context]['total'] += 1\n            if success:\n                self.context_performance[context]['success'] += 1\n\ndef select_strategy(records, task_size, context=None, complexity=1.0):\n    # Dynamic strategy mapping based on task characteristics\n    if task_size == 'small' and complexity < 0.5:\n        primary_candidates = [r for r in records if r.name in ('solo', 'pipeline')]\n        fallback_candidates = [r for r in records if r.name not in ('debate',)]\n    elif task_size == 'large' or complexity > 0.7:\n        primary_candidates = [r for r in records if r.name in ('parallel', 'debate')]\n        fallback_candidates = [r for r in records if r.name != 'solo']\n    else:\n        primary_candidates = [r for r in records if r.name in ('pipeline', 'parallel')]\n        fallback_candidates = records\n    \n    # Context-aware scoring\n    def context_adjusted_score(record):\n        base_score = record.score\n        if context and context in record.context_performance:\n            ctx_perf = record.context_performance[context]\n            if ctx_perf['total'] > 0:\n                ctx_success_rate = ctx_perf['success'] / ctx_perf['total']\n                # Blend context performance with overall score\n                weight = min(0.4, ctx_pe",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "17d4ca2306e0",
+        "source_paper": "2602.15809v1",
+        "created_at": "2026-02-18T07:32:56.495995"
+      },
+      {
+        "id": "2b4229e0d01e",
+        "strategy_name": "Strategy Selector_gen1",
+        "module": "orchestration.planner",
+        "code_hash": "69280643bfd6e693",
+        "code_snippet": "import math\nfrom collections import defaultdict\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_performance = []\n        self.context_scores = defaultdict(list)\n        self.last_used = 0\n        self.complexity_handled = []\n    \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        \n        # Base success rate with confidence interval adjustment\n        success_rate = self.successes / total\n        confidence = min(1.0, total / 10)  # More confident with more data\n        adjusted_success_rate = success_rate * confidence + 0.5 * (1 - confidence)\n        \n        # Token efficiency with diminishing returns\n        avg_tokens = self.total_tokens / max(total, 1)\n        efficiency = 1.0 / (1 + math.log(1 + avg_tokens / 5000))\n        \n        # Recent performance trend\n        trend_bonus = 0\n        if len(self.recent_performance) >= 3:\n            recent_avg = sum(self.recent_performance[-3:]) / 3\n            overall_avg = sum(self.recent_performance) / len(self.recent_performance)\n            trend_bonus = min(0.1, max(-0.1, (recent_avg - overall_avg) * 0.5))\n        \n        # Freshness penalty for unused strategies\n        staleness_penalty = min(0.05, self.last_used * 0.01)\n        \n        return round(0.6 * adjusted_success_rate + 0.25 * efficiency + 0.15 * success_rate + trend_bonus - staleness_penalty, 3)\n    \n    def update_performance(self, success, tokens_used, context=None):\n        if success:\n            self.successes += 1\n            self.recent_performance.append(1.0)\n        else:\n            self.failures += 1\n            self.recent_performance.append(0.0)\n        \n        self.total_tokens += tokens_used\n        self.last_used = 0  # Reset staleness\n        \n        # Keep only recent performance history\n        if len(self.recent_performance) > 10:\n            self.recent_performance.pop(0)\n        \n        if context:\n            self.context_scores[context].append(1.0 if success else 0.0)\n\ndef select_strategy(records, task_size, context=None, complexity=1.0):\n    # Age all strategies\n    for record in records:\n        record.last_used += 1\n    \n    # Filter by task size and complexity\n    if task_size == 'small' and complexity < 0.7:\n        candidates = [r for r in records if r.name in ('solo', 'pipeline')]\n    elif task_size == 'large' or complexity > 0.8:\n        candidates = [r for r in records if r.name in ('parallel', 'debate', 'hierarchical')]\n    else:\n        candidates = records\n    \n    if not candidates:\n        candidates = records\n    \n    # Context-aware scoring\n    scored_candidates = []\n    for candidate in candidates:\n        base_score = candidate.score\n        context_bonus = 0\n        \n        if context and context in candidate.context_scores:\n            context_performance = candidate.context_scores[",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "37958b65a336",
+        "source_paper": "2602.14993v1",
+        "created_at": "2026-02-18T07:38:50.262643"
+      },
+      {
+        "id": "8a96745bce82",
+        "strategy_name": "Strategy Selector_gen1",
+        "module": "orchestration.planner",
+        "code_hash": "9bca7d7fb9d2bb35",
+        "code_snippet": "import math\nfrom collections import defaultdict\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_outcomes = []  # Track recent performance\n        self.context_performance = defaultdict(lambda: {'success': 0, 'total': 0})\n        \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        \n        # Base success rate with confidence adjustment\n        success_rate = self.successes / total\n        confidence = min(1.0, total / 10)  # More confident with more data\n        \n        # Token efficiency with diminishing returns\n        avg_tokens = self.total_tokens / max(total, 1)\n        efficiency = 1.0 / (1 + math.log(1 + avg_tokens / 1000))\n        \n        # Recent performance trend\n        recent_boost = 0\n        if len(self.recent_outcomes) >= 3:\n            recent_success = sum(self.recent_outcomes[-5:]) / min(5, len(self.recent_outcomes))\n            recent_boost = 0.1 * (recent_success - success_rate)\n        \n        # Weighted score with confidence scaling\n        base_score = 0.6 * success_rate + 0.3 * efficiency + 0.1\n        final_score = confidence * (base_score + recent_boost) + (1 - confidence) * 0.5\n        \n        return round(min(1.0, max(0.0, final_score)), 3)\n    \n    def record_outcome(self, success, tokens, context=None):\n        if success:\n            self.successes += 1\n        else:\n            self.failures += 1\n        self.total_tokens += tokens\n        self.recent_outcomes.append(1 if success else 0)\n        if len(self.recent_outcomes) > 10:\n            self.recent_outcomes.pop(0)\n        \n        if context:\n            self.context_performance[context]['total'] += 1\n            if success:\n                self.context_performance[context]['success'] += 1\n\ndef select_strategy(records, task_size, context=None, exploration_rate=0.1):\n    # Filter strategies by task size\n    if task_size == 'small':\n        candidates = [r for r in records if r.name in ('solo', 'pipeline')]\n    elif task_size == 'large':\n        candidates = [r for r in records if r.name in ('parallel', 'debate')]\n    else:\n        candidates = records\n    \n    if not candidates:\n        candidates = records\n    \n    # Context-aware scoring\n    scored_candidates = []\n    for record in candidates:\n        base_score = record.score\n        \n        # Context adjustment\n        if context and context in record.context_performance:\n            ctx_perf = record.context_performance[context]\n            if ctx_perf['total'] > 0:\n                ctx_success_rate = ctx_perf['success'] / ctx_perf['total']\n                base_score = 0.7 * base_score + 0.3 * ctx_success_rate\n        \n        scored_candidates.append((record, base_score))\n    \n    # Exploration vs exploitation\n    import random\n    if random.random() < exploration_rate:\n        # Explore: favor less-t",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "37958b65a336",
+        "source_paper": "2602.14993v1",
+        "created_at": "2026-02-18T07:46:20.359563"
+      },
+      {
+        "id": "6e9ea37d4f72",
+        "strategy_name": "Strategy Selector_gen1_gen2",
+        "module": "orchestration.planner",
+        "code_hash": "9f034c1f23d32b96",
+        "code_snippet": "import math\nimport random\nfrom collections import defaultdict, deque\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_outcomes = deque(maxlen=15)  # Fixed-size recent history\n        self.context_performance = defaultdict(lambda: {'success': 0, 'total': 0, 'tokens': 0})\n        self.execution_times = deque(maxlen=10)\n        self.complexity_scores = deque(maxlen=10)\n        \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        \n        # Enhanced success rate with adaptive confidence\n        success_rate = self.successes / total\n        confidence = min(1.0, math.sqrt(total / 8))  # Square root scaling for smoother confidence\n        base_rate = 0.4 if total < 3 else 0.5  # Lower baseline for very new strategies\n        adjusted_success_rate = success_rate * confidence + base_rate * (1 - confidence)\n        \n        # Multi-factor efficiency scoring\n        avg_tokens = self.total_tokens / max(total, 1)\n        token_efficiency = 1.0 / (1 + math.log(1 + avg_tokens / 800))  # Tighter token scaling\n        \n        # Speed efficiency if available\n        speed_efficiency = 1.0\n        if self.execution_times:\n            avg_time = sum(self.execution_times) / len(self.execution_times)\n            speed_efficiency = 1.0 / (1 + avg_time / 5.0)  # Normalize around 5 second baseline\n        \n        # Complexity handling capability\n        complexity_bonus = 1.0\n        if self.complexity_scores:\n            avg_complexity = sum(self.complexity_scores) / len(self.complexity_scores)\n            complexity_bonus = 1.0 + 0.1 * min(avg_complexity / 10.0, 1.0)  # Bonus for handling complex tasks\n        \n        # Enhanced recent performance with momentum\n        momentum = 1.0\n        if len(self.recent_outcomes) >= 4:\n            recent_rate = sum(list(self.recent_outcomes)[-6:]) / min(6, len(self.recent_outcomes))\n            trend = recent_rate - success_rate\n            momentum = 1.0 + 0.3 * trend  # Stronger momentum effect\n            momentum = max(0.7, min(1.4, momentum))  # Bounded momentum\n        \n        # Weighted composite score with efficiency emphasis\n        efficiency_score = 0.6 * token_efficiency + 0.3 * speed_efficiency + 0.1 * complexity_bonus\n        base_score = 0.65 * adjusted_success_rate + 0.35 * efficiency_score\n        \n        return round(base_score * momentum, 3)\n    \n    def record_outcome(self, success, tokens_used, context=None, execution_time=None, complexity=None):\n        if success:\n            self.successes += 1\n        else:\n            self.failures += 1\n        \n        self.total_tokens += tokens_used\n        self.recent_outcomes.append(1 if success else 0)\n        \n        if execution_time is not None:\n            self.execution_times.append(execution_time)\n        \n        if complexity is not None:\n         ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "4a7def25fc24",
+        "source_paper": "2602.14993v1",
+        "created_at": "2026-02-18T07:57:48.144460"
+      },
+      {
+        "id": "6e53cda49791",
+        "strategy_name": "Strategy Selector_gen1_gen2",
+        "module": "orchestration.planner",
+        "code_hash": "eca0ab680ea9a756",
+        "code_snippet": "import math\nimport random\nfrom collections import defaultdict, deque\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_outcomes = deque(maxlen=15)\n        self.context_performance = defaultdict(lambda: {'success': 0, 'total': 0, 'avg_tokens': 0})\n        self.execution_times = deque(maxlen=20)\n        self.complexity_performance = defaultdict(lambda: {'success': 0, 'total': 0})\n        self.last_used = 0\n        self.streak = 0\n        self.best_streak = 0\n    \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        \n        # Enhanced success rate with adaptive confidence\n        success_rate = self.successes / total\n        confidence = min(1.0, math.log(1 + total) / math.log(21))  # Smoother confidence curve\n        base_score = success_rate * confidence + 0.5 * (1 - confidence)\n        \n        # Multi-factor efficiency scoring\n        avg_tokens = self.total_tokens / max(total, 1)\n        token_efficiency = 1.0 / (1 + math.log(1 + avg_tokens / 3000))\n        \n        # Velocity bonus for faster execution\n        velocity_bonus = 1.0\n        if self.execution_times:\n            avg_time = sum(self.execution_times) / len(self.execution_times)\n            velocity_bonus = min(1.3, 1.0 + (10.0 / max(avg_time, 1.0)) * 0.1)\n        \n        # Recent performance with momentum\n        recent_momentum = 1.0\n        if len(self.recent_outcomes) >= 3:\n            recent_window = list(self.recent_outcomes)[-7:]\n            recent_success = sum(recent_window) / len(recent_window)\n            momentum = recent_success / max(success_rate, 0.1)\n            recent_momentum = min(1.4, max(0.6, momentum))\n        \n        # Streak bonus for consistent performance\n        streak_bonus = min(1.2, 1.0 + (self.streak * 0.05))\n        \n        # Recency penalty to encourage exploration\n        recency_factor = max(0.9, 1.0 - (self.last_used * 0.02))\n        \n        final_score = (0.45 * base_score + \n                      0.2 * token_efficiency + \n                      0.15 * recent_momentum + \n                      0.1 * streak_bonus + \n                      0.1 * velocity_bonus) * recency_factor\n        \n        return round(min(1.0, final_score), 4)\n    \n    def update_outcome(self, success, tokens, context=None, complexity=1.0, execution_time=1.0):\n        if success:\n            self.successes += 1\n            self.streak += 1\n            self.best_streak = max(self.best_streak, self.streak)\n        else:\n            self.failures += 1\n            self.streak = 0\n            \n        self.total_tokens += tokens\n        self.recent_outcomes.append(1 if success else 0)\n        self.execution_times.append(execution_time)\n        self.last_used = 0  # Reset recency counter\n        \n        if context:\n            ctx_perf = self.context_performance[context]\n          ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "9eae5a47f753",
+        "source_paper": "2602.15809v1",
+        "created_at": "2026-02-18T08:03:38.224101"
+      },
+      {
+        "id": "b698145872a2",
+        "strategy_name": "Strategy Selector_gen1",
+        "module": "orchestration.planner",
+        "code_hash": "c71bb563684c9b91",
+        "code_snippet": "import math\nimport random\nfrom collections import defaultdict\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_outcomes = []\n        self.context_performance = defaultdict(lambda: {'successes': 0, 'failures': 0})\n        \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        \n        # Base success rate with confidence interval adjustment\n        success_rate = self.successes / total\n        confidence = min(1.0, total / 20)  # More confident with more data\n        adjusted_success_rate = success_rate * confidence + 0.5 * (1 - confidence)\n        \n        # Efficiency with logarithmic scaling\n        avg_tokens = self.total_tokens / max(total, 1)\n        efficiency = 1.0 / (1 + math.log(1 + avg_tokens / 1000))\n        \n        # Recent performance trend\n        recent_trend = self._calculate_trend()\n        \n        # Weighted combination\n        score = 0.5 * adjusted_success_rate + 0.3 * efficiency + 0.2 * recent_trend\n        return round(score, 3)\n    \n    def _calculate_trend(self):\n        if len(self.recent_outcomes) < 3:\n            return 0.5\n        \n        # Weight recent outcomes more heavily\n        weighted_sum = sum(outcome * (i + 1) for i, outcome in enumerate(self.recent_outcomes[-10:]))\n        weight_total = sum(range(1, min(11, len(self.recent_outcomes) + 1)))\n        return weighted_sum / weight_total if weight_total > 0 else 0.5\n    \n    def record_outcome(self, success, tokens_used, context=None):\n        if success:\n            self.successes += 1\n            self.recent_outcomes.append(1.0)\n        else:\n            self.failures += 1\n            self.recent_outcomes.append(0.0)\n        \n        self.total_tokens += tokens_used\n        \n        if context:\n            if success:\n                self.context_performance[context]['successes'] += 1\n            else:\n                self.context_performance[context]['failures'] += 1\n        \n        # Keep only recent outcomes\n        if len(self.recent_outcomes) > 20:\n            self.recent_outcomes = self.recent_outcomes[-20:]\n    \n    def contextual_score(self, context):\n        if context not in self.context_performance:\n            return self.score\n        \n        ctx_data = self.context_performance[context]\n        ctx_total = ctx_data['successes'] + ctx_data['failures']\n        \n        if ctx_total < 3:  # Not enough context data\n            return self.score\n        \n        ctx_success_rate = ctx_data['successes'] / ctx_total\n        # Blend contextual and overall performance\n        blend_factor = min(0.7, ctx_total / 10)\n        return round(blend_factor * ctx_success_rate + (1 - blend_factor) * self.score, 3)\n\ndef select_strategy(records, task_size, context=None, exploration_rate=0.1):\n    \"\"\"Enhanced strategy selection with contextual awareness and exploratio",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "37958b65a336",
+        "source_paper": "2602.14993v1",
+        "created_at": "2026-02-18T08:04:03.316379"
+      },
+      {
+        "id": "776e36597fb9",
+        "strategy_name": "Message Channel Router_gen1",
+        "module": "coordination",
+        "code_hash": "022392e1c5743810",
+        "code_snippet": "from collections import defaultdict\nimport json\nimport time\n\nclass Channel:\n    def __init__(self, name):\n        self.name = name\n        self.subscribers = defaultdict(list)\n        self.history = []\n        self.message_filters = {}\n        self.priority_queues = defaultdict(list)\n        \n    def subscribe(self, agent, topics, priority=1, message_filter=None):\n        for t in topics:\n            if agent not in self.subscribers[t]:\n                self.subscribers[t].append(agent)\n        if message_filter:\n            self.message_filters[agent] = message_filter\n            \n    def unsubscribe(self, agent, topics=None):\n        if topics is None:\n            topics = list(self.subscribers.keys())\n        for t in topics:\n            if agent in self.subscribers[t]:\n                self.subscribers[t].remove(agent)\n                \n    def send(self, topic, msg, sender, priority=1, metadata=None):\n        timestamp = time.time()\n        message = {\n            'topic': topic, \n            'msg': msg, \n            'sender': sender,\n            'timestamp': timestamp,\n            'priority': priority,\n            'metadata': metadata or {}\n        }\n        self.history.append(message)\n        \n        receivers = []\n        for agent in self.subscribers.get(topic, []):\n            if agent != sender and self._passes_filter(agent, message):\n                receivers.append(agent)\n                self.priority_queues[agent].append((priority, timestamp, message))\n                self.priority_queues[agent].sort(reverse=True)\n                \n        return receivers\n        \n    def broadcast(self, msg, sender, priority=1, exclude_topics=None):\n        timestamp = time.time()\n        message = {\n            'topic': '*', \n            'msg': msg, \n            'sender': sender,\n            'timestamp': timestamp,\n            'priority': priority,\n            'metadata': {'broadcast': True}\n        }\n        self.history.append(message)\n        \n        all_agents = set()\n        for topic, agents in self.subscribers.items():\n            if exclude_topics and topic in exclude_topics:\n                continue\n            all_agents.update(agents)\n        all_agents.discard(sender)\n        \n        filtered_agents = []\n        for agent in all_agents:\n            if self._passes_filter(agent, message):\n                filtered_agents.append(agent)\n                self.priority_queues[agent].append((priority, timestamp, message))\n                self.priority_queues[agent].sort(reverse=True)\n                \n        return sorted(filtered_agents)\n        \n    def get_messages(self, agent, limit=10):\n        messages = self.priority_queues.get(agent, [])\n        result = [msg for _, _, msg in messages[:limit]]\n        self.priority_queues[agent] = messages[limit:]\n        return result\n        \n    def _passes_filter(self, agent, message):\n        if agent not in self.message_filters:\n            return True\n        filter_func = self.message_filters[",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "8318140dffae",
+        "source_paper": "2602.15019v1",
+        "created_at": "2026-02-18T08:09:28.342453"
+      },
+      {
+        "id": "9e6414e3310f",
+        "strategy_name": "Strategy Selector_gen1_gen2",
+        "module": "orchestration.planner",
+        "code_hash": "91c5a0f832db4e0a",
+        "code_snippet": "import math\nimport random\nfrom collections import defaultdict, deque\n\nclass StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n        self.recent_performance = deque(maxlen=20)\n        self.context_scores = defaultdict(lambda: deque(maxlen=10))\n        self.last_used = 0\n        self.complexity_handled = deque(maxlen=15)\n        self.execution_times = deque(maxlen=10)\n        self.adaptive_weight = 1.0\n        self.specialization_bonus = 0.0\n    \n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: \n            return 0.5 + random.uniform(-0.05, 0.05)  # Small exploration bonus\n        \n        # Enhanced success rate with Wilson score interval\n        success_rate = self.successes / total\n        z = 1.96  # 95% confidence\n        wilson_center = (success_rate + z*z/(2*total)) / (1 + z*z/total)\n        wilson_radius = z * math.sqrt(success_rate*(1-success_rate)/total + z*z/(4*total*total)) / (1 + z*z/total)\n        confidence_adjusted = wilson_center - wilson_radius * 0.5\n        \n        # Multi-factor efficiency scoring\n        avg_tokens = self.total_tokens / max(total, 1)\n        token_efficiency = 1.0 / (1 + math.log(1 + avg_tokens / 3000))\n        \n        time_efficiency = 1.0\n        if self.execution_times:\n            avg_time = sum(self.execution_times) / len(self.execution_times)\n            time_efficiency = 1.0 / (1 + avg_time / 10.0)\n        \n        # Advanced trend analysis with momentum\n        trend_score = 0\n        if len(self.recent_performance) >= 5:\n            recent_window = list(self.recent_performance)[-5:]\n            weights = [0.1, 0.15, 0.2, 0.25, 0.3]  # More weight to recent\n            weighted_recent = sum(p * w for p, w in zip(recent_window, weights))\n            \n            overall_avg = sum(self.recent_performance) / len(self.recent_performance)\n            momentum = (weighted_recent - overall_avg) * 2.0\n            trend_score = max(-0.15, min(0.15, momentum))\n        \n        # Context specialization bonus\n        context_bonus = self.specialization_bonus * 0.1\n        \n        # Complexity handling capability\n        complexity_bonus = 0\n        if self.complexity_handled:\n            avg_complexity = sum(self.complexity_handled) / len(self.complexity_handled)\n            complexity_bonus = min(0.08, avg_complexity * 0.02)\n        \n        # Dynamic staleness with decay\n        staleness_penalty = min(0.1, self.last_used * 0.005 * (1 + self.last_used * 0.001))\n        \n        # Adaptive weighting based on performance consistency\n        consistency = 1.0\n        if len(self.recent_performance) > 3:\n            variance = sum((x - success_rate)**2 for x in self.recent_performance) / len(self.recent_performance)\n            consistency = 1.0 / (1 + variance * 2)\n        \n        final_score = (\n            0.45 * confidence_adjusted * consistency +\n ",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 2,
+        "parent_id": "2b4229e0d01e",
+        "source_paper": "2602.14993v1",
+        "created_at": "2026-02-18T08:13:23.807122"
+      }
+    ]
+  }
+}
