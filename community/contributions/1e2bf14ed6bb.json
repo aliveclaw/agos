@@ -1,0 +1,1127 @@
+{
+  "instance_id": "1e2bf14ed6bb",
+  "agos_version": "0.1.0",
+  "contributed_at": "2026-02-18T07:08:56.951566",
+  "cycles_completed": 102,
+  "strategies_applied": [
+    {
+      "name": "Hunt Globally: Deep Research AI Agents for Drug Asset Scouting in...",
+      "module": "coordination",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15019v1",
+          "title": "Hunt Globally: Deep Research AI Agents for Drug Asset Scouting in Investing, Business Development, and Search & Evaluation"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:26:58.851386",
+      "applied_count": 1
+    },
+    {
+      "name": "Distributed Quantum Gaussian Processes for Multi-Agent Systems",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15006v1",
+          "title": "Distributed Quantum Gaussian Processes for Multi-Agent Systems"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:26:58.851595",
+      "applied_count": 1
+    },
+    {
+      "name": "Cold-Start Personalization via Training-Free Priors from Structur...",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15012v1",
+          "title": "Cold-Start Personalization via Training-Free Priors from Structured World Models"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:27:49.902012",
+      "applied_count": 1
+    },
+    {
+      "name": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through ...",
+      "module": "intent.personas",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15028v1",
+          "title": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through Privacy and Personalization"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:29:33.377896",
+      "applied_count": 1
+    },
+    {
+      "name": "Boundary Point Jailbreaking of Black-Box LLMs",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15001v1",
+          "title": "Boundary Point Jailbreaking of Black-Box LLMs"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T21:29:33.377943",
+      "applied_count": 1
+    },
+    {
+      "name": "Service Orchestration in the Computing Continuum: Structural Chal...",
+      "module": "knowledge.manager",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15794v1",
+          "title": "Service Orchestration in the Computing Continuum: Structural Challenges and Vision"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:17:35.741448",
+      "applied_count": 1
+    }
+  ],
+  "discovered_patterns": [
+    {
+      "name": "Message Channel Router",
+      "module": "coordination",
+      "code_snippet": "from collections import defaultdict\n\nclass Channel:\n    def __init__(self, name):\n        self.name = name\n        self.subscribers = defaultdict(list)\n        self.history = []\n    def subscribe(self, agent, topics):\n        for t in topics:\n            self.subscribers[t].append(agent)\n    def send(self, topic, msg, sender):\n        self.history.append({'topic': topic, 'msg': msg, 'sender': sender})\n        receivers = self.subscribers.get(topic, [])\n        return [r for r in receivers if r !",
+      "sandbox_output": "findings -> ['reviewer'], broadcast -> ['researcher', 'reviewer']\nPASS: Message channel router validated\n",
+      "source_paper": "2602.15019v1"
+    },
+    {
+      "name": "Strategy Selector",
+      "module": "orchestration.planner",
+      "code_snippet": "class StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        success_rate = self.successes / total\n        efficiency = 1.0 / (1 + self.total_tokens / max(total, 1) / 10000)\n        return round(0.7 * success_rate + 0.3 * efficiency, 3)\n\ndef select_strategy(records, task_size)",
+      "sandbox_output": "Small task: solo (score=0.76)\nLarge task: parallel (score=0.675)\nPASS: Strategy selector validated\n",
+      "source_paper": "2602.14993v1"
+    }
+  ],
+  "meta_evolution": {
+    "genomes": {
+      "knowledge.semantic": {
+        "component": "knowledge.semantic",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "temperature",
+            "current": null,
+            "default": 0.0,
+            "min_val": 0.0,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Softmax retrieval diversity"
+          },
+          {
+            "name": "track_access",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Access-based confidence tracking"
+          },
+          {
+            "name": "relevance_threshold",
+            "current": null,
+            "default": 0.01,
+            "min_val": 0.001,
+            "max_val": 0.1,
+            "param_type": "float",
+            "description": "Minimum cosine similarity for results"
+          },
+          {
+            "name": "confidence_decay_factor",
+            "current": null,
+            "default": 0.95,
+            "min_val": 0.8,
+            "max_val": 0.99,
+            "param_type": "float",
+            "description": "Confidence decay for unused knowledge"
+          },
+          {
+            "name": "confidence_decay_days",
+            "current": null,
+            "default": 30,
+            "min_val": 7,
+            "max_val": 90,
+            "param_type": "int",
+            "description": "Days inactive before decay kicks in"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T07:08:22.941835",
+        "mutations_applied": 0
+      },
+      "knowledge.graph": {
+        "component": "knowledge.graph",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "default_traversal_depth",
+            "current": 2,
+            "default": 1,
+            "min_val": 1,
+            "max_val": 4,
+            "param_type": "int",
+            "description": "Default neighbor traversal hops"
+          },
+          {
+            "name": "edge_weight_decay",
+            "current": 1.0,
+            "default": 0.99,
+            "min_val": 0.9,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Weight decay per consolidation cycle"
+          }
+        ],
+        "fitness_score": 0.9219999999999999,
+        "last_evaluated": "2026-02-18T07:08:22.941851",
+        "mutations_applied": 2
+      },
+      "knowledge.consolidator": {
+        "component": "knowledge.consolidator",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "older_than_hours",
+            "current": 48,
+            "default": 24,
+            "min_val": 6,
+            "max_val": 168,
+            "param_type": "int",
+            "description": "Consolidate events older than N hours"
+          },
+          {
+            "name": "min_cluster_size",
+            "current": 4,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Minimum events to form a summary"
+          },
+          {
+            "name": "max_concurrent_writes",
+            "current": 4,
+            "default": 5,
+            "min_val": 1,
+            "max_val": 20,
+            "param_type": "int",
+            "description": "Semaphore limit for batch ops"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:08:22.941862",
+        "mutations_applied": 33
+      },
+      "knowledge.loom": {
+        "component": "knowledge.loom",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "use_layered_recall",
+            "current": true,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Priority-ordered layer retrieval"
+          },
+          {
+            "name": "recall_limit",
+            "current": 35,
+            "default": 10,
+            "min_val": 3,
+            "max_val": 50,
+            "param_type": "int",
+            "description": "Default recall result limit"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:08:22.941872",
+        "mutations_applied": 12
+      },
+      "intent.engine": {
+        "component": "intent.engine",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "default_strategy",
+            "current": null,
+            "default": "solo",
+            "min_val": null,
+            "max_val": null,
+            "param_type": "str",
+            "description": "Fallback coordination strategy"
+          },
+          {
+            "name": "max_intent_tokens",
+            "current": 370,
+            "default": 500,
+            "min_val": 200,
+            "max_val": 1500,
+            "param_type": "int",
+            "description": "Token limit for intent classification"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T07:08:22.941882",
+        "mutations_applied": 1
+      },
+      "intent.personas": {
+        "component": "intent.personas",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "researcher_budget",
+            "current": 150000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Researcher agent token budget"
+          },
+          {
+            "name": "coder_budget",
+            "current": 100000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Coder agent token budget"
+          },
+          {
+            "name": "orchestrator_budget",
+            "current": 450000,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Orchestrator agent token budget"
+          },
+          {
+            "name": "researcher_max_turns",
+            "current": 25,
+            "default": 30,
+            "min_val": 5,
+            "max_val": 80,
+            "param_type": "int",
+            "description": "Researcher max turns"
+          },
+          {
+            "name": "coder_max_turns",
+            "current": 15,
+            "default": 40,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Coder max turns"
+          },
+          {
+            "name": "orchestrator_max_turns",
+            "current": 35,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Orchestrator max turns"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:08:22.941891",
+        "mutations_applied": 40
+      },
+      "orchestration.planner": {
+        "component": "orchestration.planner",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "parallel_threshold",
+            "current": 4,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Min subtasks to trigger parallel execution"
+          },
+          {
+            "name": "pipeline_max_agents",
+            "current": null,
+            "default": 5,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Max agents in a pipeline"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-18T07:08:22.941900",
+        "mutations_applied": 1
+      },
+      "orchestration.runtime": {
+        "component": "orchestration.runtime",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "max_concurrent_agents",
+            "current": 49,
+            "default": 50,
+            "min_val": 5,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Max agents running simultaneously"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:08:22.941910",
+        "mutations_applied": 1
+      },
+      "policy.engine": {
+        "component": "policy.engine",
+        "layer": "Identity & Governance",
+        "params": [
+          {
+            "name": "default_max_tokens",
+            "current": null,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 1000000,
+            "param_type": "int",
+            "description": "Default agent token budget"
+          },
+          {
+            "name": "default_max_turns",
+            "current": null,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Default agent turn limit"
+          },
+          {
+            "name": "default_rate_limit",
+            "current": null,
+            "default": 60,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Tool calls per minute"
+          },
+          {
+            "name": "default_read_only",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Default read-only mode"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T07:08:22.941922",
+        "mutations_applied": 0
+      },
+      "events.bus": {
+        "component": "events.bus",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "history_limit",
+            "current": null,
+            "default": 500,
+            "min_val": 100,
+            "max_val": 5000,
+            "param_type": "int",
+            "description": "Max events in memory"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-18T07:08:22.941935",
+        "mutations_applied": 0
+      },
+      "events.tracing": {
+        "component": "events.tracing",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "max_traces",
+            "current": 248,
+            "default": 200,
+            "min_val": 50,
+            "max_val": 1000,
+            "param_type": "int",
+            "description": "Max traces retained"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-18T07:08:22.941945",
+        "mutations_applied": 1
+      }
+    },
+    "recent_mutations": [
+      {
+        "id": "3683dcd282c8",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 70,
+        "new_value": 50,
+        "reason": "LLM: Reduce from 70 to 50 turns to constrain coder execution cycles, reducing the likelihood of policy violations during extended coding sessions",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:48:24.493181"
+      },
+      {
+        "id": "6e5fab4f596d",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 40,
+        "new_value": 15,
+        "reason": "LLM: Reduce from 40 to 15 turns to limit researcher session length and prevent policy violations from extended operations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:51:41.241939"
+      },
+      {
+        "id": "34e0d055faf0",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 50,
+        "new_value": 25,
+        "reason": "LLM: Reduce from 50 to 25 turns to constrain coder operations and reduce resource consumption contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:51:41.242026"
+      },
+      {
+        "id": "40c5f7781570",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 6,
+        "reason": "LLM: Increase consolidation frequency from 12 to 6 hours to better manage knowledge growth and reduce system load",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:51:41.242084"
+      },
+      {
+        "id": "0d58ec9f7e0f",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 24,
+        "reason": "LLM: Increase from 6 to 24 hours to reduce consolidation frequency and lower system load, which may help reduce policy violations by giving more time for proper validation",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:54:51.591263"
+      },
+      {
+        "id": "2d06c54eeb36",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 8,
+        "new_value": 15,
+        "reason": "LLM: Increase from 8 to 15 to provide more context for decision-making, potentially improving quality and reducing policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:54:51.591298"
+      },
+      {
+        "id": "085ca01be671",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: Increase from 15 to 25 turns to allow more thorough research and validation, reducing rushed decisions that may cause policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:54:51.591324"
+      },
+      {
+        "id": "2901820fea24",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 10,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:55:31.132749"
+      },
+      {
+        "id": "850ba150dab4",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 10,
+        "new_value": 6,
+        "reason": "LLM: With perfect retrieval hit rates and high graph density, knowledge is being consolidated too slowly at 10 hours. Reducing to 6 hours will help maintain fresher knowledge clusters and potentially reduce policy violations by keeping information more current.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:58:07.734747"
+      },
+      {
+        "id": "e9e98517f517",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: The 100% policy violation rate suggests personas are operating too extensively. Reducing researcher max turns from 25 to 15 will constrain exploration and reduce the likelihood of policy violations while maintaining adequate research capability.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:58:07.734774"
+      },
+      {
+        "id": "bef3b82562d2",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 25,
+        "new_value": 18,
+        "reason": "LLM: Similarly constraining coder turns from 25 to 18 will help reduce policy violations by limiting the scope of code generation activities, while still allowing sufficient iterations for quality output.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T05:58:07.734790"
+      },
+      {
+        "id": "e7ab3729f496",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 24,
+        "reason": "LLM: Increase consolidation threshold from 6 to 24 hours to reduce aggressive knowledge processing that may be contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:01:22.846951"
+      },
+      {
+        "id": "2d8d6b21d608",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 15,
+        "new_value": 8,
+        "reason": "LLM: Reduce recall limit from 15 to 8 to constrain memory access and potentially reduce policy violations from excessive information retrieval",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:01:22.846974"
+      },
+      {
+        "id": "64fc399d0fc2",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 10,
+        "reason": "LLM: Reduce researcher turns from 15 to 10 to limit exploration depth and reduce likelihood of policy boundary violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:01:22.846987"
+      },
+      {
+        "id": "10df9f86950a",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 38,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:01:57.609623"
+      },
+      {
+        "id": "277161955ad0",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 38,
+        "new_value": 72,
+        "reason": "LLM: With perfect retrieval hit rates and high graph density, knowledge is being consolidated too frequently at 38 hours, potentially causing policy violations by premature consolidation of active knowledge",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:04:28.573188"
+      },
+      {
+        "id": "839b2ba85723",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 10,
+        "new_value": 25,
+        "reason": "LLM: 100% policy violation rate suggests personas are operating without sufficient exploration depth - increasing researcher turns allows more thorough analysis before action",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:04:28.573285"
+      },
+      {
+        "id": "0ca090726314",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 8,
+        "new_value": 15,
+        "reason": "LLM: Perfect retrieval with high activity levels indicates the system needs broader context awareness to make better policy-compliant decisions",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:04:28.573346"
+      },
+      {
+        "id": "8e130f3fc171",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 72,
+        "new_value": 48,
+        "reason": "LLM: Reduce consolidation delay from 72 to 48 hours to process knowledge faster and potentially reduce policy violations from stale data",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:13:01.795671"
+      },
+      {
+        "id": "23de85a18504",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 15,
+        "new_value": 8,
+        "reason": "LLM: Reduce recall limit from 15 to 8 to be more selective and focused, which may help reduce policy violations from over-retrieval",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:13:01.795698"
+      },
+      {
+        "id": "06c9ead8920f",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce researcher max turns from 25 to 15 to constrain exploration and prevent excessive policy violations while maintaining effectiveness",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:13:01.795713"
+      },
+      {
+        "id": "5b68b8b048e9",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 45,
+        "reason": "LLM: Increase from 15 to 45 to allow researcher persona more iterations to complete complex tasks properly, reducing premature terminations that may cause policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:24:15.219321"
+      },
+      {
+        "id": "4be14e9e935e",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 18,
+        "new_value": 60,
+        "reason": "LLM: Increase from 18 to 60 to give coder persona sufficient turns to implement and test solutions thoroughly, preventing rushed implementations that violate policies",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:24:15.219360"
+      },
+      {
+        "id": "d5bd2f04e408",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 24,
+        "reason": "LLM: Reduce from 48 to 24 hours to consolidate knowledge more frequently, ensuring recent policy-relevant information is quickly integrated and available to prevent violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:24:15.219379"
+      },
+      {
+        "id": "6cca0fb92b2c",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 6,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:24:53.716095"
+      },
+      {
+        "id": "d2c8becedcc4",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 24,
+        "reason": "LLM: Increase consolidation threshold to reduce aggressive knowledge processing that may be contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:34:58.367054"
+      },
+      {
+        "id": "cb34fce3cc91",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 45,
+        "new_value": 25,
+        "reason": "LLM: Reduce researcher turn limit to constrain exploration behavior and lower policy violation risk",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:34:58.367088"
+      },
+      {
+        "id": "ce6dad8c11af",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 60,
+        "new_value": 35,
+        "reason": "LLM: Reduce coder turn limit to prevent excessive code generation cycles that may violate policies",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:34:58.367105"
+      },
+      {
+        "id": "961a31a4094e",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 41,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:35:32.996380"
+      },
+      {
+        "id": "8df44407d64f",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce from 25 to 15 turns to limit researcher session length and prevent policy violations from extended operations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:38:00.307086"
+      },
+      {
+        "id": "2a13fc3d7233",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 35,
+        "new_value": 20,
+        "reason": "LLM: Reduce from 35 to 20 turns to constrain coder operations and reduce policy violation opportunities",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:38:00.307114"
+      },
+      {
+        "id": "3f55ec3a900a",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 8,
+        "new_value": 4,
+        "reason": "LLM: Reduce from 8 to 4 concurrent writes to prevent resource contention and policy violations during knowledge consolidation",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:38:00.307131"
+      },
+      {
+        "id": "1381d6570aa9",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 41,
+        "new_value": 12,
+        "reason": "LLM: With perfect retrieval hit rate (1.00) and high graph density (0.74), knowledge is being accessed frequently. Reducing consolidation delay from 41 to 12 hours will enable faster knowledge integration and potentially reduce policy violations by ensuring fresher consolidated knowledge is available.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:41:28.007651"
+      },
+      {
+        "id": "20a746ba87b9",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: 100% policy violation rate suggests personas may be hitting turn limits before completing tasks properly. Increasing researcher turns from 15 to 25 allows more thorough investigation and policy-compliant completion of research tasks.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:41:28.007673"
+      },
+      {
+        "id": "c7fc3f6628f4",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 8,
+        "new_value": 15,
+        "reason": "LLM: With perfect topic diversity and history utilization, the system is handling complex multi-faceted queries. Increasing recall limit from 8 to 15 provides richer context for decision-making, potentially reducing policy violations through better-informed responses.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:41:28.007685"
+      },
+      {
+        "id": "1fa72970711e",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 6,
+        "reason": "LLM: With perfect retrieval hit rate and high graph density, knowledge is being accessed frequently. Reducing consolidation threshold to minimum will ensure fresh knowledge stays readily available and may help reduce policy violations by keeping recent context accessible.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:48:49.519123"
+      },
+      {
+        "id": "c9f06897f100",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: 100% policy violation rate suggests personas may be exceeding boundaries. Reducing researcher max turns from 25 to 15 will constrain behavior while still allowing meaningful research, potentially reducing violations.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:48:49.519169"
+      },
+      {
+        "id": "8d0195f65c3d",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: With high activity levels and perfect topic diversity, increasing recall limit from 15 to 25 will provide richer context for decision-making, which may help personas make better policy-compliant choices.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:48:49.519193"
+      },
+      {
+        "id": "709eb684e4af",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 6,
+        "new_value": 12,
+        "reason": "LLM: With perfect retrieval hit rates and high graph density, knowledge is being accessed frequently. Doubling consolidation time from 6 to 12 hours will reduce unnecessary processing overhead while maintaining quality.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:51:54.913912"
+      },
+      {
+        "id": "1d7d91e68688",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: The 100% policy violation rate suggests personas may be hitting turn limits before completing tasks properly. Increasing researcher turns from 15 to 25 allows more thorough exploration and better adherence to policies.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:51:54.913941"
+      },
+      {
+        "id": "5adda6b7e7e1",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 25,
+        "new_value": 35,
+        "reason": "LLM: High activity levels and perfect topic diversity indicate complex multi-faceted tasks. Increasing recall limit from 25 to 35 provides richer context for decision-making, potentially reducing policy violations.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:51:54.913955"
+      },
+      {
+        "id": "3a86020eb6f8",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 284397,
+        "new_value": 150000,
+        "reason": "LLM: High policy violation rate suggests excessive resource consumption - reducing researcher budget by ~47% to constrain resource usage while maintaining functionality",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:55:02.379018"
+      },
+      {
+        "id": "ca17564202cc",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 171619,
+        "new_value": 100000,
+        "reason": "LLM: Further constraining coder budget to lowest reasonable level to reduce overall system resource pressure contributing to policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:55:02.379040"
+      },
+      {
+        "id": "f0b0efee2b4c",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 12,
+        "new_value": 48,
+        "reason": "LLM: With perfect retrieval rates and high graph density, knowledge system is performing well - reducing consolidation frequency from 12 to 48 hours to lower system overhead",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T06:55:02.379053"
+      },
+      {
+        "id": "84e80a93658c",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 48,
+        "new_value": 72,
+        "reason": "LLM: Increase consolidation threshold to reduce frequency and potentially lower policy violations while maintaining knowledge quality given the perfect retrieval rate",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:00:10.574916"
+      },
+      {
+        "id": "09d2c49a527f",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 25,
+        "new_value": 15,
+        "reason": "LLM: Reduce researcher turn limit to constrain activity and help address the 100% policy violation rate while still allowing meaningful research work",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:00:10.574943"
+      },
+      {
+        "id": "a327db7497ac",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 20,
+        "new_value": 15,
+        "reason": "LLM: Reduce coder turn limit to match researcher constraint and further help mitigate policy violations through reduced overall system activity",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:00:10.574956"
+      },
+      {
+        "id": "371487bf772f",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 300000,
+        "new_value": 450000,
+        "reason": "LLM: 100% policy violation rate suggests orchestrator needs more budget to properly coordinate and enforce policies across the system",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:07:30.466809"
+      },
+      {
+        "id": "266751a38cec",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 15,
+        "new_value": 25,
+        "reason": "LLM: With perfect retrieval hit rate, researcher should have more turns to leverage the excellent knowledge access and reduce policy violations through better planning",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:07:30.467008"
+      },
+      {
+        "id": "4574a3e04f81",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 72,
+        "new_value": 48,
+        "reason": "LLM: With high graph density (0.74) and perfect retrieval, consolidating knowledge more frequently will improve system responsiveness and potentially reduce policy violations",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-18T07:07:30.467088"
+      }
+    ],
+    "timestamp": "2026-02-18T07:08:23.760181"
+  },
+  "meta_cycles_completed": 91,
+  "design_archive": {
+    "max_size": 50,
+    "temperature": 0.3,
+    "entries": [
+      {
+        "id": "8318140dffae",
+        "strategy_name": "Message Channel Router",
+        "module": "coordination",
+        "code_hash": "c454a49fab15e10e",
+        "code_snippet": "from collections import defaultdict\n\nclass Channel:\n    def __init__(self, name):\n        self.name = name\n        self.subscribers = defaultdict(list)\n        self.history = []\n    def subscribe(self, agent, topics):\n        for t in topics:\n            self.subscribers[t].append(agent)\n    def send(self, topic, msg, sender):\n        self.history.append({'topic': topic, 'msg': msg, 'sender': sender})\n        receivers = self.subscribers.get(topic, [])\n        return [r for r in receivers if r != sender]\n    def broadcast(self, msg, sender):\n        all_agents = set()\n        for agents in self.subscribers.values():\n            all_agents.update(agents)\n        all_agents.discard(sender)\n        self.history.append({'topic': '*', 'msg': msg, 'sender': sender})\n        return sorted(all_agents)\n\nch = Channel('team-alpha')\nch.subscribe('researcher', ['findings', 'requests'])\nch.subscribe('coder', ['requests', 'reviews'])\nch.subscribe('reviewer', ['reviews', 'findings'])\nr1 = ch.send('findings', 'found paper', 'researcher')\nassert 'reviewer' in r1 and 'researcher' not in r1\nr2 = ch.broadcast('done', 'coder')\nassert 'researcher' in r2 and 'reviewer' in r2\nprint(f'findings -> {r1}, broadcast -> {r2}')\nprint('PASS: Message channel router validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15019v1",
+        "created_at": "2026-02-17T21:26:58.853804"
+      },
+      {
+        "id": "37958b65a336",
+        "strategy_name": "Strategy Selector",
+        "module": "orchestration.planner",
+        "code_hash": "93717c7c13b6b679",
+        "code_snippet": "class StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        success_rate = self.successes / total\n        efficiency = 1.0 / (1 + self.total_tokens / max(total, 1) / 10000)\n        return round(0.7 * success_rate + 0.3 * efficiency, 3)\n\ndef select_strategy(records, task_size):\n    if task_size == 'small':\n        candidates = [r for r in records if r.name in ('solo', 'pipeline')]\n    else:\n        candidates = [r for r in records if r.name in ('parallel', 'debate')]\n    if not candidates: candidates = records\n    return max(candidates, key=lambda r: r.score)\n\nsolo = StrategyRecord('solo')\nsolo.successes, solo.failures, solo.total_tokens = 8, 2, 50000\nparallel = StrategyRecord('parallel')\nparallel.successes, parallel.failures, parallel.total_tokens = 15, 5, 200000\ndebate = StrategyRecord('debate')\ndebate.successes, debate.failures, debate.total_tokens = 4, 1, 80000\nrecords = [solo, parallel, debate]\nsmall = select_strategy(records, 'small')\nlarge = select_strategy(records, 'large')\nassert small.name == 'solo'\nassert large.name in ('parallel', 'debate')\nprint(f'Small task: {small.name} (score={small.score})')\nprint(f'Large task: {large.name} (score={large.score})')\nprint('PASS: Strategy selector validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.14993v1",
+        "created_at": "2026-02-17T21:30:22.159005"
+      },
+      {
+        "id": "17d4ca2306e0",
+        "strategy_name": "Strategy Selector",
+        "module": "orchestration.planner",
+        "code_hash": "93717c7c13b6b679",
+        "code_snippet": "class StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        success_rate = self.successes / total\n        efficiency = 1.0 / (1 + self.total_tokens / max(total, 1) / 10000)\n        return round(0.7 * success_rate + 0.3 * efficiency, 3)\n\ndef select_strategy(records, task_size):\n    if task_size == 'small':\n        candidates = [r for r in records if r.name in ('solo', 'pipeline')]\n    else:\n        candidates = [r for r in records if r.name in ('parallel', 'debate')]\n    if not candidates: candidates = records\n    return max(candidates, key=lambda r: r.score)\n\nsolo = StrategyRecord('solo')\nsolo.successes, solo.failures, solo.total_tokens = 8, 2, 50000\nparallel = StrategyRecord('parallel')\nparallel.successes, parallel.failures, parallel.total_tokens = 15, 5, 200000\ndebate = StrategyRecord('debate')\ndebate.successes, debate.failures, debate.total_tokens = 4, 1, 80000\nrecords = [solo, parallel, debate]\nsmall = select_strategy(records, 'small')\nlarge = select_strategy(records, 'large')\nassert small.name == 'solo'\nassert large.name in ('parallel', 'debate')\nprint(f'Small task: {small.name} (score={small.score})')\nprint(f'Large task: {large.name} (score={large.score})')\nprint('PASS: Strategy selector validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.15809v1",
+        "created_at": "2026-02-18T02:13:05.972032"
+      }
+    ]
+  }
+}
