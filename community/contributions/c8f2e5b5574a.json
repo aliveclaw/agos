@@ -1,0 +1,1112 @@
+{
+  "instance_id": "c8f2e5b5574a",
+  "agos_version": "0.1.0",
+  "contributed_at": "2026-02-20T00:52:48.407407",
+  "cycles_completed": 54,
+  "strategies_applied": [
+    {
+      "name": "CoPE-VideoLM: Codec Primitives For Efficient Video Language Model...",
+      "module": "knowledge.semantic",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13191v1",
+          "title": "CoPE-VideoLM: Codec Primitives For Efficient Video Language Models"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T20:26:34.572106",
+      "applied_count": 1
+    },
+    {
+      "name": "Asynchronous Verified Semantic Caching for Tiered LLM Architectur...",
+      "module": "knowledge.semantic",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13165v1",
+          "title": "Asynchronous Verified Semantic Caching for Tiered LLM Architectures"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T20:28:56.287584",
+      "applied_count": 1
+    },
+    {
+      "name": "Quantization-Robust LLM Unlearning via Low-Rank Adaptation",
+      "module": "evolution",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.13151v1",
+          "title": "Quantization-Robust LLM Unlearning via Low-Rank Adaptation"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-16T20:37:01.901670",
+      "applied_count": 1
+    },
+    {
+      "name": "GPT-5 vs Other LLMs in Long Short-Context Performance",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.14188v1",
+          "title": "GPT-5 vs Other LLMs in Long Short-Context Performance"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T02:00:53.537909",
+      "applied_count": 1
+    },
+    {
+      "name": "Deep Dense Exploration for LLM Reinforcement Learning via Pivot-D...",
+      "module": "policy",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.14169v1",
+          "title": "Deep Dense Exploration for LLM Reinforcement Learning via Pivot-Driven Resampling"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T02:00:53.538217",
+      "applied_count": 1
+    },
+    {
+      "name": "Exploring a Multimodal Chatbot as a Facilitator in Therapeutic Ar...",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.14183v1",
+          "title": "Exploring a Multimodal Chatbot as a Facilitator in Therapeutic Art Activity"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T02:01:47.982805",
+      "applied_count": 1
+    },
+    {
+      "name": "A Multi-Agent Framework for Medical AI: Leveraging Fine-Tuned GPT...",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.14158v1",
+          "title": "A Multi-Agent Framework for Medical AI: Leveraging Fine-Tuned GPT, LLaMA, and DeepSeek R1 for Evidence-Based and Bias-Aware Clinical Query Processing"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T02:21:44.808506",
+      "applied_count": 1
+    },
+    {
+      "name": "ForesightSafety Bench: A Frontier Risk Evaluation and Governance ...",
+      "module": "knowledge.manager",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.14135v1",
+          "title": "ForesightSafety Bench: A Frontier Risk Evaluation and Governance Framework towards Safe AI"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T02:21:44.808581",
+      "applied_count": 1
+    },
+    {
+      "name": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through ...",
+      "module": "intent.personas",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15028v1",
+          "title": "Long Context, Less Focus: A Scaling Gap in LLMs Revealed through Privacy and Personalization"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T03:00:37.359534",
+      "applied_count": 1
+    },
+    {
+      "name": "Hunt Globally: Deep Research AI Agents for Drug Asset Scouting in...",
+      "module": "coordination",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15019v1",
+          "title": "Hunt Globally: Deep Research AI Agents for Drug Asset Scouting in Investing, Business Development, and Search & Evaluation"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T03:00:37.359552",
+      "applied_count": 1
+    },
+    {
+      "name": "Cold-Start Personalization via Training-Free Priors from Structur...",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15012v1",
+          "title": "Cold-Start Personalization via Training-Free Priors from Structured World Models"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T03:02:52.648322",
+      "applied_count": 1
+    },
+    {
+      "name": "Learning Robust Markov Models for Safe Runtime Monitoring",
+      "module": "intent.personas",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.14987v1",
+          "title": "Learning Robust Markov Models for Safe Runtime Monitoring"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-17T03:23:27.086168",
+      "applied_count": 1
+    },
+    {
+      "name": "The Geometry of Alignment Collapse: When Fine-Tuning Breaks Safet...",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15799v1",
+          "title": "The Geometry of Alignment Collapse: When Fine-Tuning Breaks Safety"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:15:43.000956",
+      "applied_count": 1
+    },
+    {
+      "name": "Operationalising the Superficial Alignment Hypothesis via Task Co...",
+      "module": "intent",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.15829v1",
+          "title": "Operationalising the Superficial Alignment Hypothesis via Task Complexity"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-18T02:19:30.235918",
+      "applied_count": 1
+    },
+    {
+      "name": "Policy Compiler for Secure Agentic Systems",
+      "module": "knowledge.graph",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.16708v1",
+          "title": "Policy Compiler for Secure Agentic Systems"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-19T19:20:09.265660",
+      "applied_count": 1
+    },
+    {
+      "name": "Measuring Mid-2025 LLM-Assistance on Novice Performance in Biolog...",
+      "module": "intent.proactive",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.16703v1",
+          "title": "Measuring Mid-2025 LLM-Assistance on Novice Performance in Biology"
+        }
+      ],
+      "sandbox_passed": false,
+      "health_check_passed": true,
+      "applied_at": "2026-02-19T19:20:59.683868",
+      "applied_count": 1
+    },
+    {
+      "name": "Calibrate-Then-Act: Cost-Aware Exploration in LLM Agents",
+      "module": "knowledge",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.16699v1",
+          "title": "Calibrate-Then-Act: Cost-Aware Exploration in LLM Agents"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-19T19:20:59.684083",
+      "applied_count": 1
+    },
+    {
+      "name": "VETime: Vision Enhanced Zero-Shot Time Series Anomaly Detection",
+      "module": "evolution",
+      "parameters": {},
+      "source_papers": [
+        {
+          "arxiv_id": "2602.16681v1",
+          "title": "VETime: Vision Enhanced Zero-Shot Time Series Anomaly Detection"
+        }
+      ],
+      "sandbox_passed": true,
+      "health_check_passed": true,
+      "applied_at": "2026-02-19T19:21:53.011615",
+      "applied_count": 1
+    }
+  ],
+  "discovered_patterns": [
+    {
+      "name": "Adaptive Confidence Tracker",
+      "module": "knowledge",
+      "code_snippet": "import math\n\nclass ConfidenceTracker:\n    def __init__(self, decay=0.95):\n        self.decay = decay\n        self.counts = {}\n        self.conf = {}\n    def access(self, key):\n        self.counts[key] = self.counts.get(key, 0) + 1\n        self.conf[key] = 0.5 + 0.5 * (1 - math.exp(-self.counts[key] / 5))\n        return self.conf[key]\n    def decay_all(self):\n        for k in self.conf: self.conf[k] *= self.decay\n\nt = ConfidenceTracker()\nfor _ in range(10): c = t.access('k1')\nassert c > 0.85\nt.de",
+      "sandbox_output": "After 10 accesses: 0.9323, after decay: 0.8857\nPASS: Adaptive confidence tracker validated\n",
+      "source_paper": "2602.13198v1"
+    },
+    {
+      "name": "Softmax Diversity Scorer",
+      "module": "knowledge.semantic",
+      "code_snippet": "import math\nimport random\n\ndef softmax_score(values, temperature=0.3):\n    if not values: return []\n    exp_vals = [math.exp(v / max(temperature, 0.01)) for v in values]\n    total = sum(exp_vals)\n    return [v / total for v in exp_vals]\n\nscores = softmax_score([0.9, 0.7, 0.4, 0.2, 0.1])\nassert abs(sum(scores) - 1.0) < 0.001\nprint(f'Softmax scores: {[round(s,3) for s in scores]}')\nprint('PASS: Softmax diversity scorer validated')\n",
+      "sandbox_output": "Softmax scores: [0.535, 0.275, 0.101, 0.052, 0.037]\nPASS: Softmax diversity scorer validated\n",
+      "source_paper": "2602.13194v1"
+    },
+    {
+      "name": "Layered Memory Retriever",
+      "module": "knowledge.manager",
+      "code_snippet": "class Layer:\n    def __init__(self, name, pri, data):\n        self.name, self.pri, self.data = name, pri, data\n    def query(self, q, n=5):\n        return [d for d in self.data if q.lower() in d.lower()][:n]\n\ndef layered_recall(layers, q, limit=10):\n    out = []\n    for l in sorted(layers, key=lambda x: x.pri, reverse=True):\n        if len(out) >= limit: break\n        out.extend(l.query(q, limit - len(out)))\n    return out\n\nw = Layer('working', 100, ['agent running now', 'current goal: evolve'])",
+      "sandbox_output": "Layered recall: ['agent running now', 'agent completed scan', 'agent learned']\nPASS: Layered retriever validated\n",
+      "source_paper": "2602.13166v1"
+    },
+    {
+      "name": "Fitness Proportionate Selector",
+      "module": "evolution",
+      "code_snippet": "import random\n\nclass Strategy:\n    def __init__(self, name, fitness):\n        self.name = name\n        self.fitness = fitness\n        self.selected_count = 0\n\ndef roulette_select(strategies, n=1):\n    total = sum(s.fitness for s in strategies)\n    if total == 0:\n        return random.sample(strategies, min(n, len(strategies)))\n    selected = []\n    for _ in range(n):\n        pick = random.uniform(0, total)\n        current = 0\n        for s in strategies:\n            current += s.fitness\n        ",
+      "sandbox_output": "Selection distribution: {'softmax': 430, 'layered': 358, 'confidence': 153, 'weak': 59}\nPASS: Fitness proportionate selector validated\n",
+      "source_paper": "2602.13177v1"
+    },
+    {
+      "name": "Adaptive Persona Tuner",
+      "module": "intent.personas",
+      "code_snippet": "class PersonaStats:\n    def __init__(self, name, budget, max_turns):\n        self.name = name\n        self.budget = budget\n        self.max_turns = max_turns\n        self.task_results = []\n    def record(self, success, tokens_used, turns_used):\n        self.task_results.append({\n            'success': success, 'tokens': tokens_used, 'turns': turns_used\n        })\n    def tune(self):\n        if len(self.task_results) < 3: return\n        recent = self.task_results[-5:]\n        avg_tokens = sum(r['",
+      "sandbox_output": "",
+      "source_paper": "2602.13131v1"
+    },
+    {
+      "name": "Weighted Graph Traverser",
+      "module": "knowledge.graph",
+      "code_snippet": "from collections import defaultdict\n\nclass WeightedGraph:\n    def __init__(self):\n        self.edges = defaultdict(list)\n    def add(self, src, rel, dst, weight=1.0):\n        self.edges[src].append((dst, rel, weight))\n    def traverse(self, start, max_depth=3, decay=0.7):\n        visited = {}\n        queue = [(start, 1.0, 0)]\n        while queue:\n            node, score, depth = queue.pop(0)\n            if node in visited or depth > max_depth:\n                continue\n            visited[node] =",
+      "sandbox_output": "Graph traversal: {'agent': 1.0, 'memory': 0.63, 'policy': 0.49, 'facts': 0.3528, 'papers': 0.1482}\nPASS: Weighted graph traverser validated\n",
+      "source_paper": "2602.13188v1"
+    },
+    {
+      "name": "Exponential Moving Average Tracker",
+      "module": "knowledge",
+      "code_snippet": "class EMATracker:\n    def __init__(self, alpha=0.3):\n        self.alpha = alpha\n        self.values = {}\n    def update(self, key, value):\n        if key not in self.values:\n            self.values[key] = value\n        else:\n            self.values[key] = self.alpha * value + (1 - self.alpha) * self.values[key]\n        return round(self.values[key], 4)\n\nt = EMATracker(alpha=0.3)\nresults = []\nfor v in [1.0, 0.8, 0.9, 0.7, 0.85, 0.95]:\n    results.append(t.update('sig', v))\nassert abs(results[-1] ",
+      "sandbox_output": "EMA series: [1.0, 0.94, 0.928, 0.8596, 0.8567, 0.8847]\nPASS: Exponential moving average tracker validated\n",
+      "source_paper": "2602.13167v1"
+    },
+    {
+      "name": "Policy Rule Engine",
+      "module": "policy",
+      "code_snippet": "import re\n\nclass PolicyRule:\n    def __init__(self, pattern, action, effect):\n        self.pattern = pattern\n        self.action = action\n        self.effect = effect\n    def matches(self, agent, action):\n        p = self.pattern.replace('*', '.*')\n        return bool(re.match(p, agent)) and (\n            self.action == '*' or self.action == action\n        )\n\nclass PolicyEngine:\n    def __init__(self):\n        self.rules = []\n    def add_rule(self, pattern, action, effect):\n        self.rules.ap",
+      "sandbox_output": "Policy checks: 4/4 passed\nPASS: Policy rule engine validated\n",
+      "source_paper": "2602.14169v1"
+    },
+    {
+      "name": "Intent Classifier",
+      "module": "intent",
+      "code_snippet": "import math\n\nINTENT_RULES = {\n    'research': ['search', 'find', 'look up', 'investigate', 'analyze'],\n    'code': ['write', 'implement', 'fix', 'refactor', 'build'],\n    'review': ['review', 'check', 'audit', 'inspect', 'validate'],\n    'monitor': ['watch', 'track', 'alert', 'detect', 'observe'],\n    'automate': ['schedule', 'trigger', 'automate', 'repeat', 'cron'],\n}\n\ndef classify_intent(text):\n    text_lower = text.lower()\n    scores = {}\n    for intent, keywords in INTENT_RULES.items():\n    ",
+      "sandbox_output": "Classified 4 intents correctly\nPASS: Intent classifier validated\n",
+      "source_paper": "2602.14193v1"
+    },
+    {
+      "name": "Token Budget Enforcer",
+      "module": "policy",
+      "code_snippet": "class TokenBudget:\n    def __init__(self, limit, burst_factor=1.5):\n        self.limit = limit\n        self.burst_limit = int(limit * burst_factor)\n        self.used = 0\n        self.violations = 0\n    def request(self, tokens):\n        if self.used + tokens > self.burst_limit:\n            self.violations += 1\n            return False\n        self.used += tokens\n        return True\n    def decay(self, factor=0.8):\n        self.used = int(self.used * factor)\n    @property\n    def utilization(self",
+      "sandbox_output": "Budget: used=1150, violations=1, util=1.15\nPASS: Token budget enforcer validated\n",
+      "source_paper": "2602.14191v1"
+    },
+    {
+      "name": "Cosine Similarity Ranker",
+      "module": "knowledge.semantic",
+      "code_snippet": "import math\nfrom collections import Counter\n\ndef tfidf_vector(text, vocab):\n    words = text.lower().split()\n    tf = Counter(words)\n    return [tf.get(w, 0) / max(len(words), 1) for w in vocab]\n\ndef cosine_sim(a, b):\n    dot = sum(x * y for x, y in zip(a, b))\n    na = math.sqrt(sum(x*x for x in a))\n    nb = math.sqrt(sum(x*x for x in b))\n    return dot / (na * nb) if na and nb else 0.0\n\ndocs = ['agent memory retrieval', 'semantic search vectors',\n        'policy engine rules', 'agent memory sea",
+      "sandbox_output": "Rankings: [(0, 0.816), (3, 0.816), (1, 0.0), (2, 0.0)]\nPASS: Cosine similarity ranker validated\n",
+      "source_paper": "2602.15029v1"
+    },
+    {
+      "name": "Message Channel Router",
+      "module": "coordination",
+      "code_snippet": "from collections import defaultdict\n\nclass Channel:\n    def __init__(self, name):\n        self.name = name\n        self.subscribers = defaultdict(list)\n        self.history = []\n    def subscribe(self, agent, topics):\n        for t in topics:\n            self.subscribers[t].append(agent)\n    def send(self, topic, msg, sender):\n        self.history.append({'topic': topic, 'msg': msg, 'sender': sender})\n        receivers = self.subscribers.get(topic, [])\n        return [r for r in receivers if r !",
+      "sandbox_output": "findings -> ['reviewer'], broadcast -> ['researcher', 'reviewer']\nPASS: Message channel router validated\n",
+      "source_paper": "2602.15019v1"
+    },
+    {
+      "name": "Strategy Selector",
+      "module": "orchestration.planner",
+      "code_snippet": "class StrategyRecord:\n    def __init__(self, name):\n        self.name = name\n        self.successes = 0\n        self.failures = 0\n        self.total_tokens = 0\n    @property\n    def score(self):\n        total = self.successes + self.failures\n        if total == 0: return 0.5\n        success_rate = self.successes / total\n        efficiency = 1.0 / (1 + self.total_tokens / max(total, 1) / 10000)\n        return round(0.7 * success_rate + 0.3 * efficiency, 3)\n\ndef select_strategy(records, task_size)",
+      "sandbox_output": "Small task: solo (score=0.76)\nLarge task: parallel (score=0.675)\nPASS: Strategy selector validated\n",
+      "source_paper": "2602.15018v1"
+    },
+    {
+      "name": "TTL LRU Cache",
+      "module": "kernel",
+      "code_snippet": "import time\nfrom collections import OrderedDict\n\nclass TTLCache:\n    def __init__(self, maxsize=100, ttl=60):\n        self.maxsize = maxsize\n        self.ttl = ttl\n        self.cache = OrderedDict()\n        self.hits = 0\n        self.misses = 0\n    def get(self, key):\n        if key in self.cache:\n            val, ts = self.cache[key]\n            if time.monotonic() - ts < self.ttl:\n                self.cache.move_to_end(key)\n                self.hits += 1\n                return val\n            ",
+      "sandbox_output": "Cache: hits=2, misses=1, rate=0.667\nPASS: TTL LRU cache validated\n",
+      "source_paper": "2602.15031v1"
+    },
+    {
+      "name": "DAG Task Planner",
+      "module": "orchestration.planner",
+      "code_snippet": "from collections import defaultdict\n\nclass TaskDAG:\n    def __init__(self):\n        self.tasks = {}\n        self.deps = defaultdict(set)\n    def add(self, name, deps=None):\n        self.tasks[name] = {'status': 'pending'}\n        if deps:\n            for d in deps:\n                self.deps[name].add(d)\n    def topo_sort(self):\n        in_deg = defaultdict(int)\n        for t in self.tasks: in_deg[t] = 0\n        for t, ds in self.deps.items():\n            in_deg[t] = len(ds)\n        queue = [t fo",
+      "sandbox_output": "Execution order: ['fetch_data', 'parse', 'validate', 'transform', 'store']\nParallel groups: [['fetch_data'], ['parse', 'validate'], ['transform'], ['store']]\nPASS: DAG task planner validated\n",
+      "source_paper": "2602.14974v1"
+    },
+    {
+      "name": "Semaphore Batch Processor",
+      "module": "coordination",
+      "code_snippet": "import asyncio\n\nasync def batch(items, fn, limit=3):\n    sem = asyncio.Semaphore(limit)\n    out = []\n    async def run(x):\n        async with sem:\n            out.append(await fn(x))\n    await asyncio.gather(*(run(i) for i in items))\n    return sorted(out)\n\nasync def dbl(x):\n    await asyncio.sleep(0.01)\n    return x * 2\n\nasync def main():\n    r = await batch([1,2,3,4,5], dbl, 2)\n    assert r == [2,4,6,8,10]\n    print(f'Batch: {r}')\n    print('PASS: Semaphore batch validated')\n\nasyncio.run(main(",
+      "sandbox_output": "Batch: [2, 4, 6, 8, 10]\nPASS: Semaphore batch validated\n",
+      "source_paper": "2602.15776v1"
+    },
+    {
+      "name": "Anomaly Pattern Detector",
+      "module": "intent.proactive",
+      "code_snippet": "import math\n\nclass AnomalyDetector:\n    def __init__(self, window=10, threshold=2.0):\n        self.window = window\n        self.threshold = threshold\n        self.history = []\n    def observe(self, value):\n        self.history.append(value)\n        if len(self.history) < self.window:\n            return False, 0.0\n        recent = self.history[-self.window:]\n        mean = sum(recent) / len(recent)\n        var = sum((x - mean) ** 2 for x in recent) / len(recent)\n        std = math.sqrt(var) if va",
+      "sandbox_output": "",
+      "source_paper": "2602.16703v1"
+    }
+  ],
+  "meta_evolution": {
+    "genomes": {
+      "knowledge.semantic": {
+        "component": "knowledge.semantic",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "temperature",
+            "current": null,
+            "default": 0.0,
+            "min_val": 0.0,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Softmax retrieval diversity"
+          },
+          {
+            "name": "track_access",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Access-based confidence tracking"
+          },
+          {
+            "name": "relevance_threshold",
+            "current": null,
+            "default": 0.01,
+            "min_val": 0.001,
+            "max_val": 0.1,
+            "param_type": "float",
+            "description": "Minimum cosine similarity for results"
+          },
+          {
+            "name": "confidence_decay_factor",
+            "current": null,
+            "default": 0.95,
+            "min_val": 0.8,
+            "max_val": 0.99,
+            "param_type": "float",
+            "description": "Confidence decay for unused knowledge"
+          },
+          {
+            "name": "confidence_decay_days",
+            "current": null,
+            "default": 30,
+            "min_val": 7,
+            "max_val": 90,
+            "param_type": "int",
+            "description": "Days inactive before decay kicks in"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-20T00:49:13.692451",
+        "mutations_applied": 0
+      },
+      "knowledge.graph": {
+        "component": "knowledge.graph",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "default_traversal_depth",
+            "current": 2,
+            "default": 1,
+            "min_val": 1,
+            "max_val": 4,
+            "param_type": "int",
+            "description": "Default neighbor traversal hops"
+          },
+          {
+            "name": "edge_weight_decay",
+            "current": 1.0,
+            "default": 0.99,
+            "min_val": 0.9,
+            "max_val": 1.0,
+            "param_type": "float",
+            "description": "Weight decay per consolidation cycle"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-20T00:49:13.692511",
+        "mutations_applied": 2
+      },
+      "knowledge.consolidator": {
+        "component": "knowledge.consolidator",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "older_than_hours",
+            "current": 47,
+            "default": 24,
+            "min_val": 6,
+            "max_val": 168,
+            "param_type": "int",
+            "description": "Consolidate events older than N hours"
+          },
+          {
+            "name": "min_cluster_size",
+            "current": 8,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Minimum events to form a summary"
+          },
+          {
+            "name": "max_concurrent_writes",
+            "current": 4,
+            "default": 5,
+            "min_val": 1,
+            "max_val": 20,
+            "param_type": "int",
+            "description": "Semaphore limit for batch ops"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-20T00:49:13.692552",
+        "mutations_applied": 5
+      },
+      "knowledge.loom": {
+        "component": "knowledge.loom",
+        "layer": "Semantic Work Substrate",
+        "params": [
+          {
+            "name": "use_layered_recall",
+            "current": true,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Priority-ordered layer retrieval"
+          },
+          {
+            "name": "recall_limit",
+            "current": 35,
+            "default": 10,
+            "min_val": 3,
+            "max_val": 50,
+            "param_type": "int",
+            "description": "Default recall result limit"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-20T00:49:13.692587",
+        "mutations_applied": 4
+      },
+      "intent.engine": {
+        "component": "intent.engine",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "default_strategy",
+            "current": null,
+            "default": "solo",
+            "min_val": null,
+            "max_val": null,
+            "param_type": "str",
+            "description": "Fallback coordination strategy"
+          },
+          {
+            "name": "max_intent_tokens",
+            "current": 414,
+            "default": 500,
+            "min_val": 200,
+            "max_val": 1500,
+            "param_type": "int",
+            "description": "Token limit for intent classification"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-20T00:49:13.692622",
+        "mutations_applied": 1
+      },
+      "intent.personas": {
+        "component": "intent.personas",
+        "layer": "Agent & Intent Intelligence",
+        "params": [
+          {
+            "name": "researcher_budget",
+            "current": 256041,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Researcher agent token budget"
+          },
+          {
+            "name": "coder_budget",
+            "current": 127552,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Coder agent token budget"
+          },
+          {
+            "name": "orchestrator_budget",
+            "current": 142023,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 500000,
+            "param_type": "int",
+            "description": "Orchestrator agent token budget"
+          },
+          {
+            "name": "researcher_max_turns",
+            "current": 65,
+            "default": 30,
+            "min_val": 5,
+            "max_val": 80,
+            "param_type": "int",
+            "description": "Researcher max turns"
+          },
+          {
+            "name": "coder_max_turns",
+            "current": 39,
+            "default": 40,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Coder max turns"
+          },
+          {
+            "name": "orchestrator_max_turns",
+            "current": 44,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 100,
+            "param_type": "int",
+            "description": "Orchestrator max turns"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-20T00:49:13.692656",
+        "mutations_applied": 8
+      },
+      "orchestration.planner": {
+        "component": "orchestration.planner",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "parallel_threshold",
+            "current": 4,
+            "default": 3,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Min subtasks to trigger parallel execution"
+          },
+          {
+            "name": "pipeline_max_agents",
+            "current": 6,
+            "default": 5,
+            "min_val": 2,
+            "max_val": 10,
+            "param_type": "int",
+            "description": "Max agents in a pipeline"
+          }
+        ],
+        "fitness_score": 0.75,
+        "last_evaluated": "2026-02-20T00:49:13.692691",
+        "mutations_applied": 2
+      },
+      "orchestration.runtime": {
+        "component": "orchestration.runtime",
+        "layer": "Agent Orchestration & Workflow",
+        "params": [
+          {
+            "name": "max_concurrent_agents",
+            "current": 13,
+            "default": 50,
+            "min_val": 5,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Max agents running simultaneously"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-20T00:49:13.692724",
+        "mutations_applied": 1
+      },
+      "policy.engine": {
+        "component": "policy.engine",
+        "layer": "Identity & Governance",
+        "params": [
+          {
+            "name": "default_max_tokens",
+            "current": null,
+            "default": 200000,
+            "min_val": 50000,
+            "max_val": 1000000,
+            "param_type": "int",
+            "description": "Default agent token budget"
+          },
+          {
+            "name": "default_max_turns",
+            "current": null,
+            "default": 50,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Default agent turn limit"
+          },
+          {
+            "name": "default_rate_limit",
+            "current": null,
+            "default": 60,
+            "min_val": 10,
+            "max_val": 200,
+            "param_type": "int",
+            "description": "Tool calls per minute"
+          },
+          {
+            "name": "default_read_only",
+            "current": null,
+            "default": false,
+            "min_val": null,
+            "max_val": null,
+            "param_type": "bool",
+            "description": "Default read-only mode"
+          }
+        ],
+        "fitness_score": 1.0,
+        "last_evaluated": "2026-02-20T00:49:13.692769",
+        "mutations_applied": 0
+      },
+      "events.bus": {
+        "component": "events.bus",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "history_limit",
+            "current": 100,
+            "default": 500,
+            "min_val": 100,
+            "max_val": 5000,
+            "param_type": "int",
+            "description": "Max events in memory"
+          }
+        ],
+        "fitness_score": 0.9366666666666666,
+        "last_evaluated": "2026-02-20T00:49:13.692821",
+        "mutations_applied": 1
+      },
+      "events.tracing": {
+        "component": "events.tracing",
+        "layer": "Episodic Experience",
+        "params": [
+          {
+            "name": "max_traces",
+            "current": 50,
+            "default": 200,
+            "min_val": 50,
+            "max_val": 1000,
+            "param_type": "int",
+            "description": "Max traces retained"
+          }
+        ],
+        "fitness_score": 0.5,
+        "last_evaluated": "2026-02-20T00:49:13.692857",
+        "mutations_applied": 1
+      }
+    },
+    "recent_mutations": [
+      {
+        "id": "0d56aad885ca",
+        "component": "knowledge.graph",
+        "param_name": "edge_weight_decay",
+        "old_value": 0.99,
+        "new_value": 1.0,
+        "reason": "Fitness 0.36 < 0.6, nudging edge_weight_decay",
+        "fitness_before": 0.36,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011178"
+      },
+      {
+        "id": "0c9ca91a025d",
+        "component": "knowledge.consolidator",
+        "param_name": "older_than_hours",
+        "old_value": 24,
+        "new_value": 47,
+        "reason": "Fitness 0.50 < 0.6, adjusting older_than_hours",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011208"
+      },
+      {
+        "id": "2e179b642507",
+        "component": "knowledge.consolidator",
+        "param_name": "min_cluster_size",
+        "old_value": 3,
+        "new_value": 4,
+        "reason": "Fitness 0.50 < 0.6, adjusting min_cluster_size",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011227"
+      },
+      {
+        "id": "ae4f3048fb81",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 10,
+        "new_value": 8,
+        "reason": "Fitness 0.50 < 0.6, adjusting recall_limit",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011263"
+      },
+      {
+        "id": "caa699dcf9d9",
+        "component": "intent.engine",
+        "param_name": "max_intent_tokens",
+        "old_value": 500,
+        "new_value": 414,
+        "reason": "Fitness 0.50 < 0.6, adjusting max_intent_tokens",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011282"
+      },
+      {
+        "id": "af5663be9643",
+        "component": "intent.personas",
+        "param_name": "researcher_budget",
+        "old_value": 200000,
+        "new_value": 256041,
+        "reason": "Fitness 0.50 < 0.6, adjusting researcher_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011299"
+      },
+      {
+        "id": "558debf43de6",
+        "component": "intent.personas",
+        "param_name": "coder_budget",
+        "old_value": 200000,
+        "new_value": 127552,
+        "reason": "Fitness 0.50 < 0.6, adjusting coder_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011314"
+      },
+      {
+        "id": "1caae9b43e28",
+        "component": "orchestration.planner",
+        "param_name": "pipeline_max_agents",
+        "old_value": 5,
+        "new_value": 6,
+        "reason": "Fitness 0.50 < 0.6, adjusting pipeline_max_agents",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011387"
+      },
+      {
+        "id": "4f3651cb8b82",
+        "component": "orchestration.runtime",
+        "param_name": "max_concurrent_agents",
+        "old_value": 50,
+        "new_value": 13,
+        "reason": "Fitness 0.50 < 0.6, adjusting max_concurrent_agents",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011403"
+      },
+      {
+        "id": "b7ab6e5e908b",
+        "component": "events.bus",
+        "param_name": "history_limit",
+        "old_value": 500,
+        "new_value": 100,
+        "reason": "Fitness 0.55 < 0.6, adjusting history_limit",
+        "fitness_before": 0.551,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011419"
+      },
+      {
+        "id": "d4019dbf011c",
+        "component": "events.tracing",
+        "param_name": "max_traces",
+        "old_value": 200,
+        "new_value": 50,
+        "reason": "Fitness 0.50 < 0.6, adjusting max_traces",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:16:34.011434"
+      },
+      {
+        "id": "938e04dd8339",
+        "component": "knowledge.consolidator",
+        "param_name": "max_concurrent_writes",
+        "old_value": 5,
+        "new_value": 4,
+        "reason": "Fitness 0.50 < 0.6, adjusting max_concurrent_writes",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:17:10.173421"
+      },
+      {
+        "id": "c5bb43dcc576",
+        "component": "knowledge.loom",
+        "param_name": "use_layered_recall",
+        "old_value": false,
+        "new_value": true,
+        "reason": "Fitness 0.50 < 0.6, toggling use_layered_recall",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:17:10.173447"
+      },
+      {
+        "id": "b46823178e5a",
+        "component": "intent.personas",
+        "param_name": "orchestrator_budget",
+        "old_value": 200000,
+        "new_value": 142023,
+        "reason": "Fitness 0.50 < 0.6, adjusting orchestrator_budget",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:17:10.173472"
+      },
+      {
+        "id": "7120945f66c4",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 30,
+        "new_value": 45,
+        "reason": "Fitness 0.50 < 0.6, adjusting researcher_max_turns",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:17:10.173491"
+      },
+      {
+        "id": "bd9947a35c8a",
+        "component": "orchestration.planner",
+        "param_name": "parallel_threshold",
+        "old_value": 3,
+        "new_value": 4,
+        "reason": "Fitness 0.50 < 0.6, adjusting parallel_threshold",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:17:10.173542"
+      },
+      {
+        "id": "b34e6fce6a52",
+        "component": "intent.personas",
+        "param_name": "coder_max_turns",
+        "old_value": 40,
+        "new_value": 39,
+        "reason": "Fitness 0.50 < 0.6, adjusting coder_max_turns",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:17:47.359439"
+      },
+      {
+        "id": "2e84fea5e5d9",
+        "component": "intent.personas",
+        "param_name": "orchestrator_max_turns",
+        "old_value": 50,
+        "new_value": 44,
+        "reason": "Fitness 0.50 < 0.6, adjusting orchestrator_max_turns",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:17:47.359464"
+      },
+      {
+        "id": "2721cc951b4a",
+        "component": "knowledge.graph",
+        "param_name": "default_traversal_depth",
+        "old_value": 1,
+        "new_value": 2,
+        "reason": "Fitness 0.40 < 0.6, adjusting default_traversal_depth",
+        "fitness_before": 0.40199999999999997,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-17T00:19:00.090071"
+      },
+      {
+        "id": "b9110271d0b5",
+        "component": "knowledge.consolidator",
+        "param_name": "min_cluster_size",
+        "old_value": 4,
+        "new_value": 6,
+        "reason": "LLM: Increase cluster size from 4 to 6 to reduce redundant writes (current max_concurrent_writes=4) while improving semantic recall consistency, given the high retrieval hit rate but moderate graph density.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-19T23:40:21.950475"
+      },
+      {
+        "id": "8780c702dd1c",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 45,
+        "new_value": 50,
+        "reason": "LLM: Raise from 45 to 50 to better align with budget constraints (256k) while reducing turn-based overhead in persona orchestration, given high policy audit activity but low bus diversity.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-19T23:40:21.950556"
+      },
+      {
+        "id": "383f9203f5e8",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 8,
+        "new_value": 16,
+        "reason": "LLM: Double recall limit from 8 to 16 (within 3-50 range) to leverage layered recall more effectively while maintaining high semantic retrieval hit rate, given the low bus diversity suggests fragmented but dense knowledge graphs.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-19T23:40:21.950606"
+      },
+      {
+        "id": "fcc928270045",
+        "component": "knowledge.consolidator",
+        "param_name": "min_cluster_size",
+        "old_value": 6,
+        "new_value": 8,
+        "reason": "LLM: Increasing cluster size from 6 to 8 will improve batch efficiency while maintaining recall density (current graph_density=1.00 suggests clusters are well-formed). The higher upper bound of 20 allows for more granular tuning later.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-20T00:28:06.904822"
+      },
+      {
+        "id": "68fc8072a3f5",
+        "component": "knowledge.loom",
+        "param_name": "recall_limit",
+        "old_value": 16,
+        "new_value": 35,
+        "reason": "LLM: Raising recall limit from 16 to 35 (within bounds) leverages the high semantic retrieval hit rate (1.00) while preventing memory saturation. The layered recall structure appears functional, so this should improve temporal context handling.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-20T00:28:06.904951"
+      },
+      {
+        "id": "42437fdd07f0",
+        "component": "intent.personas",
+        "param_name": "researcher_max_turns",
+        "old_value": 50,
+        "new_value": 65,
+        "reason": "LLM: Increasing researcher turns from 50 to 65 (within bounds) addresses potential turn-length bottlenecks in the persona orchestration. Current activity_level=1.00 suggests idle capacity exists, and this could improve parallelization efficiency.",
+        "fitness_before": 0.5,
+        "fitness_after": null,
+        "applied": true,
+        "timestamp": "2026-02-20T00:28:06.905032"
+      }
+    ],
+    "timestamp": "2026-02-20T00:49:15.476385"
+  },
+  "meta_cycles_completed": 25,
+  "design_archive": {
+    "max_size": 50,
+    "temperature": 0.3,
+    "entries": [
+      {
+        "id": "278b8d5c992d",
+        "strategy_name": "Exponential Moving Average Tracker",
+        "module": "knowledge",
+        "code_hash": "673f9844a1eb9c2f",
+        "code_snippet": "class EMATracker:\n    def __init__(self, alpha=0.3):\n        self.alpha = alpha\n        self.values = {}\n    def update(self, key, value):\n        if key not in self.values:\n            self.values[key] = value\n        else:\n            self.values[key] = self.alpha * value + (1 - self.alpha) * self.values[key]\n        return round(self.values[key], 4)\n\nt = EMATracker(alpha=0.3)\nresults = []\nfor v in [1.0, 0.8, 0.9, 0.7, 0.85, 0.95]:\n    results.append(t.update('sig', v))\nassert abs(results[-1] - 0.85) < 0.15\nassert results[0] == 1.0\nprint(f'EMA series: {results}')\nprint('PASS: Exponential moving average tracker validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.16704v1",
+        "created_at": "2026-02-19T23:37:06.260764"
+      },
+      {
+        "id": "6ec1b3a4a2e2",
+        "strategy_name": "Exponential Moving Average Tracker_gen1",
+        "module": "knowledge",
+        "code_hash": "563a3253be612e57",
+        "code_snippet": "import math\n\nclass EMATracker:\n    def __init__(self, alpha=0.3):\n        self.alpha = float(alpha)\n        if not (0 <= self.alpha <= 1):\n            raise ValueError(\"Alpha must be between 0 and 1\")\n        self.values = {}  # Stores only active keys\n        self._last_value = None\n\n    def update(self, key, value):\n        \"\"\"Update with exponential moving average smoothing.\"\"\"\n        if isinstance(value, (int, float)):\n            value = float(value)\n        else:\n            raise ValueError(\"Value must be numeric\")\n\n        if key not in self.values:\n            self.values[key] = {\n                'sum': value,\n                'count': 1\n            }\n        else:\n            current_sum = self.values[key]['sum']\n            current_count = self.values[key]['count']\n\n            # Avoid division by zero for single-value keys\n            avg = current_sum / current_count if current_count > 0 else value\n\n            updated_sum = (\n                (self.alpha * value + (1 - self.alpha) * avg)\n                * (current_count + 1)\n            )\n            self.values[key]['sum'] = updated_sum\n            self.values[key]['count'] += 1\n\n        return round(self.values[key]['sum'] / self.values[key]['count'], 4)\n\n    def get_active_keys(self):\n        \"\"\"Return list of currently tracked keys.\"\"\"\n        return list(self.values.keys())\n\nt = EMATracker(alpha=0.3)\nresults = []\nfor v in [1.0, 0.8, 0.9, 0.7, 0.85, 0.95]:\n    results.append(t.update('sig', v))\n\n# Validate against expected behavior\nassert abs(results[-1] - (0.3*0.95 + 0.7*0.85)) < 0.02  # More precise validation\nassert results[0] == 1.0\nprint(f'EMA series: {results}')\nprint('PASS: Improved exponential moving average tracker validated')",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 1,
+        "parent_id": "278b8d5c992d",
+        "source_paper": "2602.16704v1",
+        "created_at": "2026-02-20T00:11:20.833782"
+      },
+      {
+        "id": "e4a7c2180c7b",
+        "strategy_name": "Intent Classifier",
+        "module": "intent",
+        "code_hash": "4ac8e6acb747ea3a",
+        "code_snippet": "import math\n\nINTENT_RULES = {\n    'research': ['search', 'find', 'look up', 'investigate', 'analyze'],\n    'code': ['write', 'implement', 'fix', 'refactor', 'build'],\n    'review': ['review', 'check', 'audit', 'inspect', 'validate'],\n    'monitor': ['watch', 'track', 'alert', 'detect', 'observe'],\n    'automate': ['schedule', 'trigger', 'automate', 'repeat', 'cron'],\n}\n\ndef classify_intent(text):\n    text_lower = text.lower()\n    scores = {}\n    for intent, keywords in INTENT_RULES.items():\n        score = sum(1 for kw in keywords if kw in text_lower)\n        if score > 0:\n            scores[intent] = score\n    if not scores:\n        return 'unknown', 0.0\n    best = max(scores, key=scores.get)\n    conf = scores[best] / max(len(INTENT_RULES[best]), 1)\n    return best, round(conf, 3)\n\ntests = [\n    ('search for recent papers on memory', 'research'),\n    ('write a function to sort items', 'code'),\n    ('review the security audit logs', 'review'),\n    ('watch for anomalies and alert', 'monitor'),\n]\nfor text, expected in tests:\n    intent, conf = classify_intent(text)\n    assert intent == expected, f'{text!r}: got {intent}, expected {expected}'\nprint(f'Classified {len(tests)} intents correctly')\nprint('PASS: Intent classifier validated')\n",
+        "fitness_scores": [],
+        "current_fitness": 0.5,
+        "generation": 0,
+        "parent_id": "",
+        "source_paper": "2602.16696v1",
+        "created_at": "2026-02-20T00:44:34.379487"
+      }
+    ]
+  }
+}
