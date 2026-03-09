@@ -1,0 +1,79 @@
+[
+  {
+    "id": "ed0ca35aea66",
+    "technique": "Logical Option-based Pretraining",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Boosting deep Reinforcement Learning using pretraining with Logical Options",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "8bff1923ea9a",
+    "technique": "All-to-All Node Attention Scaling",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "A recipe for scalable attention-based MLIPs: unlocking long-range accuracy with all-to-all node attention",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "1b3426153435",
+    "technique": "Multi-Agent Knowledge Extraction Pipeline",
+    "module": "knowledge",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "SUREON: A Benchmark and Vision-Language-Model for Surgical Reasoning",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "69b35f50ae5f",
+    "technique": "Two-Stage Perception-Decision Pipeline",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "Fly360: Omnidirectional Obstacle Avoidance within Drone View",
+    "code_patterns_count": 4,
+    "repo_url": "https://github.com/Insta360-Research-Team/Fly360"
+  },
+  {
+    "id": "d0e28b0e6506",
+    "technique": "Semantic Knowledge Distillation into Spatial Representations",
+    "module": "knowledge",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "BEVLM: Distilling Semantic Knowledge from LLMs into Bird's-Eye View Representations",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "d2479afa920a",
+    "technique": "Mask-Based Discrete Diffusion Architecture",
+    "module": "kernel",
+    "priority": "medium",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "Omni-Diffusion: Unified Multimodal Understanding and Generation with Masked Discrete Diffusion",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "115e6df786be",
+    "technique": "Multimodal Dataset Quality Assessment",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Multimodal Large Language Models as Image Classifiers",
+    "code_patterns_count": 5,
+    "repo_url": "https://github.com/dreamboxtech/AI-Assisted-Radiology-Reporting-System"
+  }
+]
