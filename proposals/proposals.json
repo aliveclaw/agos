@@ -1,0 +1,68 @@
+[
+  {
+    "id": "e7aa10269d03",
+    "technique": "Provenance-Tracked Knowledge Accumulation with Reflection",
+    "module": "knowledge",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "From Experiments to Expertise: Scientific Knowledge Consolidation for AI-Driven Computational Research",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "694c7db5b8f9",
+    "technique": "Neuron Activation Pattern Data Selection",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Neuron-Aware Data Selection In Instruction Tuning For Large Language Models",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "5da5daadf93c",
+    "technique": "Mixture-of-Experts Knowledge Distillation",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "MoEKD: Mixture-of-Experts Knowledge Distillation for Robust and High-Performing Compressed Code Models",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "0c4df5d14f61",
+    "technique": "Social Observation Pattern Completion",
+    "module": "coordination",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "A Generative Model of Conspicuous Consumption and Status Signaling",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "9ac394f853b1",
+    "technique": "Joint Embedding Predictive Architectures",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Representation Learning for Spatiotemporal Physical Systems",
+    "code_patterns_count": 0,
+    "repo_url": "https://github.com/helenqu/physical-representation-learning"
+  },
+  {
+    "id": "70e1d7bf1ae5",
+    "technique": "Direct Preference Optimization for Action Planning",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  }
+]
