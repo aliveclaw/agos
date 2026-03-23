@@ -1,0 +1,112 @@
+[
+  {
+    "id": "b99ac2c69641",
+    "technique": "IoT-Augmented World Modeling",
+    "module": "coordination",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "IndoorR2X: Indoor Robot-to-Everything Coordination with LLM-Driven Planning",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "d77f6b51ed92",
+    "technique": "Kolmogorov-Arnold Network Causal Modeling",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Kolmogorov-Arnold causal generative models",
+    "code_patterns_count": 6,
+    "repo_url": "https://github.com/aalmodovares/kacgm"
+  },
+  {
+    "id": "0e406548d641",
+    "technique": "Query-Aware Evidence Seeking Loop",
+    "module": "kernel",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "VideoSeek: Long-Horizon Video Agent with Tool-Guided Seeking",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "a9b75277d781",
+    "technique": "Observation-Reaction Mutual Steering Framework",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "MuSteerNet: Human Reaction Generation from Videos via Observation-Reaction Mutual Steering",
+    "code_patterns_count": 0,
+    "repo_url": "https://github.com/zhouyuan888888/MuSteerNet"
+  },
+  {
+    "id": "4ad814156e1c",
+    "technique": "Training-Free Diverse Sampling Methods",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "Wildfire Spread Scenarios: Increasing Sample Diversity of Segmentation Diffusion Models with Training-Free Methods",
+    "code_patterns_count": 5,
+    "repo_url": "https://github.com/SebastianGer/wildfire-spread-scenarios"
+  },
+  {
+    "id": "997d88bbe6f1",
+    "technique": "Reasoning-First Query Expansion",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "CoVR-R:Reason-Aware Composed Video Retrieval",
+    "code_patterns_count": 5,
+    "repo_url": "https://github.com/mbzuai-oryx/CoVR-R"
+  },
+  {
+    "id": "c1b99302ca75",
+    "technique": "Deterministic Mode Proposal Generation",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Deterministic Mode Proposals: An Efficient Alternative to Generative Sampling for Ambiguous Segmentation",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "e657eaa15b98",
+    "technique": "Relational Cross-Attention for Dependencies",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "LumosX: Relate Any Identities with Their Attributes for Personalized Video Generation",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "ae615453d19d",
+    "technique": "Pixel-Level Semantic Content Verification",
+    "module": "tools",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "From Masks to Pixels and Meaning: A New Taxonomy, Benchmark, and Metrics for VLM Image Tampering",
+    "code_patterns_count": 5,
+    "repo_url": "https://github.com/VILA-Lab/PIXAR"
+  },
+  {
+    "id": "08e75bdb5d8c",
+    "technique": "Reasoning Coherence Validation",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "MME-CoF-Pro: Evaluating Reasoning Coherence in Video Generative Models with Text and Visual Hints",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  }
+]
