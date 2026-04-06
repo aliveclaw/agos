@@ -1,0 +1,112 @@
+[
+  {
+    "id": "c2d0fe1a1c19",
+    "technique": "Reliability Gated Multi-Teacher Distillation",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Reliability Gated Multi-Teacher Distillation for Low Resource Abstractive Summarization",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "75bf5dfad4d6",
+    "technique": "Hierarchical Partially Observed Control with Verifiers",
+    "module": "kernel",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "Coupled Control, Structured Memory, and Verifiable Action in Agentic AI (SCRAT -- Stochastic Control with Retrieval and Auditable Trajectories): A Comparative Perspective from Squirrel Locomotion and Scatter-Hoarding",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "1cb0885f5328",
+    "technique": "Modular Plugin Architecture",
+    "module": "kernel",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "PR3DICTR: A modular AI framework for medical 3D image-based detection and outcome prediction",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "2325971df5ba",
+    "technique": "Interpretable Rule-Based Intrusion Detection",
+    "module": "kernel",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "A Tsetlin Machine-driven Intrusion Detection System for Next-Generation IoMT Security",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "ad80bb447b3d",
+    "technique": "Hierarchical Planning with Multi-Scale Models",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Hierarchical Planning with Latent World Models",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "b04387782736",
+    "technique": "Low-Curvature Prototype Flow",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "ProtoFlow: Mitigating Forgetting in Class-Incremental Remote Sensing Segmentation via Low-Curvature Prototype Flow",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "ffe304c955d6",
+    "technique": "Directional Extreme Event Detection",
+    "module": "coordination",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Directional Dependence of Extreme Events",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "3e8b9ac6157d",
+    "technique": "Behavioral Alignment Score for Confidence",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "BAS: A Decision-Theoretic Approach to Evaluating Large Language Model Confidence",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "77d0de9fe4f5",
+    "technique": "Neuromorphic Decision Dynamics",
+    "module": "coordination",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Neuromorphic Realization of Best Response in Finite-Action Games",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "c534f029e385",
+    "technique": "Federated Learning with Server-Side Filtering",
+    "module": "evolution",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Enhancing Robustness of Federated Learning via Server Learning",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  }
+]
