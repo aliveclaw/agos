@@ -1,0 +1,112 @@
+[
+  {
+    "id": "ccd3e8aaaf2f",
+    "technique": "Task-Reward-Based Reinforcement Learning",
+    "module": "evolution",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Beyond Distribution Sharpening: The Importance of Task Rewards",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "2ee8a8c8a8f4",
+    "technique": "Multi-Dimensional Quality Assessment Framework",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "VEFX-Bench: A Holistic Benchmark for Generic Video Editing and Visual Effects",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "c289a01390fa",
+    "technique": "LLM-Knowledge Graph Dynamic Retrieval",
+    "module": "knowledge",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Using Large Language Models and Knowledge Graphs to Improve the Interpretability of Machine Learning Models in Manufacturing",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "602dbbe45946",
+    "technique": "Geometric Regularization for Latent Representations",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Geometric regularization of autoencoders via observed stochastic dynamics",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "b2a69eb12dc7",
+    "technique": "Code Sabotage Detection Pipeline",
+    "module": "kernel",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "ASMR-Bench: Auditing for Sabotage in ML Research",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "0db83c00159d",
+    "technique": "Multi-Accent Speech Translation Benchmarking",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "NaijaS2ST: A Multi-Accent Benchmark for Speech-to-Speech Translation in Low-Resource Nigerian Languages",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "d68406342e8d",
+    "technique": "Adaptive Phase Transition Detection",
+    "module": "coordination",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Phase transitions in Doi-Onsager, Noisy Transformer, and other multimodal models",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "41e44eb23fba",
+    "technique": "Heteroclinic Bifurcation Early Warning",
+    "module": "coordination",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Global dynamics and regime shifts in a resource-consumer model with facilitation and habitat loss",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "2e2bb68a7d07",
+    "technique": "Fine-grained Cognitive Module Architecture",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "FineCog-Nav: Integrating Fine-grained Cognitive Modules for Zero-shot Multimodal UAV Navigation",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "11fd09fa028d",
+    "technique": "Autoregressive Spatial Planning with Physical Constraints",
+    "module": "coordination",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Repurposing 3D Generative Model for Autoregressive Layout Generation",
+    "code_patterns_count": 0,
+    "repo_url": "https://github.com/fenghora/LaviGen"
+  }
+]
