@@ -1,0 +1,57 @@
+[
+  {
+    "id": "343341e5abb6",
+    "technique": "Multi-Level World Model Architecture",
+    "module": "knowledge",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Agentic World Modeling: Foundations, Capabilities, Laws, and Beyond",
+    "code_patterns_count": 0,
+    "repo_url": "https://github.com/matrix-agent/awesome-agentic-world-modeling"
+  },
+  {
+    "id": "a22731e72b9f",
+    "technique": "Global Majority Bias Detection and Mitigation",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Representational Harms in LLM-Generated Narratives Against Global Majority Nationalities",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "173ec5b260bb",
+    "technique": "Predictive Token Budget Management",
+    "module": "kernel",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "How Do AI Agents Spend Your Money? Analyzing and Predicting Token Consumption in Agentic Coding Tasks",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "bcc5c7374f5e",
+    "technique": "Maximum Entropy Probabilistic Modeling",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "From Physics to Statistics: A Simple Route to Exponential Families via Maximum Entropy",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "c99343a6bea3",
+    "technique": "Budget-Aware Sequential Experiment Selection",
+    "module": "evolution",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Spend Less, Fit Better: Budget-Efficient Scaling Law Fitting via Active Experiment Selection",
+    "code_patterns_count": 6,
+    "repo_url": "https://github.com/PlanarG/active-sl"
+  }
+]
