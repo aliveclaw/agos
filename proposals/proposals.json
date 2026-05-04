@@ -1,0 +1,101 @@
+[
+  {
+    "id": "07c51a0276fe",
+    "technique": "Constraint-Guided Plan Execution",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "RunAgent: Interpreting Natural-Language Plans with Constraint-Guided Execution",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "12b96d333556",
+    "technique": "Scientific Workflow Recovery and Validation",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Can Coding Agents Reproduce Findings in Computational Materials Science?",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "48ee4669dc1b",
+    "technique": "Shape-Aware Virtual Content Generation",
+    "module": "tools",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Prop-Chromeleon: Adaptive Haptic Props in Mixed Reality through Generative Artificial Intelligence",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "cca9ed54362d",
+    "technique": "Generative Vision-Language Pre-training",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Let ViT Speak: Generative Language-Image Pre-training",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "d6388ddb791f",
+    "technique": "Persistent Visual Memory Module",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "Persistent Visual Memory: Sustaining Perception for Deep Generation in LVLMs",
+    "code_patterns_count": 5,
+    "repo_url": "https://github.com/huaixuheqing/PVM"
+  },
+  {
+    "id": "3e5d48f6058d",
+    "technique": "Procedural Execution Validation Framework",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "When LLMs Stop Following Steps: A Diagnostic Study of Procedural Execution in Language Models",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "cdf106d42828",
+    "technique": "Query-Conditioned Modular Composition",
+    "module": "coordination",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "HyCOP: Hybrid Composition Operators for Interpretable Learning of PDEs",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "38731614ff08",
+    "technique": "Multimodal Content Retrieval Framework",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "CustomDancer: Customized Dance Recommendation by Text-Dance Retrieval",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "f974816d5afc",
+    "technique": "Posterior-Augmented Training with Variance Reduction",
+    "module": "evolution",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Posterior Augmented Flow Matching",
+    "code_patterns_count": 0,
+    "repo_url": "https://github.com/gstoica27/PAFM.git"
+  }
+]
