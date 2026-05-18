@@ -1,0 +1,24 @@
+[
+  {
+    "id": "a9a0a98eb8c5",
+    "technique": "Bias Detection and Mitigation Framework",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "AI-Mediated Communication Can Steer Collective Opinion",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "72fdb167160c",
+    "technique": "Constrained Decoding for Natural Language Generation",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "A Generative AI Framework for Intelligent Utility Billing CO 2 Analytics and Sustainable Resource Optimisation",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  }
+]
