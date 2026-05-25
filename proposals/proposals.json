@@ -1,0 +1,24 @@
+[
+  {
+    "id": "18996f888fc9",
+    "technique": "Model-Generated Skill Extraction and Consumption",
+    "module": "knowledge",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "From Raw Experience to Skill Consumption: A Systematic Study of Model-Generated Agent Skills",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "7cf1c6aa1240",
+    "technique": "Systematic Text-Space Skill Optimization",
+    "module": "evolution",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "SkillOpt: Executive Strategy for Self-Evolving Agent Skills",
+    "code_patterns_count": 6,
+    "repo_url": "https://github.com/regerah/Skillopt-Executive-Strategy-For-Selfevolving"
+  }
+]
