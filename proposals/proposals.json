@@ -1,0 +1,101 @@
+[
+  {
+    "id": "ef2ff3f1d204",
+    "technique": "Privileged Information Knowledge Distillation",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "CoFiDA-M: Concept-Aware Feature Modulation for Cross-Domain Adaptation with Image-Only Inference",
+    "code_patterns_count": 0,
+    "repo_url": "https://github.com/mmu-dermatology-research/CoFiDA.git"
+  },
+  {
+    "id": "fcd9e9d8b019",
+    "technique": "Stateful Multi-Agent Behavior Monitoring",
+    "module": "coordination",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Stateful Online Monitoring Catches Distributed Agent Attacks",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "7c752715dbee",
+    "technique": "Error Feedback for Distributed Coordination",
+    "module": "coordination",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "A Tight Theory of Error Feedback Algorithms in Distributed Optimization",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "b021e1d290d7",
+    "technique": "KL-Divergence Distribution Shift Detection",
+    "module": "kernel",
+    "priority": "medium",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "KLIP: localized distribution shift detection via KL-divergence with diffusion priors in Inverse Problems",
+    "code_patterns_count": 5,
+    "repo_url": "https://github.com/voilalab/KLIP"
+  },
+  {
+    "id": "f11a94d16575",
+    "technique": "Semantic Object Correspondence Evaluation",
+    "module": "tools",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "SOCO: Benchmarking Semantic Object Correspondence in Vision Foundation Models",
+    "code_patterns_count": 0,
+    "repo_url": "https://github.com/GenIntel/SOCO"
+  },
+  {
+    "id": "654722e6e43f",
+    "technique": "Fixed-Capacity Importance-Based Recurrent State",
+    "module": "knowledge",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Linear Scaling Video VLMs for Long Video Understanding",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "ad6ddf21c54f",
+    "technique": "Empirical Bayes Parameter Denoising",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Normal approximations in nonparametric empirical Bayes",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "9361539a9cb4",
+    "technique": "Unified Progressive Frequency Bridging",
+    "module": "coordination",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Lumos-Nexus: Efficient Frequency Bridging with Homogeneous Latent Space for Video Unified Models",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "2e3c01aaa743",
+    "technique": "Representation Forcing for Multimodal Understanding",
+    "module": "tools",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Representation Forcing for Bottleneck-Free Unified Multimodal Models",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  }
+]
