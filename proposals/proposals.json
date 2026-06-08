@@ -1,0 +1,79 @@
+[
+  {
+    "id": "038594c33959",
+    "technique": "Autonomous Task Decomposition and Execution",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "How AI Agents Reshape Knowledge Work: Autonomy, Efficiency, and Scope",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "5b5f324501c7",
+    "technique": "Explicit Feedback Loop Mechanics",
+    "module": "kernel",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "Twelve quick tips for designing AI-driven HPC workflows",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "1603a05a9953",
+    "technique": "Bradley-Terry Algorithm Ranking System",
+    "module": "coordination",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Bradley-Terry Rankings for Recommender Systems Across Dataset Taxonomies",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "ba188a5e3b43",
+    "technique": "Hierarchical Graph Memory with Agentic Retrieval",
+    "module": "knowledge",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "MemDreamer: Decoupling Perception and Reasoning for Long Video Understanding via Hierarchical Graph Memory and Agentic Retrieval Mechanism",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "a649480fdee8",
+    "technique": "Life Reward Training for Agent Learning",
+    "module": "evolution",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Agentopia: Long-Term Life Simulation and Learning in Agent Societies",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "d317fa71cb51",
+    "technique": "Probabilistic Reasoning Validation Framework",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "How reliable are LLMs when it comes to playing dice?",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "72d6d8484b3e",
+    "technique": "Counterintuitive Reasoning Bias Detection",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Counterintuitive problems in discrete probability",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  }
+]
