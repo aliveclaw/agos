@@ -1,0 +1,112 @@
+[
+  {
+    "id": "5ae6641c23eb",
+    "technique": "Modular Component Interface Standardization",
+    "module": "kernel",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "AgentSpec: Understanding Embodied Agent Scaffolds Through Controlled Composition",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "11bd49aed3d5",
+    "technique": "Trivia-Bounded Knowledge Generation",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "Flood and Harvest: The Provable Necessity of Trivia for Generating Valuable Mathematics via the Lens of Language Generation in the Limit",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "6c5fa572e21e",
+    "technique": "Preference Coordinated Multi-Agent Policy Optimization",
+    "module": "coordination",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Learning Coordinated Preference for Multi-Objective Multi-Agent Reinforcement Learning",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "40649a92cc23",
+    "technique": "Adaptive Streaming Reasoning with Hierarchical Optimization",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "high",
+    "auto_mergeable": false,
+    "paper_title": "AdaSR: Adaptive Streaming Reasoning with Hierarchical Relative Policy Optimization",
+    "code_patterns_count": 5,
+    "repo_url": "https://github.com/EIT-NLP/StreamingLLM"
+  },
+  {
+    "id": "1f1d2b514b90",
+    "technique": "Persona-Specific Model Pruning",
+    "module": "coordination",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Persona-Pruner: Sculpting Lightweight Models for Role-Playing",
+    "code_patterns_count": 0,
+    "repo_url": "https://github.com/jsu-kim/Persona-Pruner"
+  },
+  {
+    "id": "c7efddf21080",
+    "technique": "Stage-Wise Reasoning Trace Decomposition",
+    "module": "intent",
+    "priority": "high",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "ClinHallu: A Benchmark for Diagnosing Stage-Wise Hallucinations in Medical MLLM Reasoning",
+    "code_patterns_count": 6,
+    "repo_url": "https://github.com/alibaba-damo-academy/ClinHallu"
+  },
+  {
+    "id": "638dab4e97c9",
+    "technique": "Vision-Language Model Kinematic Specification",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "Instruct-Particulate: Scaling Feed-Forward 3D Object Articulation with Kinematic Control",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "50304210300a",
+    "technique": "Multimodal LLM Representation Conditioning",
+    "module": "knowledge",
+    "priority": "medium",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "RepFusion: Leveraging Multimodal Priors for Denoising in Representation Space",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "a91c2bb44644",
+    "technique": "Register-Based Attention Routing",
+    "module": "intent",
+    "priority": "medium",
+    "risk_level": "medium",
+    "auto_mergeable": false,
+    "paper_title": "RATS! Patches Talk Through Registers: Emergent Parts in Register Attention Transformers",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  },
+  {
+    "id": "4e632c25d7b6",
+    "technique": "Entity-Anchored Structured Information Processing",
+    "module": "knowledge",
+    "priority": "high",
+    "risk_level": "low",
+    "auto_mergeable": true,
+    "paper_title": "OmniVideo-100K: A Dataset for Audio-Visual Reasoning through Structured Scripts and Evidence Chains",
+    "code_patterns_count": 0,
+    "repo_url": ""
+  }
+]
